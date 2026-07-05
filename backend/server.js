@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import trafficRoutes from './routes/traffic.js';
 import queryRoutes from './routes/query.js';
+import forecastRoutes from './routes/forecast.js';
 
 dotenv.config();
 
@@ -22,6 +23,9 @@ app.use('/api/traffic', trafficRoutes);
 
 // Stage 6: Query routes
 app.use('/api/query', queryRoutes);
+
+// Stage 8: Forecast / Alerts routes
+app.use('/api', forecastRoutes);
 
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);

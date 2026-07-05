@@ -8,13 +8,8 @@ import RecommendationCard from '../components/RecommendationCard.jsx';
 ---
 
 <Layout>
-  <main className="min-h-screen bg-slate-50 p-6">
+  <div className="p-6">
     <div className="max-w-7xl mx-auto space-y-6">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">CityPulse Dashboard</h1>
-        <p className="text-slate-500 mt-1">Real-time urban mobility intelligence</p>
-      </header>
-
       {/* Query Bar for NLP interaction */}
       <QueryBar client:load />
 
@@ -42,5 +37,5 @@ import RecommendationCard from '../components/RecommendationCard.jsx';
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </Layout>

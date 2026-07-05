@@ -9,18 +9,36 @@ import '../styles/global.css';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>CityPulse - Urban Mobility Intelligence</title>
 	</head>
-	<body>
-		<slot />
+	<body className="bg-[#f0f4f8] text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+		<header className="bg-[#0f172a] text-white py-4 shadow-md border-b-4 border-[#f59e0b]">
+			<div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between">
+				<div className="flex items-center">
+					<div className="w-10 h-10 bg-[#f59e0b] rounded-md flex items-center justify-center mr-3 font-bold text-[#0f172a] text-xl tracking-tighter">CP</div>
+					<div>
+						<h1 className="text-2xl font-bold tracking-tight">CityPulse</h1>
+						<p className="text-blue-200 text-sm font-medium mt-0.5">AI-Powered Urban Mobility Intelligence</p>
+					</div>
+				</div>
+				<div className="hidden md:block">
+					<span className="px-3 py-1 bg-blue-900 text-blue-100 text-xs font-semibold rounded-full border border-blue-700">Official Portal</span>
+				</div>
+			</div>
+		</header>
+
+		<main className="flex-grow">
+			<slot />
+		</main>
+
+		<footer className="bg-[#0f172a] text-slate-400 py-6 border-t border-slate-800 mt-12">
+			<div className="max-w-7xl mx-auto px-6 text-center text-sm font-medium">
+				<p>Built for Gen AI Academy APAC Edition | Team Infinite Parallax</p>
+			</div>
+		</footer>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+	html, body { margin: 0; width: 100%; height: 100%; }
 </style>

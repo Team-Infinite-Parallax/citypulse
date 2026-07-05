@@ -1,0 +1,77 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "MG Road"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [77.5946, 12.9716],
+          [77.6046, 12.9726],
+          [77.6146, 12.9736]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ring Road"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [77.5846, 12.9616],
+          [77.5946, 12.9516],
+          [77.6046, 12.9416],
+          [77.6146, 12.9516]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Airport Expressway"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [77.6146, 12.9736],
+          [77.6246, 13.0000],
+          [77.6500, 13.0500],
+          [77.7000, 13.1500]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tech Park Avenue"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [77.6500, 12.9200],
+          [77.6600, 12.9300],
+          [77.6800, 12.9500]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Station Road"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [77.5746, 12.9716],
+          [77.5646, 12.9816],
+          [77.5546, 12.9716]
+        ]
+      }
+    }
+  ]
+}

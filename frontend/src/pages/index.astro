@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import MapView from '../components/MapView.jsx';
 import Dashboard from '../components/Dashboard.jsx';
+import QueryBar from '../components/QueryBar.jsx';
 ---
 
 <Layout>
@@ -11,6 +12,9 @@ import Dashboard from '../components/Dashboard.jsx';
         <h1 className="text-3xl font-bold text-slate-900 tracking-tight">CityPulse Dashboard</h1>
         <p className="text-slate-500 mt-1">Real-time urban mobility intelligence</p>
       </header>
+
+      {/* Query Bar for NLP interaction */}
+      <QueryBar client:load />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Map View */}

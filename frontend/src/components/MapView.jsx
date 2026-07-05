@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Map, { Source, Layer, NavigationControl } from 'react-map-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import useCityStore from '../store/useCityStore';
 import routesGeoJson from '../data/routes.geojson'; // In Vite/Astro this might need special handling, let's fetch or import it properly. Wait, it's better to fetch it if it's in public, or just import as JSON.
 
 // Actually, in Vite we can import JSON directly.
@@ -10,6 +11,8 @@ const MapView = () => {
   const [summaryData, setSummaryData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const setSelectedRoute = useCityStore((state) => state.setSelectedRoute);
+  const selectedRoute = useCityStore((state) => state.selectedRoute);
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -39,20 +42,43 @@ const MapView = () => {
         ...feature,
         properties: {
           ...feature.properties,
-          congestion: routeStats ? routeStats.avg_congestion : 0
+          congestion: routeStats ? routeStats.avg_congestion : 0,
+          isSelected: feature.properties.name === selectedRoute
         }
       };
     })
   };
 
   const getLineColor = () => [
-    'interpolate',
-    ['linear'],
-    ['get', 'congestion'],
-    0, '#10b981',   // Green
-    50, '#f59e0b',  // Orange
-    100, '#ef4444'  // Red
+    'case',
+    ['==', ['get', 'isSelected'], true],
+    '#3b82f6', // highlight selected route in blue
+    [
+      'interpolate',
+      ['linear'],
+      ['get', 'congestion'],
+      0, '#10b981',   // Green
+      50, '#f59e0b',  // Orange
+      100, '#ef4444'  // Red
+    ]
   ];
+
+  const getLineWidth = () => [
+    'case',
+    ['==', ['get', 'isSelected'], true],
+    8,
+    5
+  ];
+
+  const onClick = (e) => {
+    if (e.features && e.features.length > 0) {
+      const clickedRoute = e.features[0].properties.name;
+      // Toggle selection
+      setSelectedRoute(selectedRoute === clickedRoute ? null : clickedRoute);
+    } else {
+      setSelectedRoute(null);
+    }
+  };
 
   return (
     <div className="relative w-full h-[600px] bg-slate-100 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
@@ -81,6 +107,9 @@ const MapView = () => {
         }}
         mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         interactive={true}
+        onClick={onClick}
+        interactiveLayerIds={['route-lines']}
+        cursor="pointer"
       >
         <NavigationControl position="top-right" />
         
@@ -96,7 +125,7 @@ const MapView = () => {
               }}
               paint={{
                 'line-color': getLineColor(),
-                'line-width': 6,
+                'line-width': getLineWidth(),
                 'line-opacity': 0.8
               }}
             />

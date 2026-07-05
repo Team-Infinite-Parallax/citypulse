@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AlertTriangle, Clock, MapPin, Activity } from 'lucide-react';
+import { AlertTriangle, Clock, MapPin, ShieldCheck } from 'lucide-react';
 
 const AlertsPanel = () => {
   const [alerts, setAlerts] = useState([]);
@@ -12,8 +12,7 @@ const AlertsPanel = () => {
         setLoading(true);
         const res = await fetch('http://localhost:3001/api/alerts');
         if (!res.ok) throw new Error('Failed to fetch alerts');
-        const data = await res.json();
-        setAlerts(data);
+        setAlerts(await res.json());
         setError(null);
       } catch (err) {
         console.error(err);
@@ -27,17 +26,17 @@ const AlertsPanel = () => {
 
   if (loading) {
     return (
-      <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 h-64 flex flex-col justify-center items-center">
-        <div className="w-8 h-8 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-3 text-sm font-medium text-slate-600">Scanning for anomalies...</p>
+      <div className="panel h-64 flex flex-col justify-center items-center gap-3" aria-live="polite">
+        <div className="w-8 h-8 border-2 border-[#FF5A5F] border-t-transparent rounded-full animate-spin"></div>
+        <span className="eyebrow">Scanning for anomalies…</span>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 text-red-600 p-5 rounded-2xl border border-red-100 flex items-center">
-        <AlertTriangle className="w-5 h-5 mr-3" />
+      <div className="panel p-5 flex items-center text-[#FF9497] border-[#FF5A5F]/30" aria-live="assertive">
+        <AlertTriangle className="w-5 h-5 mr-3 flex-shrink-0" />
         <p className="font-semibold text-sm">{error}</p>
       </div>
     );
@@ -45,51 +44,61 @@ const AlertsPanel = () => {
 
   if (alerts.length === 0) {
     return (
-      <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 h-64 flex flex-col justify-center items-center">
-        <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-3">
-          <Activity className="w-6 h-6" />
+      <div className="panel h-64 flex flex-col justify-center items-center text-center px-6">
+        <div className="w-12 h-12 rounded-full grid place-items-center mb-3 border border-[#31D0AA]/30 bg-[#31D0AA]/12 text-[#31D0AA]">
+          <ShieldCheck className="w-6 h-6" />
         </div>
-        <h3 className="font-semibold text-slate-800">All Clear</h3>
-        <p className="text-sm text-slate-500 mt-1">No anomalies detected in the network.</p>
+        <h3 className="font-semibold text-[#E6EDF3]">All Clear</h3>
+        <p className="text-sm text-[#64748B] mt-1">No anomalies in the network.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-      <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-        <AlertTriangle className="w-5 h-5 text-red-500 mr-2" />
-        Active Anomalies ({alerts.length})
-      </h3>
-      
-      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-        {alerts.map(alert => (
-          <div 
-            key={alert.id} 
-            className={`p-4 rounded-xl border-l-4 ${alert.severity === 'CRITICAL' ? 'bg-red-50 border-red-500 text-red-900' : 'bg-orange-50 border-orange-500 text-orange-900'}`}
-          >
-            <div className="flex justify-between items-start mb-2">
-              <span className={`text-xs font-bold px-2 py-1 rounded uppercase tracking-wider ${alert.severity === 'CRITICAL' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>
-                {alert.severity}
-              </span>
-              <div className="flex items-center text-xs opacity-75 font-medium">
-                <Clock className="w-3 h-3 mr-1" />
-                {new Date(alert.timestamp).toLocaleString()}
+    <div className="panel">
+      <div className="panel-head">
+        <div className="flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 text-[#FF5A5F]" />
+          <h3 className="text-base font-semibold text-[#E6EDF3]">Active Anomalies</h3>
+        </div>
+        <span className="mono text-xs px-2 py-0.5 rounded-full bg-[#FF5A5F]/12 text-[#FF9497] border border-[#FF5A5F]/25">{alerts.length}</span>
+      </div>
+
+      <div className="p-4 space-y-3 max-h-[420px] overflow-y-auto custom-scrollbar">
+        {alerts.map(alert => {
+          const critical = alert.severity === 'CRITICAL';
+          const accent = critical ? '#FF5A5F' : '#FFB020';
+          return (
+            <div key={alert.id} className="rounded-xl bg-[#0E141E] border border-[#1B2534] p-4 hover:border-[#FF5A5F]/50 transition-colors shadow-lg"
+                 style={{ borderLeft: `3px solid ${accent}` }}>
+              <div className="flex justify-between items-center mb-2">
+                <span className="mono text-[10px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider"
+                      style={{ background: `${accent}1f`, color: accent }}>
+                  {alert.severity}
+                </span>
+                <span className="flex items-center mono text-[11px] text-[#64748B]">
+                  <Clock className="w-3 h-3 mr-1" />
+                  {new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+
+              <h4 className="font-semibold text-[#E6EDF3] mb-1 flex items-center text-sm">
+                <MapPin className="w-3.5 h-3.5 mr-1.5 text-[#64748B]" />
+                {alert.route_name}
+              </h4>
+              <p className="text-sm text-[#9AA9BD] mb-3 leading-relaxed">{alert.message}</p>
+
+              <div className="flex items-center gap-2 mono text-[11px]">
+                <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]">
+                  Congestion <span className="text-[#E6EDF3]">{alert.metrics.congestion}</span>/100
+                </span>
+                <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]">
+                  Delay <span className="text-[#E6EDF3]">{alert.metrics.delay}</span>m
+                </span>
               </div>
             </div>
-            
-            <h4 className="font-semibold mb-1 flex items-center">
-              <MapPin className="w-4 h-4 mr-1 opacity-70" />
-              {alert.route_name}
-            </h4>
-            <p className="text-sm opacity-90 mb-3">{alert.message}</p>
-            
-            <div className="flex items-center gap-4 text-sm font-medium opacity-80">
-              <span className="bg-white/50 px-2 py-1 rounded">Congestion: {alert.metrics.congestion}/100</span>
-              <span className="bg-white/50 px-2 py-1 rounded">Delay: {alert.metrics.delay}m</span>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

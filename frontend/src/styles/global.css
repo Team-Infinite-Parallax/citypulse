@@ -1,1 +1,179 @@
 @import "tailwindcss";
+
+/* ============================================================
+   CityPulse — "Night Dispatch" Premium Glassmorphism System
+   Display: Space Grotesk · Body: Inter · Telemetry: JetBrains Mono
+   ============================================================ */
+
+:root {
+  --ink:        #0B0E14;   /* deep control-room base   */
+  --ink-2:      #0E141E;   /* map / recessed wells     */
+  --panel:      rgba(19, 26, 38, 0.65);   /* glass console surface */
+  --panel-2:    rgba(24, 34, 51, 0.8);    /* inner cells / hover   */
+  --line:       rgba(38, 50, 68, 0.5);    /* hairline dividers     */
+  --line-soft:  rgba(27, 37, 52, 0.5);
+  --text:       #E6EDF3;   /* primary ink               */
+  --text-mid:   #9AA9BD;   /* secondary                 */
+  --text-dim:   #64748B;   /* captions / muted          */
+
+  --amber:      #FFB020;   /* sodium-vapor brand accent */
+  --amber-soft: rgba(255,176,32,0.14);
+  --flow:       #31D0AA;   /* free-flowing / good       */
+  --caution:    #FFB020;   /* slowing                   */
+  --stop:       #FF5A5F;   /* congested / critical      */
+  
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.03);
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html, body { margin: 0; width: 100%; min-height: 100%; }
+
+body {
+  background-color: var(--ink);
+  /* Rich animated mesh gradient + grid */
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(49, 208, 170, 0.05), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(255, 176, 32, 0.05), transparent 40%),
+    linear-gradient(rgba(38,50,68,0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38,50,68,0.35) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text-wrap: balance; }
+
+/* ---------- Structural devices ---------- */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.panel {
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 12px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line-soft);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+}
+
+.mono { font-family: var(--font-mono); }
+
+.stat {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Live status chrome ---------- */
+
+.livedot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--flow);
+  box-shadow: 0 0 0 0 rgba(49,208,170,0.7);
+  animation: ping 2s cubic-bezier(0,0,0.2,1) infinite;
+}
+@keyframes ping {
+  0%   { box-shadow: 0 0 0 0 rgba(49,208,170,0.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(49,208,170,0); }
+  100% { box-shadow: 0 0 0 0 rgba(49,208,170,0); }
+}
+
+/* ---------- Signature: the EKG pulse line ---------- */
+
+.ekg {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.ekg svg { display: block; }
+.ekg .trace {
+  stroke: var(--flow);
+  stroke-width: 2;
+  fill: none;
+  filter: drop-shadow(0 0 6px rgba(49,208,170,0.8));
+  animation: ekg-scroll 3.2s linear infinite;
+}
+@keyframes ekg-scroll { from { transform: translateX(0); } to { transform: translateX(-240px); } }
+
+/* ---------- Buttons ---------- */
+
+.btn-signal {
+  background: var(--amber);
+  color: #1A1206;
+  font-weight: 700;
+  font-family: var(--font-display);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 16px rgba(255, 176, 32, 0.2);
+}
+.btn-signal:hover:not(:disabled) { 
+  filter: brightness(1.1);
+  box-shadow: 0 0 24px rgba(255, 176, 32, 0.4);
+  transform: translateY(-1px);
+}
+.btn-signal:active:not(:disabled) { 
+  transform: translateY(1px); 
+  box-shadow: 0 0 8px rgba(255, 176, 32, 0.3);
+}
+.btn-signal:disabled { 
+  background: #26303F; 
+  color: #55627A; 
+  cursor: not-allowed; 
+  box-shadow: none; 
+}
+
+/* ---------- Focus & Accessibility (Vercel Guidelines) ---------- */
+
+*:focus { outline: none; }
+*:focus-visible { 
+  outline: 2px solid var(--amber); 
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- Motion floors ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ekg .trace, .livedot, .btn-signal, .panel { 
+    animation: none !important; 
+    transition: none !important; 
+    transform: none !important;
+  }
+}
+
+/* ---------- Scrollbar ---------- */
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1); 
+  border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+.custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.1) transparent; }

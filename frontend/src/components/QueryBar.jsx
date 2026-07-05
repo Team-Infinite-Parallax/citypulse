@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Bot, Loader2, ChevronDown, ChevronUp, AlertCircle, BarChart2 } from 'lucide-react';
+import { Send, Bot, Loader2, ChevronDown, ChevronUp, AlertCircle, BarChart2, Sparkles } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import useCityStore from '../store/useCityStore';
 
@@ -42,16 +42,24 @@ const QueryBar = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-6">
+    <div className="panel p-5 mb-6">
+      <div className="flex items-center gap-2 mb-3">
+        <Sparkles className="w-3.5 h-3.5 text-[#FFB020]" />
+        <span className="eyebrow">Ask the city</span>
+      </div>
       <form onSubmit={handleSubmit} className="relative">
-        <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl overflow-hidden focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all">
-          <div className="pl-4 text-slate-400">
+        <div className="flex items-center bg-[#0E141E] border border-[#263244] rounded-xl overflow-hidden focus-within:border-[#FFB020] transition-colors">
+          <div className="pl-4 text-[#64748B]">
             <Bot className="w-6 h-6" />
           </div>
           <input
+            id="query-input"
+            name="query"
             type="text"
-            className="flex-1 bg-transparent border-none py-4 px-4 text-slate-700 placeholder-slate-400 focus:outline-none"
-            placeholder="Ask CityPulse (e.g., 'Which route has the worst congestion?')"
+            autoComplete="off"
+            aria-label="Ask the city"
+            className="flex-1 bg-transparent border-none py-4 px-4 text-[#E6EDF3] placeholder-[#64748B] focus:outline-none"
+            placeholder="e.g. Which corridor has the worst congestion right now?"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             disabled={loading}
@@ -59,67 +67,65 @@ const QueryBar = () => {
           <button
             type="submit"
             disabled={!query.trim() || loading}
-            className="px-6 py-4 bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+            className="btn-signal px-6 py-4 flex items-center gap-2"
           >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Send className="w-4 h-4" /> Ask</>}
           </button>
         </div>
       </form>
 
       {error && (
-        <div className="mt-4 bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 flex items-start">
+        <div className="mt-4 bg-[#FF5A5F]/10 text-[#FF9497] p-4 rounded-xl border border-[#FF5A5F]/30 flex items-start" aria-live="assertive">
           <AlertCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
           <p>{error}</p>
         </div>
       )}
 
       {response && (
-        <div className="mt-6 border-t border-slate-100 pt-6">
+        <div className="mt-6 border-t border-[var(--glass-border)] pt-6" aria-live="polite">
           <div className="flex items-start mb-6">
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4 flex-shrink-0">
+            <div className="w-10 h-10 rounded-lg bg-[#31D0AA]/12 flex items-center justify-center text-[#31D0AA] mr-4 flex-shrink-0 border border-[#31D0AA]/25">
               <Bot className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <h4 className="text-sm font-semibold text-slate-500 mb-1">AI Assistant</h4>
-              <p className="text-slate-800 text-lg leading-relaxed">{response.answer}</p>
+              <h4 className="eyebrow mb-1.5">CityPulse AI</h4>
+              <p className="text-[#E6EDF3] text-lg leading-relaxed">{response.answer}</p>
             </div>
           </div>
 
           {response.chart_data && response.chart_data.length > 0 && (
-            <div className="mt-6 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100 h-64">
-              <h5 className="text-sm font-medium text-slate-500 mb-4 flex items-center">
-                <BarChart2 className="w-4 h-4 mr-2" /> Data Visualization
+            <div className="mt-6 mb-6 bg-[#0E141E] p-4 rounded-xl border border-[#1B2534] h-64">
+              <h5 className="eyebrow mb-4 flex items-center">
+                <BarChart2 className="w-3.5 h-3.5 mr-2" /> Data Visualization
               </h5>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={response.chart_data}>
-                  <XAxis dataKey="label" stroke="#64748b" fontSize={12} />
-                  <YAxis stroke="#64748b" fontSize={12} />
-                  <RechartsTooltip />
-                  <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                  <XAxis dataKey="label" stroke="#64748B" fontSize={12} />
+                  <YAxis stroke="#64748B" fontSize={12} />
+                  <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={{ background: '#131A26', border: '1px solid #263244', borderRadius: '10px', color: '#E6EDF3' }} />
+                  <Bar dataKey="value" fill="#FFB020" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           )}
 
           {response.cited_points && response.cited_points.length > 0 && (
-            <div className="mt-4 border border-slate-200 rounded-xl overflow-hidden">
+            <div className="mt-4 border border-[#263244] rounded-xl overflow-hidden">
               <button
                 type="button"
-                className="w-full px-4 py-3 bg-slate-50 flex items-center justify-between text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+                aria-expanded={showExplanation}
+                className="w-full px-4 py-3 bg-[#0E141E] flex items-center justify-between text-sm font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
                 onClick={() => setShowExplanation(!showExplanation)}
               >
-                <span>Why this answer? (Grounded Data)</span>
+                <span className="mono text-xs">grounded on {response.cited_points.length} data point(s)</span>
                 {showExplanation ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
-              
+
               {showExplanation && (
-                <div className="p-4 bg-white border-t border-slate-200 max-h-60 overflow-y-auto">
-                  <p className="text-xs text-slate-500 mb-3">
-                    The AI generated its answer based solely on the following {response.cited_points.length} data point(s):
-                  </p>
+                <div className="p-4 bg-[#131A26] border-t border-[#263244] max-h-60 overflow-y-auto custom-scrollbar">
                   <div className="space-y-3">
                     {response.cited_points.map((point, idx) => (
-                      <div key={idx} className="text-xs font-mono bg-slate-100 p-3 rounded-lg overflow-x-auto text-slate-700">
+                      <div key={idx} className="text-xs font-mono bg-[#0E141E] p-3 rounded-lg overflow-x-auto text-[#9AA9BD] border border-[#1B2534]">
                         {JSON.stringify(point, null, 2)}
                       </div>
                     ))}

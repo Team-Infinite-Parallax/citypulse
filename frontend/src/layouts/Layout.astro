@@ -9,36 +9,56 @@ import '../styles/global.css';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>CityPulse - Urban Mobility Intelligence</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+		<title>CityPulse — Urban Mobility Intelligence</title>
 	</head>
-	<body className="bg-[#f0f4f8] text-slate-900 font-sans antialiased min-h-screen flex flex-col">
-		<header className="bg-[#0f172a] text-white py-4 shadow-md border-b-4 border-[#f59e0b]">
-			<div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between">
-				<div className="flex items-center">
-					<div className="w-10 h-10 bg-[#f59e0b] rounded-md flex items-center justify-center mr-3 font-bold text-[#0f172a] text-xl tracking-tighter">CP</div>
-					<div>
-						<h1 className="text-2xl font-bold tracking-tight">CityPulse</h1>
-						<p className="text-blue-200 text-sm font-medium mt-0.5">AI-Powered Urban Mobility Intelligence</p>
+	<body>
+		<header class="border-b border-[var(--glass-border)] bg-[#0B0E14]/70 backdrop-blur-xl sticky top-0 z-30 shadow-lg transition-colors">
+			<div class="max-w-7xl mx-auto px-6 py-3 flex items-center gap-5">
+				<!-- Wordmark -->
+				<a href="/" class="flex items-center gap-3 shrink-0 rounded-lg transition-transform hover:scale-105 active:scale-95" aria-label="CityPulse Home">
+					<div class="w-9 h-9 rounded-lg bg-[#FFB020] grid place-items-center text-[#1A1206] font-bold text-lg shadow-[0_0_12px_rgba(255,176,32,0.4)]" style="font-family:var(--font-display)">C</div>
+					<div class="leading-tight">
+						<h1 class="text-lg font-bold tracking-tight text-[#E6EDF3]">City<span class="text-[#31D0AA]">Pulse</span></h1>
+						<p class="eyebrow mt-0.5">Bengaluru · Mobility Ops</p>
 					</div>
+				</a>
+
+				<!-- Signature: live EKG pulse -->
+				<div class="ekg flex-1 h-8 hidden sm:block">
+					<svg viewBox="0 0 480 32" width="480" height="32" preserveAspectRatio="none" aria-hidden="true">
+						<path class="trace" d="M0 16 H58 L68 16 L74 4 L80 28 L88 16 H148 L158 16 L164 6 L170 24 L178 16 H240 H298 L308 16 L314 4 L320 28 L328 16 H388 L398 16 L404 6 L410 24 L418 16 H480" />
+					</svg>
 				</div>
-				<div className="hidden md:block">
-					<span className="px-3 py-1 bg-blue-900 text-blue-100 text-xs font-semibold rounded-full border border-blue-700">Official Portal</span>
+
+				<!-- Live clock / status -->
+				<div class="flex items-center gap-3 shrink-0" aria-live="polite">
+					<span class="flex items-center gap-2 px-2.5 py-1 rounded-full border border-[#31D0AA]/30 bg-[#31D0AA]/10 shadow-[0_0_10px_rgba(49,208,170,0.15)]">
+						<span class="livedot" aria-hidden="true"></span>
+						<span class="eyebrow" style="color:#31D0AA">Live</span>
+					</span>
+					<time id="dispatch-clock" class="mono text-sm text-[#9AA9BD] tabular-nums hidden md:block" aria-label="Current time">--:--:--</time>
 				</div>
 			</div>
 		</header>
 
-		<main className="flex-grow">
+		<main class="flex-grow" id="main-content">
 			<slot />
 		</main>
 
-		<footer className="bg-[#0f172a] text-slate-400 py-6 border-t border-slate-800 mt-12">
-			<div className="max-w-7xl mx-auto px-6 text-center text-sm font-medium">
-				<p>Built for Gen AI Academy APAC Edition | Team Infinite Parallax</p>
+		<footer class="border-t border-[var(--glass-border)] mt-14 bg-[var(--panel)] backdrop-blur-md">
+			<div class="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-center">
+				<p class="eyebrow">CityPulse · Gen AI Academy APAC</p>
+				<p class="eyebrow">Team Infinite Parallax</p>
 			</div>
 		</footer>
+
+		<script is:inline>
+			const el = document.getElementById('dispatch-clock');
+			const tick = () => { if (el) el.textContent = new Date().toLocaleTimeString('en-GB'); };
+			tick(); setInterval(tick, 1000);
+		</script>
 	</body>
 </html>
-
-<style>
-	html, body { margin: 0; width: 100%; height: 100%; }
-</style>

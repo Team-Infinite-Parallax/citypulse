@@ -28,17 +28,17 @@ const RecommendationCard = () => {
 
   if (loading) {
     return (
-      <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 h-64 flex flex-col justify-center items-center">
-        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-3 text-sm font-medium text-slate-600">Generating AI Recommendations...</p>
+      <div className="panel h-64 flex flex-col justify-center items-center" aria-live="polite">
+        <div className="w-8 h-8 border-4 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Generating AI Recommendations...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-red-50 text-red-600 p-5 rounded-2xl border border-red-100 flex items-center">
-        <AlertCircle className="w-5 h-5 mr-3" />
+      <div className="panel p-5 flex items-center text-[#FF9497] border border-[#FF5A5F]/30" aria-live="assertive">
+        <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
         <p className="font-semibold text-sm">{error}</p>
       </div>
     );
@@ -46,48 +46,51 @@ const RecommendationCard = () => {
 
   if (recommendations.length === 0) {
     return (
-      <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 h-64 flex flex-col justify-center items-center">
-        <div className="w-12 h-12 bg-blue-50 text-blue-400 rounded-full flex items-center justify-center mb-3">
+      <div className="panel h-64 flex flex-col justify-center items-center">
+        <div className="w-12 h-12 bg-[#31D0AA]/10 text-[#31D0AA] border border-[#31D0AA]/20 rounded-full flex items-center justify-center mb-3 shadow-[0_0_12px_rgba(49,208,170,0.15)]">
           <Lightbulb className="w-6 h-6" />
         </div>
-        <h3 className="font-semibold text-slate-800">No Action Needed</h3>
-        <p className="text-sm text-slate-500 mt-1">Traffic patterns are within normal parameters.</p>
+        <h3 className="font-semibold text-[#E6EDF3]">No Action Needed</h3>
+        <p className="text-sm text-[#9AA9BD] mt-1">Traffic patterns are within normal parameters.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 h-full">
-      <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center">
-        <Sparkles className="w-5 h-5 text-blue-500 mr-2" />
-        AI Recommendations ({recommendations.length})
-      </h3>
+    <div className="panel h-full flex flex-col">
+      <div className="panel-head">
+        <h3 className="text-base font-bold text-[#E6EDF3] flex items-center">
+          <Sparkles className="w-4 h-4 text-[#FFB020] mr-2" />
+          AI Recommendations ({recommendations.length})
+        </h3>
+      </div>
       
-      <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+      <div className="p-4 space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar flex-grow">
         {recommendations.map(rec => (
-          <div key={rec.id} className="border border-slate-200 rounded-xl overflow-hidden bg-slate-50 hover:border-blue-300 transition-colors">
+          <div key={rec.id} className="border border-[#1B2534] rounded-xl overflow-hidden bg-[#0E141E] hover:border-[#FFB020]/50 transition-colors shadow-lg">
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <span className="text-xs font-bold px-2 py-1 rounded tracking-wider bg-blue-100 text-blue-700">
+                <span className="mono text-[10px] font-bold px-2 py-1 rounded tracking-wider bg-[#31D0AA]/10 text-[#31D0AA] border border-[#31D0AA]/20 uppercase">
                   {rec.route_name}
                 </span>
-                <span className="text-xs font-medium text-slate-500 px-2 py-1 bg-white border border-slate-200 rounded">
+                <span className="text-xs font-medium text-[#9AA9BD] px-2 py-1 bg-[#131A26] border border-[#263244] rounded">
                   {rec.issue}
                 </span>
               </div>
               
               <div className="mt-3 flex items-start">
-                <Lightbulb className="w-5 h-5 text-orange-400 mr-2 flex-shrink-0 mt-0.5" />
-                <p className="text-slate-800 font-medium leading-relaxed">
+                <Lightbulb className="w-4 h-4 text-[#FFB020] mr-2 flex-shrink-0 mt-0.5" />
+                <p className="text-[#E6EDF3] text-sm font-medium leading-relaxed">
                   {rec.suggestion}
                 </p>
               </div>
             </div>
 
-            <div className="border-t border-slate-200">
+            <div className="border-t border-[#1B2534]">
               <button
                 type="button"
-                className="w-full px-4 py-2 bg-white flex items-center justify-between text-xs font-medium text-slate-500 hover:bg-slate-50 transition-colors"
+                aria-expanded={expandedId === rec.id}
+                className="w-full px-4 py-3 bg-[#131A26] flex items-center justify-between text-xs font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
                 onClick={() => setExpandedId(expandedId === rec.id ? null : rec.id)}
               >
                 <span>Why this recommendation? (Supporting Data)</span>
@@ -95,15 +98,15 @@ const RecommendationCard = () => {
               </button>
               
               {expandedId === rec.id && (
-                <div className="p-4 bg-white border-t border-slate-200">
-                  <p className="text-xs text-slate-500 mb-2">
+                <div className="p-4 bg-[#0B0E14] border-t border-[#1B2534]">
+                  <p className="text-xs text-[#9AA9BD] mb-2">
                     Triggered by sustained high congestion during peak hours:
                   </p>
                   <div className="space-y-2">
                     {rec.supporting_data.map((point, idx) => (
-                      <div key={idx} className="text-xs font-mono bg-slate-100 p-2 rounded text-slate-700 flex justify-between">
+                      <div key={idx} className="text-xs font-mono bg-[#131A26] p-2 rounded text-[#9AA9BD] border border-[#1B2534] flex justify-between">
                         <span>{new Date(point.timestamp).toLocaleString()}</span>
-                        <span className="font-semibold text-red-600">Score: {point.congestion}</span>
+                        <span className="font-semibold text-[#FF5A5F]">Score: {point.congestion}</span>
                       </div>
                     ))}
                   </div>

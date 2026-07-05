@@ -26,3 +26,19 @@ export const generateQueryResponse = async (question, dataChunk) => {
     throw error;
   }
 };
+
+export const generateRecommendation = async (route_name, supporting_data) => {
+  const prompt = `Based on the following traffic data for ${route_name} showing high peak-hour congestion, provide a single, actionable, one-line recommendation to city planners to alleviate this specific issue (e.g., adjust signal timing, increase bus frequency, add dedicated lanes). Do not explain, just provide the one-line recommendation.
+DATA: ${JSON.stringify(supporting_data)}`;
+  
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-flash-latest',
+      contents: prompt,
+    });
+    return response.text().trim();
+  } catch (error) {
+    console.error("Gemini API Error (Recommendation):", error);
+    return `Review traffic management strategies for ${route_name} due to high peak-hour congestion.`;
+  }
+};

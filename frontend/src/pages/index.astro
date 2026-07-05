@@ -4,6 +4,7 @@ import MapView from '../components/MapView.jsx';
 import Dashboard from '../components/Dashboard.jsx';
 import QueryBar from '../components/QueryBar.jsx';
 import AlertsPanel from '../components/AlertsPanel.jsx';
+import RecommendationCard from '../components/RecommendationCard.jsx';
 ---
 
 <Layout>
@@ -33,6 +34,11 @@ import AlertsPanel from '../components/AlertsPanel.jsx';
         {/* Alerts Panel */}
         <div className="lg:col-span-1">
           <AlertsPanel client:load />
+        </div>
+
+        {/* AI Recommendations */}
+        <div className="lg:col-span-2">
+          <RecommendationCard client:load />
         </div>
       </div>
     </div>

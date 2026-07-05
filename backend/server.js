@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import trafficRoutes from './routes/traffic.js';
 
 dotenv.config();
 
@@ -14,6 +15,9 @@ app.use(express.json());
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
 });
+
+// Stage 3: Traffic routes
+app.use('/api/traffic', trafficRoutes);
 
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);

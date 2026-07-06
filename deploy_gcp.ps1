@@ -15,7 +15,7 @@ if (!(Test-Path $gcloudPath)) {
     $installDir = "$env:USERPROFILE"
     
     Write-Host "Downloading..."
-    Invoke-WebRequest -Uri "https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-cli-windows-x86_64.zip" -OutFile $zipPath
+    Invoke-WebRequest -Uri "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-windows-x86_64.zip" -OutFile $zipPath
     
     Write-Host "Extracting to $installDir..."
     Expand-Archive -Path $zipPath -DestinationPath $installDir -Force

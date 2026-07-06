@@ -82,7 +82,7 @@ const MapView = () => {
   };
 
   return (
-    <div className="relative w-full h-[50vh] min-h-[300px] sm:h-[600px] panel overflow-hidden">
+    <div className="relative w-full h-[50vh] min-h-[300px] lg:h-[560px] panel overflow-hidden">
       {loading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0B0E14]/60 backdrop-blur-md" aria-live="polite">
           <div className="flex flex-col items-center">

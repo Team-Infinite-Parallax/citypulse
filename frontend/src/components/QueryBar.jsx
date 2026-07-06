@@ -49,7 +49,7 @@ const QueryBar = () => {
         <span className="eyebrow">Ask the city</span>
       </div>
       <form onSubmit={handleSubmit} className="relative">
-        <div className="flex items-center bg-[#0E141E] border border-[#263244] rounded-xl overflow-hidden focus-within:border-[#FFB020] transition-colors">
+        <div className="flex items-center query-bar">
           <div className="pl-4 text-[#64748B]">
             <Bot className="w-6 h-6" />
           </div>

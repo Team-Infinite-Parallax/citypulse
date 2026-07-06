@@ -8,35 +8,39 @@ import RecommendationCard from '../components/RecommendationCard.jsx';
 ---
 
 <Layout>
-  <div className="p-4 sm:p-6">
-    <div className="max-w-[1600px] mx-auto space-y-6 sm:space-y-8">
+  <div class="p-4 sm:p-6 lg:p-8">
+    <div class="max-w-[1600px] mx-auto space-y-8 lg:space-y-10">
 
+      <!-- Query Bar -->
       <QueryBar client:load />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <section className="lg:col-span-2" aria-label="Traffic Map">
+      <!-- Map: Hero section - full width, dominant -->
+      <section aria-label="Traffic Map" class="relative">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span>
+          <h2 class="text-lg font-bold" style="color: var(--amber)">Traffic Map</h2>
+          <span class="eyebrow ml-auto hidden sm:block">Bengaluru · Live Network</span>
+        </div>
+        <div class="relative">
           <MapView client:only="react" />
-        </section>
-        <section className="lg:col-span-1" aria-label="Active Alerts">
-          <AlertsPanel client:load />
-        </section>
-      </div>
+          <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0B0E14] to-transparent rounded-b-[16px]"></div>
+        </div>
+      </section>
 
+      <!-- Live Telemetry -->
       <section aria-label="Live Telemetry">
-        <h2 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
-          <span className="w-1 h-5 rounded-full bg-[#31D0AA]"></span>
-          Live Telemetry
-        </h2>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span>
+          <h2 class="text-lg font-bold" style="color: var(--amber)">Live Telemetry</h2>
+        </div>
         <Dashboard client:load />
       </section>
 
-      <section aria-label="AI Recommendations">
-        <h2 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
-          <span className="w-1 h-5 rounded-full bg-[#FFB020]"></span>
-          AI Insights
-        </h2>
+      <!-- Alerts + AI Recommendations -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <AlertsPanel client:load />
         <RecommendationCard client:load />
-      </section>
+      </div>
 
     </div>
   </div>

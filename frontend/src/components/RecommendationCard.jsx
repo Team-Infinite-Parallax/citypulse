@@ -31,7 +31,7 @@ const RecommendationCard = () => {
     return (
       <div className="panel h-64 flex flex-col justify-center items-center" aria-live="polite">
         <div className="w-8 h-8 border-4 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Generating AI Recommendations...</p>
+        <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Generating AI Recommendations…</p>
       </div>
     );
   }

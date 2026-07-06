@@ -38,12 +38,20 @@ for (let d = DAYS - 1; d >= 0; d--) {
       // Keep within 0-100
       congestion = Math.min(100, congestion);
 
+      // Air Quality Index (second domain). Correlated with congestion, since
+      // idling traffic drives tailpipe emissions, plus mild noise. Clamped 30-150.
+      let aqi = Math.round(30 + congestion * 0.9 + (Math.random() * 20 - 10));
+      // Ring Road incident also spikes air quality to an unhealthy level.
+      if (route === "Ring Road" && d === 5 && h === 9) aqi = 150;
+      aqi = Math.max(30, Math.min(150, aqi));
+
       data.push({
         route_name: route,
         timestamp: recordTime.toISOString(),
         congestion,
         delay_minutes,
-        notes
+        notes,
+        aqi
       });
     });
   }

@@ -1,69 +1,92 @@
 # CityPulse 🏙️
 
-**CityPulse** is an AI-powered Decision Intelligence Platform designed for urban mobility and environmental monitoring. It aggregates traffic congestion data and Air Quality Index (AQI) metrics to provide city planners with a comprehensive, real-time dashboard. 
+**CityPulse** is an AI-powered **urban decision-intelligence platform**. It fuses two civic domains — **urban mobility** (traffic congestion) and **environmental & community wellness** (air quality) — into one real-time operations dashboard for city planners.
 
-Powered by **Google Cloud**, CityPulse leverages **Vertex AI** for forecasting and Natural Language querying, enabling planners to literally "Ask the City" about current conditions and receive actionable recommendations.
+Powered by **Google Cloud Vertex AI**, CityPulse lets planners literally *"Ask the City"* in natural language, forecasts near-term conditions, and turns raw telemetry into actionable, health-aware recommendations.
 
 ## 🚀 Features
 
-- **Live Congestion & AQI Map**: A dark-mode, MapLibre-powered live view of 5 major city corridors.
-- **KPI Dashboard**: Real-time trend charts for congestion and delay times.
-- **Anomaly Detection & Alerts**: Automatic flagging of severe congestion and incidents.
-- **"Ask the City" (RAG Interface)**: A natural-language query bar powered by Vertex AI (Gemini 1.5 Flash) and vector embeddings to answer specific questions about the city's state.
-- **AI Forecasting & Recommendations**: Simple Moving Average forecasting combined with LLM-generated actionable recommendations for city planners.
+- **Live Congestion & AQI Map** — a dark-mode, MapLibre view of 5 major Bengaluru corridors, colored by live congestion.
+- **KPI Dashboard** — real-time congestion trend, delay-by-route, peak-hour and average-AQI cards.
+- **Anomaly Detection & Alerts** — automatic flagging of severe congestion and logged incidents.
+- **"Ask the City" — genuine RAG** — a natural-language query bar backed by **real vector retrieval**: each corridor is summarized into a text chunk, embedded with Vertex AI `text-embedding-004`, and matched to the user's query by **cosine similarity** (top-k). The API returns the retrieved corridors *and their similarity scores* for full transparency.
+- **Seasonal-Naive Forecasting** — predicts each corridor's next-hour congestion, delay and AQI from its hour-of-day seasonal profile, corrected by the latest residual. The recommendation text is genuinely downstream of a prediction.
+- **Health & Air-Quality Advisories (2nd domain)** — cross-references AQI with peak-hour congestion to produce **vulnerable-group advisories** (children, elderly, respiratory/cardiac patients), mapping directly to the challenge's *Healthcare Access & Community Wellness* solution area.
 
-## 🏗 Architecture & Google Cloud Integration
+## 🏗 Architecture
 
-CityPulse is built as a modern full-stack application and natively integrates with the Google Cloud ecosystem:
+```
+┌────────────────────────────┐        ┌─────────────────────────────────────────┐
+│  Frontend (Astro + React)  │        │        Backend (Express / Cloud Run)      │
+│  MapLibre · Recharts · TW  │        │                                           │
+│                            │  HTTP  │  /api/traffic   /api/query   /api/forecast│
+│  Dashboard · MapView       │ ─────► │  /api/alerts    /api/advisories           │
+│  QueryBar · HealthAdvisory │        │        │                │                 │
+└────────────────────────────┘        │        ▼                ▼                 │
+                                       │   ┌─────────┐    ┌──────────────┐         │
+                                       │   │ db.js   │    │  gemini.js   │         │
+                                       │   │ BigQuery│    │  Vertex AI   │         │
+                                       │   │ (+JSON  │    │  Gemini 1.5  │         │
+                                       │   │  fallbk)│    │  + embeddings│         │
+                                       │   └─────────┘    └──────────────┘         │
+                                       └─────────────────────────────────────────┘
+```
 
-1. **Frontend**: Astro + React Islands + TailwindCSS + Recharts
-2. **Backend**: Express.js (Node) API
-3. **Data Layer**: 
-   - Uses **BigQuery** to query traffic and environmental data live.
-   - (Includes a fallback JSON data layer for local development without credentials).
-4. **AI/ML (Vertex AI)**:
-   - Uses `gemini-1.5-flash` via the `@google-cloud/vertexai` SDK for natural language queries and recommendations.
-   - Implements **Genuine RAG** by generating vector embeddings of route summaries and performing cosine similarity search.
-5. **Deployment**:
-   - Containerized backend designed for **Cloud Run**.
-   - Automated deployment pipeline via **Cloud Build** and GitHub Actions.
+The backend is **degradation-tolerant**: with no cloud credentials it falls back to a bundled JSON dataset and a deterministic local embedding, so the full app runs offline for local dev and CI. Set `GCP_PROJECT_ID` (+ ADC) to activate Vertex AI, and `USE_BIGQUERY=true` to query BigQuery live.
+
+## ☁️ Google Cloud Services Used
+
+| Service | Where | Why |
+|---|---|---|
+| **Vertex AI — Gemini 1.5 Flash** | `lib/gemini.js` | Natural-language answers + planner recommendations |
+| **Vertex AI — text-embedding-004** | `lib/gemini.js`, `routes/query.js` | Real embeddings powering cosine-similarity RAG |
+| **BigQuery** | `lib/db.js`, `scripts/init_bq.js` | Live analytical queries over traffic + AQI data |
+| **Cloud Run** | `Dockerfile`, `cloudbuild.yaml` | Containerized, autoscaling backend |
+| **Cloud Build + GitHub Actions** | `.github/workflows/deploy.yml` | CI (tests) → build → deploy pipeline |
 
 ## 🛠️ Tech Stack
 
-- **GCP Services**: Vertex AI, BigQuery, Cloud Run, Cloud Build
-- **Frontend**: Astro, React, TailwindCSS, Zustand
-- **Backend**: Express.js, Jest for testing
+- **Frontend**: Astro, React (islands), TailwindCSS, Recharts, MapLibre GL, Zustand
+- **Backend**: Express.js (ESM), Jest + Supertest
+- **GCP**: Vertex AI, BigQuery, Cloud Run, Cloud Build
 
 ## 🚦 Local Setup
 
-1. **Clone the repository**
-2. **Install dependencies**
+1. **Install dependencies**
    ```bash
-   cd frontend && npm install
-   cd ../backend && npm install
+   cd backend  && npm install
+   cd ../frontend && npm install
    ```
-3. **Google Cloud Authentication** (Required for Vertex AI / BigQuery)
+2. **(Optional) Google Cloud** — for live Vertex AI / BigQuery:
    ```bash
    gcloud auth application-default login
    ```
-4. **Environment Variables**
-   Create a `.env` file in the `backend` directory:
-   ```env
-   PORT=3001
-   GCP_PROJECT_ID=your-google-cloud-project-id
-   USE_BIGQUERY=false # Set to true if you run the init script
+3. **Environment** — copy `.env.example` and fill in as needed.
+   - `backend/.env`: `PORT`, `GCP_PROJECT_ID` (blank = offline fallback), `USE_BIGQUERY`.
+   - `frontend/.env`: `PUBLIC_API_URL` — **leave blank locally** (the Astro dev server proxies `/api` → `http://localhost:3001`); set it to the Cloud Run URL for production builds.
+4. **(Optional) Generate fresh data / load BigQuery**
+   ```bash
+   cd backend
+   node scripts/generate_data.js   # regenerates data/traffic.json (traffic + AQI)
+   node scripts/init_bq.js         # creates the BigQuery dataset/table and uploads
    ```
-5. **Run the Application**
-   - Start the backend: `cd backend && npm run dev`
-   - Start the frontend: `cd frontend && npm run dev`
-6. **View the App**
-   Open `http://localhost:4321` in your browser.
+5. **Run**
+   ```bash
+   cd backend  && npm run dev      # http://localhost:3001
+   cd frontend && npm run dev      # http://localhost:4321
+   ```
+
+## 🧪 Tests
+
+```bash
+cd backend && npm test
+```
 
 ## 📸 Screenshots
-*(Insert Screenshots here)*
+*(Insert screenshots here)*
 
 ## 🎥 Live Demo
-*(Insert Live Demo Link/Video here)*
+*(Insert live demo link / video here)*
 
 ---
-*Built for the Google Cloud Hackathon*
+*Built for Gen AI Academy APAC — "AI for Better Living and Smarter Communities" · Team Infinite Parallax*

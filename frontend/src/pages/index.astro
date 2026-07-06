@@ -5,6 +5,7 @@ import Dashboard from '../components/Dashboard.jsx';
 import QueryBar from '../components/QueryBar.jsx';
 import AlertsPanel from '../components/AlertsPanel.jsx';
 import RecommendationCard from '../components/RecommendationCard.jsx';
+import HealthAdvisory from '../components/HealthAdvisory.jsx';
 ---
 
 <Layout>
@@ -36,6 +37,9 @@ import RecommendationCard from '../components/RecommendationCard.jsx';
           <RecommendationCard client:load />
         </div>
       </div>
+
+      {/* Second domain: Environmental / Community Wellness */}
+      <HealthAdvisory client:load />
     </div>
   </div>
 </Layout>

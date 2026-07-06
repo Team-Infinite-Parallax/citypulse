@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import trafficRoutes from './routes/traffic.js';
 import queryRoutes from './routes/query.js';
 import forecastRoutes from './routes/forecast.js';
+import healthRoutes from './routes/health.js';
 
 dotenv.config();
 
@@ -55,6 +56,9 @@ app.use('/api/query', queryRoutes);
 
 // Stage 8: Forecast / Alerts routes
 app.use('/api', forecastRoutes);
+
+// Stage 9: Environmental / health advisory routes (second domain)
+app.use('/api', healthRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

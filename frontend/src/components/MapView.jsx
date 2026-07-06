@@ -87,7 +87,7 @@ const MapView = () => {
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0B0E14]/60 backdrop-blur-md" aria-live="polite">
           <div className="flex flex-col items-center">
             <div className="w-8 h-8 border-4 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
-            <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Loading map data...</p>
+            <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Loading map data…</p>
           </div>
         </div>
       )}

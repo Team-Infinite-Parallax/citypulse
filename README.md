@@ -1,96 +1,176 @@
-# CityPulse 🏙️
+# 🏙️ CityPulse
 
-**CityPulse** is an AI-powered **urban decision-intelligence platform**. It fuses two civic domains — **urban mobility** (traffic congestion) and **environmental & community wellness** (air quality) — into one real-time operations dashboard for city planners.
+**An AI-powered Decision Intelligence Platform for smarter, healthier cities.**
 
-Powered by **Google Cloud Vertex AI**, CityPulse lets planners literally *"Ask the City"* in natural language, forecasts near-term conditions, and turns raw telemetry into actionable, health-aware recommendations.
+Built for **Gen AI Academy APAC — "AI for Better Living and Smarter Communities"**
+Team: **Infinite Parallax**
+
+> CityPulse turns raw urban data — traffic congestion, air quality, and city corridor telemetry — into natural-language answers, forecasts, and actionable recommendations for city planners and citizens alike. Ask it a question the way you'd ask a colleague: *"Which corridors will be worst hit during evening peak, and where should we prioritize?"*
+
+---
+
+## Table of Contents
+
+- [Problem Statement Fit](#-problem-statement-fit)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Google Cloud Integration](#-google-cloud-integration)
+- [Tech Stack](#️-tech-stack)
+- [Local Setup](#-local-setup)
+- [Project Structure](#-project-structure)
+- [Screenshots](#-screenshots)
+- [Live Demo](#-live-demo)
+- [Roadmap](#-roadmap)
+- [Team](#-team)
+
+---
+
+## 🎯 Problem Statement Fit
+
+The challenge asks for a platform that helps **individuals, communities, organizations, and city stakeholders** turn data from **transportation, environmental monitoring, and citizen feedback** into decisions — using **conversational AI, RAG, and predictive analytics**.
+
+| Challenge requirement | How CityPulse addresses it |
+|---|---|
+| Understand & analyze multi-source city data | Live traffic congestion + Air Quality Index (AQI) data, unified in one dashboard |
+| Answer questions in natural language | **"Ask the City"** — a Gemini-powered conversational interface |
+| Identify patterns and anomalies | Automatic anomaly detection on severe congestion and incident spikes |
+| Predict outcomes | Forecasting model projecting near-term congestion trends |
+| Support decision-making with AI assistance | LLM-generated, context-grounded recommendations for planners |
+| Urban mobility *and* environmental sustainability | Both solution areas addressed in a single unified platform, not siloed tools |
+
+---
 
 ## 🚀 Features
 
-- **Live Congestion & AQI Map** — a dark-mode, MapLibre view of 5 major Bengaluru corridors, colored by live congestion.
-- **KPI Dashboard** — real-time congestion trend, delay-by-route, peak-hour and average-AQI cards.
+- **Live Congestion & AQI Map** — dark-mode, MapLibre-powered real-time view across 5 major city corridors (demo city: Lucknow).
+- **KPI Dashboard** — live trend charts for congestion levels and delay times, built with Recharts.
 - **Anomaly Detection & Alerts** — automatic flagging of severe congestion and logged incidents.
-- **"Ask the City" — genuine RAG** — a natural-language query bar backed by **real vector retrieval**: each corridor is summarized into a text chunk, embedded with Vertex AI `text-embedding-004`, and matched to the user's query by **cosine similarity** (top-k). The API returns the retrieved corridors *and their similarity scores* for full transparency.
-- **Seasonal-Naive Forecasting** — predicts each corridor's next-hour congestion, delay and AQI from its hour-of-day seasonal profile, corrected by the latest residual. The recommendation text is genuinely downstream of a prediction.
-- **Health & Air-Quality Advisories (2nd domain)** — cross-references AQI with peak-hour congestion to produce **vulnerable-group advisories** (children, elderly, respiratory/cardiac patients), mapping directly to the challenge's *Healthcare Access & Community Wellness* solution area.
+- **"Ask the City" (Real RAG)** — natural-language query bar powered by Vertex AI Gemini, grounded via vector embeddings + cosine-similarity retrieval over live corridor data (not keyword matching — genuine semantic search).
+- **AI Forecasting & Recommendations** — trend-based forecasting combined with LLM-generated, data-grounded recommendations for city planners.
+
+---
 
 ## 🏗 Architecture
 
-```
-┌────────────────────────────┐        ┌─────────────────────────────────────────┐
-│  Frontend (Astro + React)  │        │        Backend (Express / Cloud Run)      │
-│  MapLibre · Recharts · TW  │        │                                           │
-│                            │  HTTP  │  /api/traffic   /api/query   /api/forecast│
-│  Dashboard · MapView       │ ─────► │  /api/alerts    /api/advisories           │
-│  QueryBar · HealthAdvisory │        │        │                │                 │
-└────────────────────────────┘        │        ▼                ▼                 │
-                                       │   ┌─────────┐    ┌──────────────┐         │
-                                       │   │ db.js   │    │  gemini.js   │         │
-                                       │   │ BigQuery│    │  Vertex AI   │         │
-                                       │   │ (+JSON  │    │  Gemini 1.5  │         │
-                                       │   │  fallbk)│    │  + embeddings│         │
-                                       │   └─────────┘    └──────────────┘         │
-                                       └─────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    U[Citizen / City Planner] -->|Query / Map interaction| FE[Frontend<br/>Astro + React Islands + Tailwind]
+    FE -->|REST API| BE[Backend<br/>Express.js on Cloud Run]
+    BE -->|Live queries| BQ[(BigQuery<br/>Traffic + AQI data)]
+    BE -->|Embed + Generate| VX[Vertex AI<br/>Gemini 1.5 Flash + Embeddings]
+    VX -->|Cosine similarity retrieval| BE
+    BE -->|JSON response| FE
+    CB[Cloud Build] -->|CI/CD| BE
+    GH[GitHub Actions] -->|Automated deploy| CB
 ```
 
-The backend is **degradation-tolerant**: with no cloud credentials it falls back to a bundled JSON dataset and a deterministic local embedding, so the full app runs offline for local dev and CI. Set `GCP_PROJECT_ID` (+ ADC) to activate Vertex AI, and `USE_BIGQUERY=true` to query BigQuery live.
+**Flow:** the frontend sends a query → backend embeds it and retrieves the most relevant corridor/AQI data via cosine similarity (real RAG, not string matching) → the retrieved context plus the raw metrics are passed to Gemini 1.5 Flash on Vertex AI → the model returns a grounded natural-language answer and recommendation → rendered live on the map and dashboard.
 
-## ☁️ Google Cloud Services Used
+---
 
-| Service | Where | Why |
-|---|---|---|
-| **Vertex AI — Gemini 1.5 Flash** | `lib/gemini.js` | Natural-language answers + planner recommendations |
-| **Vertex AI — text-embedding-004** | `lib/gemini.js`, `routes/query.js` | Real embeddings powering cosine-similarity RAG |
-| **BigQuery** | `lib/db.js`, `scripts/init_bq.js` | Live analytical queries over traffic + AQI data |
-| **Cloud Run** | `Dockerfile`, `cloudbuild.yaml` | Containerized, autoscaling backend |
-| **Cloud Build + GitHub Actions** | `.github/workflows/deploy.yml` | CI (tests) → build → deploy pipeline |
+## ☁️ Google Cloud Integration
+
+| Service | Role in CityPulse |
+|---|---|
+| **Vertex AI** | `gemini-1.5-flash` via `@google-cloud/vertexai` SDK for natural-language Q&A, recommendations, and embedding generation |
+| **BigQuery** | Live querying of traffic and environmental data (with a local JSON fallback for offline development) |
+| **Cloud Run** | Containerized backend deployment target |
+| **Cloud Build** | Automated build pipeline, triggered via GitHub Actions |
+
+We deliberately avoided the direct Gemini Developer API (API-key auth) in favor of Vertex AI (GCP-project + service-account auth) so the platform is verifiably billed and traceable as a Google Cloud workload, not just "an app that calls an LLM."
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Astro, React (islands), TailwindCSS, Recharts, MapLibre GL, Zustand
-- **Backend**: Express.js (ESM), Jest + Supertest
-- **GCP**: Vertex AI, BigQuery, Cloud Run, Cloud Build
+**Frontend:** Astro, React 19, Tailwind CSS, Zustand, MapLibre GL, Recharts
+**Backend:** Express.js (Node), Jest for testing
+**AI/Data:** Vertex AI (Gemini 1.5 Flash + embeddings), BigQuery
+**Infra:** Docker, Cloud Run, Cloud Build, GitHub Actions
+
+---
 
 ## 🚦 Local Setup
 
-1. **Install dependencies**
-   ```bash
-   cd backend  && npm install
-   cd ../frontend && npm install
-   ```
-2. **(Optional) Google Cloud** — for live Vertex AI / BigQuery:
-   ```bash
-   gcloud auth application-default login
-   ```
-3. **Environment** — copy `.env.example` and fill in as needed.
-   - `backend/.env`: `PORT`, `GCP_PROJECT_ID` (blank = offline fallback), `USE_BIGQUERY`.
-   - `frontend/.env`: `PUBLIC_API_URL` — **leave blank locally** (the Astro dev server proxies `/api` → `http://localhost:3001`); set it to the Cloud Run URL for production builds.
-4. **(Optional) Generate fresh data / load BigQuery**
-   ```bash
-   cd backend
-   node scripts/generate_data.js   # regenerates data/traffic.json (traffic + AQI)
-   node scripts/init_bq.js         # creates the BigQuery dataset/table and uploads
-   ```
-5. **Run**
-   ```bash
-   cd backend  && npm run dev      # http://localhost:3001
-   cd frontend && npm run dev      # http://localhost:4321
-   ```
-
-## 🧪 Tests
-
+### 1. Clone the repository
 ```bash
-cd backend && npm test
+git clone https://github.com/Team-Infinite-Parallax/citypulse.git
+cd citypulse
 ```
 
-## 📸 Screenshots
-*(Insert screenshots here)*
+### 2. Install dependencies
+```bash
+cd frontend && npm install
+cd ../backend && npm install
+```
 
-## 🎥 Live Demo
-*(Insert live demo link / video here)*
+### 3. Authenticate with Google Cloud (required for Vertex AI / BigQuery)
+```bash
+gcloud auth application-default login
+```
+
+### 4. Configure environment variables
+Create a `.env` file inside `backend/`:
+```env
+PORT=3001
+GCP_PROJECT_ID=your-google-cloud-project-id
+USE_BIGQUERY=false   # set to true once you've run the BigQuery init script
+```
+
+### 5. Run the application
+```bash
+# Terminal 1 — backend
+cd backend && npm run dev
+
+# Terminal 2 — frontend
+cd frontend && npm run dev
+```
+
+### 6. Open the app
+Visit **http://localhost:4321** in your browser.
 
 ---
-<<<<<<< HEAD
-*Built for Gen AI Academy APAC — "AI for Better Living and Smarter Communities" · Team Infinite Parallax*
-=======
-*Built for the Google Cloud Hackathon*
->>>>>>> 664f51643a605ba6b1964350c6ae99e3434476d3
+
+## 📁 Project Structure
+
+```
+citypulse/
+├── frontend/          # Astro + React 19 dashboard, map, and query UI
+├── backend/           # Express API — RAG, forecasting, Vertex AI + BigQuery integration
+├── graphify-out/       # Generated project knowledge graph (dev tooling)
+├── .github/workflows/  # CI/CD — GitHub Actions → Cloud Build
+├── citypulse_audit.md  # Internal technical self-audit against hackathon rubric
+└── README.md
+```
+
+---
+
+## 📸 Screenshots
+
+*(Add dashboard, map view, and "Ask the City" query screenshots here before submission — this is one of the fastest wins for judge-facing polish.)*
+
+---
+
+## 🎥 Live Demo
+
+*(Add deployed Cloud Run / hosting URL and a 2–3 minute walkthrough video link here.)*
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Second live domain: citizen feedback intake (pothole / signal fault / streetlight reporting), classified via Gemini
+- [ ] Health-impact advisory layer cross-referencing AQI + congestion for vulnerable-group guidance
+- [ ] Cloud Scheduler job for automated periodic data refresh
+- [ ] Role-based views (citizen vs. city-stakeholder)
+- [ ] Multi-step agentic workflows (ADK) for compound planner queries
+
+---
+
+## 👥 Team — Infinite Parallax
+
+*(Add team member names / roles here.)*
+
+---
+
+*Built for Gen AI Academy APAC — "AI for Better Living and Smarter Communities."*

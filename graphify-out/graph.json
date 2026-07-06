@@ -2234,6 +2234,16 @@
       "norm_label": "app"
     },
     {
+      "label": "copy-vercel.js",
+      "file_type": "code",
+      "source_file": "copy-vercel.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "copy_vercel",
+      "community": 35,
+      "norm_label": "copy-vercel.js"
+    },
+    {
       "label": "deploy_gcp.ps1",
       "file_type": "code",
       "source_file": "deploy_gcp.ps1",
@@ -10380,5 +10390,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d6a1014345a2f498ff65d1cacc93d434b8e4106f"
+  "built_at_commit": "92614bdc219b4f9c841ce22ea4ebc2e1e8feeabe"
 }

@@ -21,5 +21,17 @@
   "19": "actions.js",
   "20": "generate_incidents.js",
   "21": "forecast.js",
-  "22": "generate_environment.js"
+  "22": "generate_environment.js",
+  "23": "server.js",
+  "24": "firestore.js",
+  "25": "ExplainabilityPanel.jsx",
+  "26": "useCityStore",
+  "27": "README.md",
+  "28": "Dashboard.jsx",
+  "29": "Frontend Requirements",
+  "30": "init_firestore.js",
+  "31": "CommunityImpactPanel.jsx",
+  "32": "HealthAdvisory.jsx",
+  "33": "TourismPanel.jsx",
+  "34": "deploy_gcp.ps1"
 }

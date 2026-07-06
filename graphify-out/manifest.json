@@ -115,8 +115,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1783365300.5867624,
-    "ast_hash": "2b399182e9d7adb9fd7f16f2112dfc20",
+    "mtime": 1783367884.8561537,
+    "ast_hash": "7215c475cfda22fe8738439a932bd1e9",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -439,14 +439,14 @@
     "ast_hash": "9a664d0d310743b5d35e79e6c86f21f0",
     "semantic_hash": ""
   },
-  "frontend/requirements.txt": {
-    "mtime": 1783352731.2264514,
-    "ast_hash": "ba75071d337114629ea5bc423f7089bb",
-    "semantic_hash": ""
-  },
   "render.yaml": {
     "mtime": 1783352731.257705,
     "ast_hash": "1fef5dee1f20ecde3d2a7abfa6dbc8d4",
+    "semantic_hash": ""
+  },
+  "copy-vercel.js": {
+    "mtime": 1783367878.5704758,
+    "ast_hash": "110ae1a1621c434df6e5ae4069ae9e3e",
     "semantic_hash": ""
   }
 }

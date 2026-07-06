@@ -25,7 +25,10 @@ export const getTrafficData = async () => {
       };
       const [job] = await bigquery.createQueryJob(options);
       const [rows] = await job.getQueryResults();
-      return rows;
+      return rows.map(row => ({
+        ...row,
+        timestamp: row.timestamp && row.timestamp.value ? row.timestamp.value : row.timestamp
+      }));
     } catch (err) {
       console.error("BigQuery query failed, falling back to JSON:", err.message);
     }

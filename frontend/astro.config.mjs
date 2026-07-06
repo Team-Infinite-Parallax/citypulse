@@ -14,7 +14,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     define: {
-      'import.meta.env.PUBLIC_API_URL': JSON.stringify(process.env.PUBLIC_API_URL || 'https://citypulse-backend-jcj2hp3haq-uc.a.run.app')
+      'import.meta.env.PUBLIC_API_URL': JSON.stringify(process.env.PUBLIC_API_URL || 'https://citypulse-backend-520102883931.us-central1.run.app')
     },
     server: {
       proxy: {

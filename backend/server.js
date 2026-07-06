@@ -21,15 +21,16 @@ import wasteRoutes from './routes/waste.js';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3001;
 
 // ... (keep middleware untouched)
 const allowedOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',')
-  : ['http://localhost:4321', 'http://localhost:3000', 'http://localhost:4322'];
+  : true; // Allow all if not specified, even in production, to prevent frontend breakage
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? allowedOrigins : true,
+  origin: allowedOrigins,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'x-api-key']
 }));

@@ -34,8 +34,12 @@ router.get('/summary', async (req, res) => {
     stats.count += 1;
     
     const hour = new Date(record.timestamp).getHours();
-    stats.hourly_congestion[hour].total += record.congestion;
-    stats.hourly_congestion[hour].count += 1;
+    if (!isNaN(hour) && hour >= 0 && hour < 24) {
+      stats.hourly_congestion[hour].total += record.congestion;
+      stats.hourly_congestion[hour].count += 1;
+    } else {
+      console.warn(`Invalid timestamp in traffic record: ${record.timestamp}`);
+    }
   });
 
   const summary = Object.values(statsByRoute).map(stats => {

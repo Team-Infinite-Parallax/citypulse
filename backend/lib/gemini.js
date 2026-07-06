@@ -1,4 +1,5 @@
 import { VertexAI } from '@google-cloud/vertexai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleAuth } from 'google-auth-library';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -9,17 +10,24 @@ const projectId =
 const location = process.env.GCP_LOCATION || 'us-central1';
 
 // Model IDs are env-overridable so the deployment can track Google's model
-// lifecycle without a code change (Gemini 1.x/2.0 and text-embedding-004 are
-// retired on Vertex AI as of 2026).
-const GEN_MODEL = process.env.GEMINI_MODEL || 'gemini-3-flash';
+// Model IDs are env-overridable so the deployment can track Google's model
+// lifecycle without a code change.
+const GEN_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
 
-let vertexai, generativeModel;
+let vertexai, generativeModel, googleAI;
 let useVertex = Boolean(projectId);
+let useGoogleAI = Boolean(process.env.GEMINI_API_KEY);
 
 const SYSTEM_INSTRUCTION = `You are CityPulse, an urban decision-intelligence assistant for city planners and citizens. You are given a JSON excerpt of retrieved records that may span MULTIPLE domains — mobility (traffic congestion, delay), environment (air-quality AQI, waste-collection efficiency, water quality), and public safety (incident reports). Answer the user's question using ONLY this data — do not use outside knowledge. When records from more than one domain are present, REASON ACROSS them and produce a single synthesized answer (e.g. relate air quality to congestion to incident rate for a ward), not three separate answers concatenated. Respond as strict JSON in this exact shape: { "answer": string, "reasoning": string — ONE plain-language sentence explaining why this answer follows from the retrieved data, "chart_data": array of {label, value} objects suitable for a bar/line chart, "cited_points": array of the raw data records you used }. If the data doesn't answer the question, say so in "answer", explain in "reasoning", and return empty arrays for the others.`;
 
 try {
-  if (useVertex) {
+  if (useGoogleAI) {
+    googleAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    generativeModel = googleAI.getGenerativeModel({
+      model: GEN_MODEL,
+      systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+    });
+  } else if (useVertex) {
     vertexai = new VertexAI({ project: projectId, location });
     generativeModel = vertexai.getGenerativeModel({
       model: GEN_MODEL,
@@ -27,21 +35,22 @@ try {
     });
   } else {
     console.warn(
-      '[gemini] GCP_PROJECT_ID not set — running in local fallback mode (no Vertex AI).'
+      '[gemini] GCP_PROJECT_ID and GEMINI_API_KEY not set — running in local fallback mode.'
     );
   }
 } catch (err) {
-  console.warn('[gemini] Failed to initialize Vertex AI:', err.message);
+  console.warn('[gemini] Failed to initialize AI provider:', err.message);
   useVertex = false;
+  useGoogleAI = false;
 }
 
-export const isVertexEnabled = () => useVertex;
+export const isVertexEnabled = () => useVertex || useGoogleAI;
 
 export const generateQueryResponse = async (question, dataChunk) => {
-  if (!useVertex) {
+  if (!useVertex && !useGoogleAI) {
     return JSON.stringify({
       answer:
-        'Vertex AI is not configured (set GCP_PROJECT_ID and authenticate). ' +
+        'AI is not configured (set GCP_PROJECT_ID or GEMINI_API_KEY). ' +
         'Retrieval still ran — see the grounded data points below.',
       reasoning:
         'Vertex AI is offline, so this response reflects the retrieval step only; ' +
@@ -62,9 +71,9 @@ export const generateQueryResponse = async (question, dataChunk) => {
 export const generateRecommendation = async (route_name, supporting_data) => {
   const fallbackSuggestion = `Review traffic-management strategies for ${route_name} (signal retiming, added bus frequency, or a temporary dedicated lane) to relieve sustained peak-hour congestion.`;
   const fallbackRationale = `Peak-hour congestion on ${route_name} stayed well above the citywide comfort threshold across the sampled window.`;
-  if (!useVertex) return { suggestion: fallbackSuggestion, rationale: fallbackRationale };
+  if (!useVertex && !useGoogleAI) return { suggestion: fallbackSuggestion, rationale: fallbackRationale };
 
-  const recModel = vertexai.getGenerativeModel({ model: GEN_MODEL });
+  const recModel = (googleAI || vertexai).getGenerativeModel({ model: GEN_MODEL });
   const prompt = `You advise city traffic planners. Based on the following traffic data for ${route_name} showing high peak-hour congestion, respond as strict JSON: { "suggestion": a single actionable one-line recommendation (e.g. adjust signal timing, increase bus frequency, add a dedicated lane), "rationale": ONE sentence explaining why this action is warranted, referencing the data }.
 DATA: ${JSON.stringify(supporting_data)}`;
 
@@ -94,9 +103,9 @@ DATA: ${JSON.stringify(supporting_data)}`;
  * so every domain shares one Vertex-or-fallback code path.
  */
 export const generateOneLiner = async (prompt, fallback) => {
-  if (!useVertex) return fallback;
+  if (!useVertex && !useGoogleAI) return fallback;
   try {
-    const model = vertexai.getGenerativeModel({ model: GEN_MODEL });
+    const model = (googleAI || vertexai).getGenerativeModel({ model: GEN_MODEL });
     const response = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
     });
@@ -113,9 +122,9 @@ export const generateOneLiner = async (prompt, fallback) => {
  * action-memo drafting step (Phase 3).
  */
 export const generateStructured = async (prompt, fallbackObj) => {
-  if (!useVertex) return fallbackObj;
+  if (!useVertex && !useGoogleAI) return fallbackObj;
   try {
-    const model = vertexai.getGenerativeModel({ model: GEN_MODEL });
+    const model = (googleAI || vertexai).getGenerativeModel({ model: GEN_MODEL });
     const response = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       generationConfig: { responseMimeType: 'application/json' },
@@ -135,9 +144,9 @@ export const generateStructured = async (prompt, fallbackObj) => {
 /*  Vision — Gemini Flash handles multimodal requests                         */
 /* -------------------------------------------------------------------------- */
 export const analyzeImage = async (base64Image, prompt, fallbackObj) => {
-  if (!useVertex || !base64Image) return fallbackObj;
+  if ((!useVertex && !useGoogleAI) || !base64Image) return fallbackObj;
   try {
-    const model = vertexai.getGenerativeModel({ model: GEN_MODEL });
+    const model = (googleAI || vertexai).getGenerativeModel({ model: GEN_MODEL });
     const imagePart = {
       inlineData: {
         data: base64Image,
@@ -173,9 +182,8 @@ export const analyzeImage = async (base64Image, prompt, fallbackObj) => {
 const EMBED_DIM = 768;
 const EMBED_MODEL = process.env.GEMINI_EMBED_MODEL || 'gemini-embedding-001';
 
-// 'vertex' until a call fails, then permanently 'local' so query + document
-// vectors are always produced by the same method (comparable cosine space).
-let embedMode = useVertex ? 'vertex' : 'local';
+// 'studio' if we have an API key, 'vertex' if GCP, then permanently 'local' if it fails
+let embedMode = useGoogleAI ? 'studio' : (useVertex ? 'vertex' : 'local');
 let auth = null;
 const embedCache = new Map(); // text -> Float array (avoids re-embedding chunks)
 
@@ -272,7 +280,21 @@ export const embedTexts = async (texts, taskType = 'RETRIEVAL_DOCUMENT') => {
   });
   if (misses.length === 0) return results;
 
-  if (embedMode === 'vertex') {
+  if (embedMode === 'studio') {
+    try {
+      const model = googleAI.getGenerativeModel({ model: EMBED_MODEL });
+      for (const i of misses) {
+        const res = await model.embedContent(texts[i]);
+        results[i] = l2Normalize(res.embedding.values);
+        embedCache.set(`${taskType}:${texts[i]}`, results[i]);
+      }
+      return results;
+    } catch (err) {
+      console.warn(`[gemini] Studio embeddings failed (${err.message}); falling back to local.`);
+      embedMode = 'local';
+      embedCache.clear();
+    }
+  } else if (embedMode === 'vertex') {
     try {
       // Outer batching just bounds memory; per-request fan-out happens inside
       // vertexEmbedBatch (gemini-embedding-001 takes one instance per call).
@@ -319,7 +341,9 @@ export const embeddingMode = () => embedMode;
 // chunk so cached vectors from a retired model (or the offline fallback) are
 // re-embedded instead of being cosine-compared against incompatible vectors.
 export const embeddingSpace = () =>
-  embedMode === 'vertex'
+  embedMode === 'studio'
+    ? `studio:${EMBED_MODEL}:${EMBED_DIM}`
+    : embedMode === 'vertex'
     ? `vertex:${EMBED_MODEL}:${EMBED_DIM}`
     : `local:hashed-bow:${EMBED_DIM}`;
 

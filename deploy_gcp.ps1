@@ -39,8 +39,8 @@ Write-Host "Configuring Project..."
 & $gcloudPath config set project $projectID
 
 # 4. Enable APIs
-Write-Host "Enabling required APIs (Cloud Run, Cloud Build)..."
-& $gcloudPath services enable run.googleapis.com cloudbuild.googleapis.com
+Write-Host "Enabling required APIs (Cloud Run, Cloud Build, AI Platform)..."
+& $gcloudPath services enable run.googleapis.com cloudbuild.googleapis.com aiplatform.googleapis.com
 
 # 5. Deploy Backend
 Write-Host "Deploying Backend to Cloud Run..."

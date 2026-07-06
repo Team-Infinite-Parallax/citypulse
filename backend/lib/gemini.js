@@ -12,7 +12,7 @@ const location = process.env.GCP_LOCATION || 'us-central1';
 // Model IDs are env-overridable so the deployment can track Google's model
 // Model IDs are env-overridable so the deployment can track Google's model
 // lifecycle without a code change.
-const GEN_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+const GEN_MODEL = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
 
 let vertexai, generativeModel, googleAI;
 let useVertex = Boolean(projectId);

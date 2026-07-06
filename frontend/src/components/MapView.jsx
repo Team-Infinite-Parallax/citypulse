@@ -17,6 +17,7 @@ const MapView = () => {
   const selectedRoute = useCityStore((state) => state.selectedRoute);
   const showIncidents = useCityStore((state) => state.showIncidents);
   const setShowIncidents = useCityStore((state) => state.setShowIncidents);
+  const liteMode = useCityStore((state) => state.liteMode);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,6 +111,105 @@ const MapView = () => {
     }
   };
 
+  if (liteMode) {
+    return (
+      <div className="panel p-5 space-y-5 bg-[#0B0E14] border border-[#263244] rounded-xl">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-[#F97316] animate-pulse"></span>
+            <h3 className="text-sm font-semibold text-[#8896A8] uppercase tracking-wider">Network Summary (Lite Mode)</h3>
+          </div>
+          <button
+            onClick={() => setShowIncidents(!showIncidents)}
+            className={`px-3 py-1 rounded text-xs font-semibold border transition-all ${
+              showIncidents 
+                ? 'bg-[#10b981]/25 text-[#10b981] border-[#10b981]/40' 
+                : 'bg-[#0E141E] text-[#8896A8] border-[#263244]'
+            }`}
+          >
+            {showIncidents ? 'Hide Incidents' : 'Show Incidents'}
+          </button>
+        </div>
+
+        {loading ? (
+          <div className="h-40 flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : error ? (
+          <p className="text-sm text-[#FF9497] text-center py-6">{error}</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Corridors List */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-2">Corridors</h4>
+              {summaryData.map(route => {
+                const isSelected = route.route_name === selectedRoute;
+                const statusColor = route.avg_congestion >= 70 ? 'text-[#FF5A5F]' : route.avg_congestion >= 40 ? 'text-[#F97316]' : 'text-[#31D0AA]';
+                const statusBg = route.avg_congestion >= 70 ? 'bg-[#FF5A5F]/10 border-[#FF5A5F]/35' : route.avg_congestion >= 40 ? 'bg-[#F97316]/10 border-[#F97316]/35' : 'bg-[#31D0AA]/10 border-[#31D0AA]/35';
+
+                return (
+                  <div
+                    key={route.route_name}
+                    onClick={() => setSelectedRoute(isSelected ? '' : route.route_name)}
+                    className={`p-3 rounded-lg border cursor-pointer transition-all select-none ${
+                      isSelected 
+                        ? 'border-[#3b82f6] bg-[#3b82f6]/10 shadow-[0_0_12px_rgba(59,130,246,0.15)]' 
+                        : 'border-[#1B2534] bg-[#0E141E] hover:border-[#31D0AA]/40'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-semibold text-sm text-[#31D0AA]">{route.route_name}</span>
+                      <span className={`text-xs px-2 py-0.5 rounded border mono font-bold ${statusColor} ${statusBg}`}>
+                        {route.avg_congestion}% Congestion
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs text-[#8896A8]">
+                      <span>Avg Delay: <span className="font-medium text-white">{route.avg_delay_minutes} mins</span></span>
+                      <span>Peak: <span className="font-medium text-white">{route.peak_hour}</span></span>
+                    </div>
+                    {/* Progress Bar */}
+                    <div className="h-1.5 w-full bg-[#131A26] rounded-full overflow-hidden mt-2">
+                      <div 
+                        className={`h-full rounded-full ${route.avg_congestion >= 70 ? 'bg-[#ef4444]' : route.avg_congestion >= 40 ? 'bg-[#F97316]' : 'bg-[#10b981]'}`}
+                        style={{ width: `${route.avg_congestion}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Incidents List (if toggled) */}
+            <div className="space-y-3 border-t md:border-t-0 md:border-l border-[#263244] pt-4 md:pt-0 md:pl-4 max-h-[340px] overflow-y-auto custom-scrollbar">
+              <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-2">Active Incidents</h4>
+              {!showIncidents ? (
+                <p className="text-xs text-[#8896A8] italic">Click "Show Incidents" to list active hazard alerts.</p>
+              ) : incidentsData.length === 0 ? (
+                <p className="text-xs text-[#8896A8] italic">No active safety alerts logged.</p>
+              ) : (
+                incidentsData.map(inc => {
+                  const sevColor = inc.severity === 'CRITICAL' ? 'text-[#ef4444]' : inc.severity === 'HIGH' ? 'text-[#f97316]' : 'text-[#eab308]';
+                  return (
+                    <div key={inc.incident_id} className="p-3 bg-[#0E141E] border border-[#1B2534] rounded-lg space-y-1">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-semibold text-[#31D0AA]">{inc.ward} ({inc.type})</span>
+                        <span className={`text-[10px] font-bold uppercase ${sevColor}`}>{inc.severity}</span>
+                      </div>
+                      <p className="text-xs text-[#8896A8] leading-normal">{inc.notes || 'No description logged.'}</p>
+                      <div className="text-[10px] text-[#64748B] mono">
+                        {new Date(inc.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-[50vh] min-h-[300px] lg:h-[560px] panel overflow-hidden">
       {loading && (
@@ -198,7 +298,7 @@ const MapView = () => {
           className={`px-3 py-1.5 rounded text-sm font-medium transition-colors border ${
             showIncidents 
               ? 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/50' 
-               : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#31D0AA]'
+              : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#31D0AA]'
           }`}
         >
             {showIncidents ? 'Hide Incidents' : 'Show Incidents'}

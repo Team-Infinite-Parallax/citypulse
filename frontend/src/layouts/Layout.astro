@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import HeaderActions from '../components/HeaderActions.jsx';
 ---
 <!doctype html>
 <html lang="en">
@@ -25,14 +26,17 @@ import '../styles/global.css';
 						<p class="eyebrow mt-0.5 hidden sm:block">Bengaluru · Mobility Ops</p>
 					</div>
 				</a>
-
+ 
 				<!-- Signature: live EKG pulse -->
-				<div class="ekg flex-1 h-8 hidden sm:block">
+				<div class="ekg flex-1 h-8 hidden lg:block">
 					<svg viewBox="0 0 480 32" width="480" height="32" preserveAspectRatio="none" aria-hidden="true">
 						<path class="trace" d="M0 16 H58 L68 16 L74 4 L80 28 L88 16 H148 L158 16 L164 6 L170 24 L178 16 H240 H298 L308 16 L314 4 L320 28 L328 16 H388 L398 16 L404 6 L410 24 L418 16 H480" />
 					</svg>
 				</div>
 
+				<!-- Mode Toggles (Zustand client component) -->
+				<HeaderActions client:load />
+ 
 				<!-- Live clock / status -->
 				<div class="flex items-center gap-2 sm:gap-3 shrink-0" aria-live="polite">
 					<span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[#31D0AA]/30 bg-[#31D0AA]/10 shadow-[0_0_10px_rgba(49,208,170,0.15)]">

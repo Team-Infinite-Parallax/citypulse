@@ -17,5 +17,9 @@
   "15": "AGENTS.md",
   "16": "CLAUDE.md",
   "17": "graphify.md",
-  "18": "graphify.md"
+  "18": "graphify.md",
+  "19": "actions.js",
+  "20": "generate_incidents.js",
+  "21": "forecast.js",
+  "22": "generate_environment.js"
 }

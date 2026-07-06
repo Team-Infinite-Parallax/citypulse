@@ -15,8 +15,8 @@
     "semantic_hash": ""
   },
   "backend/data/traffic.json": {
-    "mtime": 1783336288.3452811,
-    "ast_hash": "2fe470d31c4893effa7964f657143814",
+    "mtime": 1783348279.2355702,
+    "ast_hash": "8501184d8a97453143a5eb70101b08b8",
     "semantic_hash": ""
   },
   "backend/lib/gemini.js": {
@@ -25,18 +25,18 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1783333915.8248649,
-    "ast_hash": "6e99530ea911fe1bf72365d0cdda3e80",
+    "mtime": 1783348164.889566,
+    "ast_hash": "c256f83fe76502aed90603dedf3cea84",
     "semantic_hash": ""
   },
   "backend/routes/forecast.js": {
-    "mtime": 1783339497.4643092,
-    "ast_hash": "8d66017a99c2a31c903601765f780b5b",
+    "mtime": 1783348164.894912,
+    "ast_hash": "e9001d9810a31d4dfb4953978f2f4b74",
     "semantic_hash": ""
   },
   "backend/routes/query.js": {
-    "mtime": 1783340240.0626771,
-    "ast_hash": "db1d2e4cba45df691fd0e3dffe4ce797",
+    "mtime": 1783348164.89716,
+    "ast_hash": "37a025a848e8bc5c111fd72227ad11fd",
     "semantic_hash": ""
   },
   "backend/routes/traffic.js": {
@@ -50,43 +50,43 @@
     "semantic_hash": ""
   },
   "backend/server.js": {
-    "mtime": 1783340306.772776,
-    "ast_hash": "eed719cc74543686abce5678eb97f715",
+    "mtime": 1783340659.3216717,
+    "ast_hash": "50551cc1fb91fa470ff7db6d55aa3583",
     "semantic_hash": ""
   },
   "frontend/astro.config.mjs": {
-    "mtime": 1783264740.5932987,
-    "ast_hash": "9a54df6fd231d8fe2909e2ed5b328975",
+    "mtime": 1783348164.9762354,
+    "ast_hash": "452c4325b80669d0d88c9c825f516d85",
     "semantic_hash": ""
   },
   "frontend/package.json": {
-    "mtime": 1783264742.3061066,
-    "ast_hash": "ab7ae4b97e095092c1e5974b559efacd",
+    "mtime": 1783348164.9815078,
+    "ast_hash": "60fa96d4cd58de336d621c1e1637408e",
     "semantic_hash": ""
   },
   "frontend/src/components/AlertsPanel.jsx": {
-    "mtime": 1783339619.0951538,
-    "ast_hash": "cf2cdc917da684abe90876578d318c6d",
+    "mtime": 1783348164.9834316,
+    "ast_hash": "c01c6295580553db544f062ae3c09005",
     "semantic_hash": ""
   },
   "frontend/src/components/Dashboard.jsx": {
-    "mtime": 1783339224.1364484,
-    "ast_hash": "920670c2033a921ea77ed26e76f0775c",
+    "mtime": 1783349003.0426395,
+    "ast_hash": "e7bbab4f81617c8c61f21275647ab76c",
     "semantic_hash": ""
   },
   "frontend/src/components/MapView.jsx": {
-    "mtime": 1783340377.6945593,
-    "ast_hash": "90769c09d4c1293d86c17270d4f5bac4",
+    "mtime": 1783348984.2515993,
+    "ast_hash": "b087b47719df678c231c101fa9f51742",
     "semantic_hash": ""
   },
   "frontend/src/components/QueryBar.jsx": {
-    "mtime": 1783340410.9903257,
-    "ast_hash": "fbae64bd93f0179b73fe045a9d3679cd",
+    "mtime": 1783349013.365371,
+    "ast_hash": "f8ae9240160e37687190adce0f203309",
     "semantic_hash": ""
   },
   "frontend/src/components/RecommendationCard.jsx": {
-    "mtime": 1783339601.8290954,
-    "ast_hash": "ce86eb1ed00b9e5d4dbe94e523035294",
+    "mtime": 1783348164.9922917,
+    "ast_hash": "f116d4313beb8f2225b956b7ea6a6862",
     "semantic_hash": ""
   },
   "frontend/src/components/Welcome.astro": {
@@ -95,18 +95,18 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/Layout.astro": {
-    "mtime": 1783336973.9419436,
-    "ast_hash": "33d290ecc7a95482022df0693ed265b2",
+    "mtime": 1783348939.3386245,
+    "ast_hash": "6805adde158b2ca9e31a868548affcd0",
     "semantic_hash": ""
   },
   "frontend/src/pages/index.astro": {
-    "mtime": 1783340463.2461655,
-    "ast_hash": "b4c7b7e4a2120daa8302476df6b55108",
+    "mtime": 1783348959.3765354,
+    "ast_hash": "2a4df7a7b326f00e37439457e99a9b82",
     "semantic_hash": ""
   },
   "frontend/src/store/useCityStore.js": {
-    "mtime": 1783340332.63837,
-    "ast_hash": "658d2bcfdb17b32cdff9db910dcdba05",
+    "mtime": 1783348917.827048,
+    "ast_hash": "49f7370a8ed3b11f2e221a9c520c9383",
     "semantic_hash": ""
   },
   "frontend/tsconfig.json": {
@@ -140,8 +140,8 @@
     "semantic_hash": "d0a7b7b03f265262bd24ef65e29eb340"
   },
   "README.md": {
-    "mtime": 1783339762.1707952,
-    "ast_hash": "892c88480e6480e467c98dc9eaac10e5",
+    "mtime": 1783348164.868068,
+    "ast_hash": "5149bd4117c0b31b16a985b81a1300ec",
     "semantic_hash": ""
   },
   "frontend/public/favicon.svg": {
@@ -180,13 +180,13 @@
     "semantic_hash": ""
   },
   "backend/tests/api.test.js": {
-    "mtime": 1783339079.7385652,
-    "ast_hash": "4d53b31b5b40f07b20b27ded7ae47b92",
+    "mtime": 1783348164.9003143,
+    "ast_hash": "d74df5e83a3d67915af7b9c9fc583d68",
     "semantic_hash": ""
   },
   "frontend/src/components/HealthAdvisory.jsx": {
-    "mtime": 1783336040.0306985,
-    "ast_hash": "9b59d44504ef4221140939182ef4b44c",
+    "mtime": 1783348164.9882574,
+    "ast_hash": "dacd673ebeedc09592e6d9584f805ac9",
     "semantic_hash": ""
   },
   "frontend/src/data/routes.json": {
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "backend/cloudbuild.yaml": {
-    "mtime": 1783336123.9831347,
-    "ast_hash": "a4fa00c4af389a894f4ef31e9fdb173e",
+    "mtime": 1783348164.8708012,
+    "ast_hash": "6e4808b6768e0e8483275f76e78e1b33",
     "semantic_hash": ""
   },
   "backend/data/environment.json": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "backend/data/incidents.json": {
-    "mtime": 1783339889.4319496,
-    "ast_hash": "f4caf96052206c10333e0d8e44ce6b1d",
+    "mtime": 1783349029.389795,
+    "ast_hash": "247bbf1daf9d65e48806886239a1bbf6",
     "semantic_hash": ""
   },
   "backend/data/wards.json": {
@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "backend/lib/forecast.js": {
-    "mtime": 1783339013.634328,
-    "ast_hash": "8d9b9d6124b2a053ee71b3b2c5a307fb",
+    "mtime": 1783348164.8840313,
+    "ast_hash": "e4ed8e3894f1ae4fa8ef305e0fed5bd5",
     "semantic_hash": ""
   },
   "backend/lib/memoStore.js": {
@@ -250,23 +250,23 @@
     "semantic_hash": ""
   },
   "backend/routes/actions.js": {
-    "mtime": 1783340258.1921444,
-    "ast_hash": "4102345dac82de3d3afde05776f45b6f",
+    "mtime": 1783348896.9728167,
+    "ast_hash": "d48b609cce8191c3774a0acaa07a599f",
     "semantic_hash": ""
   },
   "backend/routes/citizen.js": {
-    "mtime": 1783340290.6847737,
-    "ast_hash": "92bca282c8e51a9bfe665af0c7da775e",
+    "mtime": 1783348164.892639,
+    "ast_hash": "3e02d3cd5a37a5d40c5df1f15c9ae366",
     "semantic_hash": ""
   },
   "backend/routes/environment.js": {
-    "mtime": 1783340213.1273496,
-    "ast_hash": "b30e443753108704de7eee7897abe77f",
+    "mtime": 1783348910.367881,
+    "ast_hash": "f6e3be87bb3482435fef4ddebd3b2c1e",
     "semantic_hash": ""
   },
   "backend/routes/publicSafety.js": {
-    "mtime": 1783340175.4930668,
-    "ast_hash": "b64f754c7e3e4f97eea90e33f3285755",
+    "mtime": 1783348164.8961592,
+    "ast_hash": "42a1947b6cb0d94c53e24744d15c939d",
     "semantic_hash": ""
   },
   "backend/scripts/generate_environment.js": {
@@ -280,33 +280,178 @@
     "semantic_hash": ""
   },
   "frontend/src/components/ActionCenter.jsx": {
-    "mtime": 1783340438.6865697,
-    "ast_hash": "e2cf7b51d21bdde9d6ed987996f9cf5c",
+    "mtime": 1783348164.9831603,
+    "ast_hash": "f4b82ed467ded7b50ad81d16ad003c16",
     "semantic_hash": ""
   },
   "frontend/src/components/CitizenReport.jsx": {
-    "mtime": 1783340440.7138329,
-    "ast_hash": "00a0e5b2ebb5e42bf7505923665e9088",
+    "mtime": 1783348164.9854307,
+    "ast_hash": "7035e05b56f9405044d240c971f92878",
     "semantic_hash": ""
   },
   "frontend/src/components/ExplainabilityPanel.jsx": {
-    "mtime": 1783339547.631832,
-    "ast_hash": "4289b2ec6bdc0ea08e7988c2907ed5f3",
+    "mtime": 1783348164.9872444,
+    "ast_hash": "fa1b50f5faf27edf89c7c1f6f9a3bedb",
     "semantic_hash": ""
   },
   "frontend/src/components/WardDetailPanel.jsx": {
-    "mtime": 1783340393.89317,
-    "ast_hash": "448f9a0729b61f5a1212ab3548177aee",
+    "mtime": 1783348164.9932919,
+    "ast_hash": "129e0c3ad4bac1c591eaf27adb4a0bba",
     "semantic_hash": ""
   },
   "RESPONSIBLE_AI.md": {
-    "mtime": 1783339742.3724627,
-    "ast_hash": "4dd2dcadc259f4a131bd9c329f085425",
+    "mtime": 1783348164.8696053,
+    "ast_hash": "aea670c2d8aaa5d094cbc5a1134b3c31",
     "semantic_hash": ""
   },
   "citypulse_imp.md": {
     "mtime": 1783337943.5629044,
     "ast_hash": "a0f0296b5d4e039f0239d5531be4e327",
+    "semantic_hash": ""
+  },
+  "backend/data/chunks_cache.json": {
+    "mtime": 1783349029.8507607,
+    "ast_hash": "775faee6238b5f95c21e893ec4be77f0",
+    "semantic_hash": ""
+  },
+  "backend/lib/firestore.js": {
+    "mtime": 1783348164.8830304,
+    "ast_hash": "b4a813d270e1560cce360a31aa891bcc",
+    "semantic_hash": ""
+  },
+  "backend/lib/vectorStore.js": {
+    "mtime": 1783348164.88503,
+    "ast_hash": "0fc5e0b4e446c99010cf80d9d859dc3d",
+    "semantic_hash": ""
+  },
+  "backend/scripts/init_alloydb.js": {
+    "mtime": 1783348164.8977237,
+    "ast_hash": "f2068ce280bdd3b85a67d5640c563661",
+    "semantic_hash": ""
+  },
+  "backend/scripts/init_firestore.js": {
+    "mtime": 1783348164.8990147,
+    "ast_hash": "fdac30302d35ac6cb744f1ca90e5ee43",
+    "semantic_hash": ""
+  },
+  "backend/tests/firestore.test.js": {
+    "mtime": 1783348164.9013155,
+    "ast_hash": "3479761013cee27238ef71b781ecd442",
+    "semantic_hash": ""
+  },
+  "backend/tests/forecast.test.js": {
+    "mtime": 1783348164.9023125,
+    "ast_hash": "b9e1e0398885945e1835f749a5ceee49",
+    "semantic_hash": ""
+  },
+  "backend/tests/vectorStore.test.js": {
+    "mtime": 1783348164.9023125,
+    "ast_hash": "53605a94a8db281ab119ff42c93b37c0",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/_@astrojs-ssr-adapter.mjs": {
+    "mtime": 1783348540.714347,
+    "ast_hash": "4f2f4755aa47327974d19fe688aaf0de",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/_noop-middleware.mjs": {
+    "mtime": 1783348540.713344,
+    "ast_hash": "20b31509197f3bac0e79694035b5cbdb",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/chunks/_@astrojs-ssr-adapter_xtIFlGZV.mjs": {
+    "mtime": 1783348540.713344,
+    "ast_hash": "1d0177933c24f69bdf241dbbe2ada3f6",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/chunks/astro-designed-error-pages_NJ0JctVG.mjs": {
+    "mtime": 1783348540.714574,
+    "ast_hash": "b495c39ce3d7163aecf1ce2b83626b7b",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/chunks/astro/server_CZdgb9a8.mjs": {
+    "mtime": 1783348540.7158334,
+    "ast_hash": "e35dfcc1f0bd47b0bb2b62e7767c8cec",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/chunks/generic_CDjtPFrw.mjs": {
+    "mtime": 1783348540.713344,
+    "ast_hash": "df07b766673213409ef30d81463d0df5",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/chunks/index_BAPvq1xm.mjs": {
+    "mtime": 1783348540.714347,
+    "ast_hash": "d4925e9d5ae0db9ce042faf9ccde2afc",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/chunks/sharp_Dr5fsOm3.mjs": {
+    "mtime": 1783348540.714574,
+    "ast_hash": "f850352e87a3699a741b7c1b0dd494d8",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/entry.mjs": {
+    "mtime": 1783348540.7117736,
+    "ast_hash": "4a2217aebc9564ebdf189be3d8197b54",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/manifest_DGpdMz-M.mjs": {
+    "mtime": 1783348571.916535,
+    "ast_hash": "0304cf97b50be131e9cbbb7f2738a4c4",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/noop-entrypoint.mjs": {
+    "mtime": 1783348540.713344,
+    "ast_hash": "d97016bbf766ffe776cfb31d4b412135",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/pages/_image.astro.mjs": {
+    "mtime": 1783348540.7107043,
+    "ast_hash": "a03edf637abcd4362c57914a45a39b26",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/pages/api/health.astro.mjs": {
+    "mtime": 1783348540.715575,
+    "ast_hash": "0a5b23c619c8f67824c1a3b526c8d848",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/pages/api/proxy.astro.mjs": {
+    "mtime": 1783348540.7158334,
+    "ast_hash": "cde1afed1709df50dc302623b7d0828f",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/pages/index.astro.mjs": {
+    "mtime": 1783348540.7158334,
+    "ast_hash": "f9f429c083803c4363bcddf7630e6a33",
+    "semantic_hash": ""
+  },
+  "frontend/.vercel/output/_functions/renderers.mjs": {
+    "mtime": 1783348540.713344,
+    "ast_hash": "a9d1c34500370d4ddf11073857890a75",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/AppBody.jsx": {
+    "mtime": 1783348953.4332566,
+    "ast_hash": "cd965faa4eaca1d11ad53153ef9adf49",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/HeaderActions.jsx": {
+    "mtime": 1783348929.6835153,
+    "ast_hash": "178e53d97f63177eb667279192167620",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/api/health.js": {
+    "mtime": 1783348164.994289,
+    "ast_hash": "451c71b2f5a62bf9efd49f517344e47b",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/api/proxy.js": {
+    "mtime": 1783348164.9955585,
+    "ast_hash": "688f4c738c25701d2df46cf7c2a62274",
+    "semantic_hash": ""
+  },
+  "frontend/vercel.json": {
+    "mtime": 1783348164.9972277,
+    "ast_hash": "438cd6202d97291b394ef649d242aec0",
     "semantic_hash": ""
   }
 }

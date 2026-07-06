@@ -12,6 +12,12 @@ const useCityStore = create((set) => ({
 
   showIncidents: false,
   setShowIncidents: (show) => set({ showIncidents: show }),
+
+  viewMode: 'planner', // 'planner' | 'citizen'
+  setViewMode: (mode) => set({ viewMode: mode }),
+
+  liteMode: false,
+  setLiteMode: (lite) => set({ liteMode: lite }),
 }));
 
 export default useCityStore;

@@ -1,5 +1,6 @@
 import express from 'express';
 import { getTrafficData } from '../lib/db.js';
+import { generateOneLiner } from '../lib/gemini.js';
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.get('/livability', async (req, res) => {
     routeCongestion[t.route_name].push(t.congestion);
   });
 
-  const wardScores = WARDS.map((w, i) => {
+  const wardScores = await Promise.all(WARDS.map(async (w, i) => {
     const congestion = routeCongestion[w.ward] || [];
     const avgCong = congestion.length > 0
       ? Math.round(congestion.reduce((a, c) => a + c, 0) / congestion.length)
@@ -36,12 +37,20 @@ router.get('/livability', async (req, res) => {
     const wasteScore = w.waste_efficiency;
     const congestionScore = Math.max(0, 100 - avgCong);
     const livability = Math.round((aqiScore + wasteScore + congestionScore) / 3);
+
+    const defaultInterpretation = INTERPRETATIONS[i % INTERPRETATIONS.length];
+    const prompt = `You are a city planner writing a one-line evaluation for Ward ${w.ward}. 
+Livability score is ${livability}/100. Average AQI is ${w.aqi}, waste efficiency is ${w.waste_efficiency}%, and average congestion is ${avgCong}/100.
+Write exactly one short, punchy sentence explaining what the main factor is. Keep it under 15 words.`;
+
+    const interpretation = await generateOneLiner(prompt, defaultInterpretation);
+
     return {
       ...w,
       livability_score: livability,
-      interpretation: INTERPRETATIONS[i % INTERPRETATIONS.length],
+      interpretation,
     };
-  });
+  }));
 
   res.json(wardScores);
 });
@@ -55,7 +64,7 @@ router.get('/advisories', async (req, res) => {
     routeStats[t.route_name].congestion.push(t.congestion);
   });
 
-  const advisories = Object.entries(routeStats).map(([route, stats], i) => {
+  const advisories = await Promise.all(Object.entries(routeStats).map(async ([route, stats], i) => {
     const peakAqi = Math.round(stats.aqi.reduce((a, b) => Math.max(a, b), 0));
     const peakCong = Math.round(stats.congestion.reduce((a, b) => Math.max(a, b), 0));
     const avgAqi = Math.round(stats.aqi.reduce((a, b) => a + b, 0) / stats.aqi.length);
@@ -70,6 +79,16 @@ router.get('/advisories', async (req, res) => {
       ? ['Elderly', 'Children', 'Respiratory patients']
       : ['Sensitive groups'];
 
+    const defaultAdvisory = peakCong > 70
+      ? `High congestion (${peakCong}/100) combined with AQI ${peakAqi}. Limit outdoor exposure during peak hours.`
+      : `AQI at ${peakAqi} (${aqiCat}). Consider masks if outdoors for extended periods.`;
+
+    const prompt = `Write a short, direct health or transit advisory for a commuter on route ${route}.
+Peak congestion is ${peakCong}/100 and peak AQI is ${peakAqi}.
+Write exactly one sentence. Keep it under 20 words.`;
+
+    const advisory = await generateOneLiner(prompt, defaultAdvisory);
+
     return {
       id: `adv-${route}-${i}`,
       route_name: route,
@@ -77,12 +96,10 @@ router.get('/advisories', async (req, res) => {
       peak_aqi: peakAqi,
       aqi_category: aqiCat,
       peak_congestion: peakCong,
-      advisory: peakCong > 70
-        ? `High congestion (${peakCong}/100) combined with AQI ${peakAqi}. Limit outdoor exposure during peak hours.`
-        : `AQI at ${peakAqi} (${aqiCat}). Consider masks if outdoors for extended periods.`,
+      advisory,
       vulnerable_groups: groups,
     };
-  });
+  }));
 
   res.json(advisories);
 });

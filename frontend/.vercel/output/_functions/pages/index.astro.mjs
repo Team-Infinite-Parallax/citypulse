@@ -21,7 +21,7 @@ const $$Layout = createComponent(($$result, $$props, $$slots) => {
 			const tick = () => { if (el) el.textContent = new Date().toLocaleTimeString('en-GB'); };
 			tick(); setInterval(tick, 1000);
 		<\/script> </body> </html>`])), addAttribute(Astro2.generator, "content"), renderHead(), renderSlot($$result, $$slots["default"]));
-}, "D:/infinite parallax/web/citypulse/frontend/src/layouts/Layout.astro", void 0);
+}, "C:/Users/himan/Desktop/citypulse/frontend/src/layouts/Layout.astro", void 0);
 
 const useCityStore = create((set) => ({
   selectedRoute: '',
@@ -78,7 +78,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const API = undefined                               || "";
+        const API = "";
         const [summaryRes, trafficRes, forecastRes] = await Promise.all([
           fetch(`${API}/api/traffic/summary`),
           fetch(`${API}/api/traffic`),
@@ -363,7 +363,7 @@ const QueryBar = () => {
     setError(null);
     setResponse(null);
     try {
-      const API = undefined                               || "";
+      const API = "";
       const res = await fetch(`${API}/api/query`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -427,7 +427,7 @@ const AlertsPanel = () => {
     const fetchAlerts = async () => {
       try {
         setLoading(true);
-        const API = undefined                               || "";
+        const API = "";
         const res = await fetch(`${API}/api/alerts`);
         if (!res.ok) throw new Error("Failed to fetch alerts");
         setAlerts(await res.json());
@@ -484,7 +484,7 @@ const RecommendationCard = () => {
     const fetchRecommendations = async () => {
       try {
         setLoading(true);
-        const API = undefined                               || "";
+        const API = "";
         const res = await fetch(`${API}/api/recommendations`);
         if (!res.ok) throw new Error("Failed to fetch recommendations");
         const data = await res.json();
@@ -526,7 +526,7 @@ const HealthAdvisory = () => {
     const fetchAdvisories = async () => {
       try {
         setLoading(true);
-        const API = undefined                               || "";
+        const API = "";
         const res = await fetch(`${API}/api/advisories`);
         if (!res.ok) throw new Error("Failed to fetch advisories");
         setAdvisories(await res.json());
@@ -579,7 +579,7 @@ const WardDetailPanel = () => {
     const fetchLivability = async () => {
       try {
         setLoading(true);
-        const API = undefined                               || "";
+        const API = "";
         const res = await fetch(`${API}/api/environment/livability`);
         if (!res.ok) throw new Error("Failed to fetch livability data");
         const json = await res.json();
@@ -613,7 +613,7 @@ const ActionCenter = () => {
   const fetchMemos = async () => {
     try {
       setLoading(true);
-      const API = undefined                               || "";
+      const API = "";
       const res = await fetch(`${API}/api/actions/memos`);
       if (!res.ok) throw new Error("Failed to fetch action memos");
       const data = await res.json();
@@ -627,7 +627,7 @@ const ActionCenter = () => {
   };
   const handleDispatch = async (id) => {
     try {
-      const API = undefined                               || "";
+      const API = "";
       const res = await fetch(`${API}/api/actions/dispatch/${id}`, { method: "POST" });
       if (res.ok) {
         fetchMemos();
@@ -638,7 +638,7 @@ const ActionCenter = () => {
   };
   const handleTestDraft = async () => {
     try {
-      const API = undefined                               || "";
+      const API = "";
       const res = await fetch(`${API}/api/actions/draft`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -694,7 +694,7 @@ const CitizenReport = () => {
     setLoading(true);
     setError(null);
     try {
-      const API = undefined                               || "";
+      const API = "";
       const res = await fetch(`${API}/api/citizen/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -747,12 +747,12 @@ const CitizenReport = () => {
 };
 
 const $$Index = createComponent(($$result, $$props, $$slots) => {
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="p-4 sm:p-6 lg:p-8"> <div class="max-w-[1600px] mx-auto space-y-8 lg:space-y-10"> <!-- Query Bar --> ${renderComponent($$result2, "QueryBar", QueryBar, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/QueryBar.jsx", "client:component-export": "default" })} <!-- Map: Hero section - full width, dominant --> <section aria-label="Traffic Map" class="relative"> <div class="flex items-center gap-2 mb-4"> <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span> <h2 class="text-lg font-bold" style="color: var(--amber)">Traffic Map</h2> <span class="eyebrow ml-auto hidden sm:block">Bengaluru · Live Network</span> </div> <div class="relative"> ${renderComponent($$result2, "MapView", null, { "client:only": "react", "client:component-hydration": "only", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/MapView.jsx", "client:component-export": "default" })} <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0B0E14] to-transparent rounded-b-[16px]"></div> </div> </section> <!-- Second domain: Environmental / Community Wellness --> <section aria-label="Health & Air-Quality Advisories"> ${renderComponent($$result2, "HealthAdvisory", HealthAdvisory, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/HealthAdvisory.jsx", "client:component-export": "default" })} </section> <!-- Live Telemetry --> <section aria-label="Live Telemetry"> <div class="flex items-center gap-2 mb-4"> <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span> <h2 class="text-lg font-bold" style="color: var(--amber)">Live Telemetry</h2> </div> ${renderComponent($$result2, "Dashboard", Dashboard, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/Dashboard.jsx", "client:component-export": "default" })} </section> <!-- Alerts + AI Recommendations --> <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"> ${renderComponent($$result2, "AlertsPanel", AlertsPanel, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/AlertsPanel.jsx", "client:component-export": "default" })} ${renderComponent($$result2, "RecommendationCard", RecommendationCard, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/RecommendationCard.jsx", "client:component-export": "default" })} </div> <!-- Phase 2: Environment Ward Details --> <section aria-label="Ward Livability"> <h2 class="text-lg font-bold text-[#31D0AA] mb-4 flex items-center gap-2"> <span class="w-1 h-5 rounded-full bg-[#10b981]"></span>
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="p-4 sm:p-6 lg:p-8"> <div class="max-w-[1600px] mx-auto space-y-8 lg:space-y-10"> <!-- Query Bar --> ${renderComponent($$result2, "QueryBar", QueryBar, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/QueryBar.jsx", "client:component-export": "default" })} <!-- Map: Hero section - full width, dominant --> <section aria-label="Traffic Map" class="relative"> <div class="flex items-center gap-2 mb-4"> <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span> <h2 class="text-lg font-bold" style="color: var(--amber)">Traffic Map</h2> <span class="eyebrow ml-auto hidden sm:block">Bengaluru · Live Network</span> </div> <div class="relative"> ${renderComponent($$result2, "MapView", null, { "client:only": "react", "client:component-hydration": "only", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/MapView.jsx", "client:component-export": "default" })} <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0B0E14] to-transparent rounded-b-[16px]"></div> </div> </section> <!-- Second domain: Environmental / Community Wellness --> <section aria-label="Health & Air-Quality Advisories"> ${renderComponent($$result2, "HealthAdvisory", HealthAdvisory, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/HealthAdvisory.jsx", "client:component-export": "default" })} </section> <!-- Live Telemetry --> <section aria-label="Live Telemetry"> <div class="flex items-center gap-2 mb-4"> <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span> <h2 class="text-lg font-bold" style="color: var(--amber)">Live Telemetry</h2> </div> ${renderComponent($$result2, "Dashboard", Dashboard, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/Dashboard.jsx", "client:component-export": "default" })} </section> <!-- Alerts + AI Recommendations --> <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8"> ${renderComponent($$result2, "AlertsPanel", AlertsPanel, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/AlertsPanel.jsx", "client:component-export": "default" })} ${renderComponent($$result2, "RecommendationCard", RecommendationCard, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/RecommendationCard.jsx", "client:component-export": "default" })} </div> <!-- Phase 2: Environment Ward Details --> <section aria-label="Ward Livability"> <h2 class="text-lg font-bold text-[#31D0AA] mb-4 flex items-center gap-2"> <span class="w-1 h-5 rounded-full bg-[#10b981]"></span>
 Ward Livability Score
-</h2> ${renderComponent($$result2, "WardDetailPanel", WardDetailPanel, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/WardDetailPanel.jsx", "client:component-export": "default" })} </section> <!-- Phase 3: Action Center & Citizen Reporting --> <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"> <section aria-label="Action Center"> ${renderComponent($$result2, "ActionCenter", ActionCenter, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/ActionCenter.jsx", "client:component-export": "default" })} </section> <section aria-label="Citizen Reporting"> ${renderComponent($$result2, "CitizenReport", CitizenReport, { "client:load": true, "client:component-hydration": "load", "client:component-path": "D:/infinite parallax/web/citypulse/frontend/src/components/CitizenReport.jsx", "client:component-export": "default" })} </section> </div> </div> </div> ` })}`;
-}, "D:/infinite parallax/web/citypulse/frontend/src/pages/index.astro", void 0);
+</h2> ${renderComponent($$result2, "WardDetailPanel", WardDetailPanel, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/WardDetailPanel.jsx", "client:component-export": "default" })} </section> <!-- Phase 3: Action Center & Citizen Reporting --> <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"> <section aria-label="Action Center"> ${renderComponent($$result2, "ActionCenter", ActionCenter, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/ActionCenter.jsx", "client:component-export": "default" })} </section> <section aria-label="Citizen Reporting"> ${renderComponent($$result2, "CitizenReport", CitizenReport, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/CitizenReport.jsx", "client:component-export": "default" })} </section> </div> </div> </div> ` })}`;
+}, "C:/Users/himan/Desktop/citypulse/frontend/src/pages/index.astro", void 0);
 
-const $$file = "D:/infinite parallax/web/citypulse/frontend/src/pages/index.astro";
+const $$file = "C:/Users/himan/Desktop/citypulse/frontend/src/pages/index.astro";
 const $$url = "";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

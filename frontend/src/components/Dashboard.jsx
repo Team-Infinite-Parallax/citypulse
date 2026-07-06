@@ -37,6 +37,7 @@ const Dashboard = () => {
 
   const selectedRoute = useCityStore((state) => state.selectedRoute);
   const setSelectedRoute = useCityStore((state) => state.setSelectedRoute);
+  const liteMode = useCityStore((state) => state.liteMode);
 
   const routeNames = useMemo(() => {
     if (!routesGeoJson?.features) return [];
@@ -198,6 +199,155 @@ const Dashboard = () => {
       <div className="panel p-6 flex items-center text-[#FF9497] border-[#FF5A5F]/30" aria-live="assertive">
         <AlertCircle className="w-6 h-6 mr-3 flex-shrink-0" />
         <p className="font-semibold">{error}</p>
+      </div>
+    );
+  }
+
+  if (liteMode) {
+    return (
+      <div className="space-y-6">
+        {/* Route Filter */}
+        <div className="flex items-center gap-3 route-filter">
+          <Filter className="filter-icon" />
+          <select
+            aria-label="Filter by route"
+            value={activeRoute}
+            onChange={handleRouteFilter}
+            className="route-select"
+          >
+            <option value="">All routes</option>
+            {routeNames.map(name => (
+              <option key={name} value={name}>{name}</option>
+            ))}
+          </select>
+          {activeRoute && (
+            <button
+              type="button"
+              onClick={() => { setFilterRoute(''); setSelectedRoute(''); }}
+              className="text-xs clear-filter hover:text-[#31D0AA] transition-colors px-2 py-1"
+            >
+              Clear filter
+            </button>
+          )}
+        </div>
+
+        {/* KPI Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {kpiCards.map(({ key, value, unit, color, extra }) => {
+            const meta = KPI_ICONS[key];
+            const Icon = meta.icon;
+            return (
+              <div key={key} className="panel p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="eyebrow">{meta.label}</span>
+                  <div className="w-8 h-8 rounded-lg grid place-items-center border"
+                       style={{ background: `${color}1a`, borderColor: `${color}44`, color }}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="stat text-2xl sm:text-4xl" style={{ color: key === 'congestion' ? color : '#31D0AA' }}>
+                    {value}
+                  </span>
+                  {unit && <span className="text-[#8896A8] text-sm">{unit}</span>}
+                </div>
+                {extra}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Lite Mode Tables */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* 24h Congestion Trend */}
+          <div className="panel p-5">
+            <div className="panel-head mb-4">
+              <h3 className="text-base font-semibold text-[#31D0AA]">Congestion Trend · 24h (Table)</h3>
+              <span className="eyebrow">{activeRoute || 'All corridors'}</span>
+            </div>
+            <div className="max-h-60 overflow-y-auto custom-scrollbar">
+              <table className="w-full text-xs text-[#8896A8] border-collapse">
+                <thead>
+                  <tr className="border-b border-[#263244] text-left">
+                    <th className="pb-2 font-bold uppercase">Time</th>
+                    <th className="pb-2 font-bold uppercase text-right">Congestion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {trendData.map((d, idx) => (
+                    <tr key={idx} className="border-b border-[#1B2534] hover:bg-[#131A26]">
+                      <td className="py-2">{d.time}</td>
+                      <td className="py-2 text-right font-medium text-white">{d.Congestion}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Delay by Route */}
+          <div className="panel p-5">
+            <div className="panel-head mb-4">
+              <h3 className="text-base font-semibold text-[#31D0AA]">Avg Delay by Route</h3>
+              <span className="eyebrow">minutes</span>
+            </div>
+            <div className="space-y-3">
+              {delayChartData.map((d, idx) => (
+                <div key={idx} className="space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-[#31D0AA] font-medium">{d.name}</span>
+                    <span className="text-white font-bold">{d.Delay} mins</span>
+                  </div>
+                  <div className="h-2 w-full bg-[#0E141E] rounded-full overflow-hidden border border-[#1B2534]">
+                    <div className="h-full bg-[#F97316] rounded-full" style={{ width: `${Math.min(100, (d.Delay / 30) * 100)}%` }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Forecast */}
+        {activeForecast && (
+          <div className="panel p-5">
+            <div className="panel-head mb-4">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-[#31D0AA]" />
+                <h3 className="text-base font-semibold text-[#31D0AA]">
+                  Congestion Forecast · next {activeForecast.horizon_hours}h (Table)
+                </h3>
+              </div>
+              <span className="eyebrow">{activeForecast.route_name} · 90% confidence band</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-[#8896A8] border-collapse min-w-[400px]">
+                <thead>
+                  <tr className="border-b border-[#263244] text-left">
+                    <th className="pb-2 font-bold uppercase">Target Time</th>
+                    <th className="pb-2 font-bold uppercase text-right">Lower Bound</th>
+                    <th className="pb-2 font-bold uppercase text-right">Point Forecast</th>
+                    <th className="pb-2 font-bold uppercase text-right">Upper Bound</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {activeForecast.forecast_series.map((f, idx) => (
+                    <tr key={idx} className="border-b border-[#1B2534] hover:bg-[#131A26]">
+                      <td className="py-2.5">{f.label}</td>
+                      <td className="py-2.5 text-right text-[#FF5A5F]">{f.lower}%</td>
+                      <td className="py-2.5 text-right font-semibold text-[#31D0AA]">{f.forecast}%</td>
+                      <td className="py-2.5 text-right text-[#3b82f6]">{f.upper}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-4">
+              <p className="mono text-[11px] text-[#64748B]">
+                {activeForecast.method} · Selected: {activeForecast.model_choice}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

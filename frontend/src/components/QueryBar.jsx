@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Bot, Loader2, AlertCircle, BarChart2, Sparkles } from 'lucide-react';
+import { Send, Bot, Loader2, AlertCircle, BarChart2, Sparkles, Mic, MicOff } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import useCityStore from '../store/useCityStore';
 import ExplainabilityPanel from './ExplainabilityPanel';
@@ -9,8 +9,42 @@ const QueryBar = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
+  const [listening, setListening] = useState(false);
 
   const addQueryToHistory = useCityStore((state) => state.addQuery);
+
+  const startListening = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice input is not supported in this browser. Please use Chrome, Edge, or Safari.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = 'en-IN'; // Optimized language model for Indian accents and city names
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setListening(true);
+    };
+
+    recognition.onerror = (e) => {
+      console.error(e);
+      setListening(false);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setQuery(transcript);
+    };
+
+    recognition.start();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +83,7 @@ const QueryBar = () => {
       </div>
       <form onSubmit={handleSubmit} className="relative">
         <div className="flex items-center bg-[#E8F9EE] border border-[#6EE3A0] rounded-xl overflow-hidden focus-within:border-[#6EE3A0] transition-colors">
-          <div className="pl-4 text-[#4EBF79]">
+          <div className="pl-4 text-[#4EBF79] flex-shrink-0">
             <Bot className="w-6 h-6" />
           </div>
           <input
@@ -58,16 +92,29 @@ const QueryBar = () => {
             type="text"
             autoComplete="off"
             aria-label="Ask the city"
-            className="flex-1 bg-transparent border-none py-4 px-4 text-[#11502B] placeholder-[#6A8B6F] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+            className="flex-1 bg-transparent border-none py-4 px-4 text-[#11502B] placeholder-[#6A8B6F] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 min-w-0"
             placeholder="e.g. Which corridor has the worst congestion right now?…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             disabled={loading}
           />
+          {/* Microphone Button */}
+          <button
+            type="button"
+            onClick={startListening}
+            className={`p-3 mr-1 rounded-lg flex items-center justify-center transition-colors ${
+              listening
+                ? 'bg-[#ef4444]/20 text-[#ef4444] animate-pulse'
+                : 'text-[#4EBF79] hover:bg-[#6EE3A0]/25'
+            }`}
+            title="Ask by voice"
+          >
+            {listening ? <MicOff className="w-5.5 h-5.5" /> : <Mic className="w-5.5 h-5.5" />}
+          </button>
           <button
             type="submit"
             disabled={!query.trim() || loading}
-            className="btn-signal px-6 py-4 flex items-center gap-2 active:scale-95 transition-transform"
+            className="btn-signal px-6 py-4 flex items-center gap-2 active:scale-95 transition-transform flex-shrink-0"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Send className="w-4 h-4" /> Ask</>}
           </button>

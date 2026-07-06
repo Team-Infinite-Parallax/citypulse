@@ -75,9 +75,9 @@ const MapView = () => {
     if (e.features && e.features.length > 0) {
       const clickedRoute = e.features[0].properties.name;
       // Toggle selection
-      setSelectedRoute(selectedRoute === clickedRoute ? null : clickedRoute);
+      setSelectedRoute(selectedRoute === clickedRoute ? '' : clickedRoute);
     } else {
-      setSelectedRoute(null);
+      setSelectedRoute('');
     }
   };
 

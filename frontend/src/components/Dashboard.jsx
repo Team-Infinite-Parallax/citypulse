@@ -68,7 +68,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const activeRoute = filterRoute || selectedRoute;
+  const activeRoute = filterRoute || selectedRoute || '';
 
   const displaySummary = activeRoute
     ? summaryData.filter(s => s.route_name === activeRoute)
@@ -184,7 +184,7 @@ const Dashboard = () => {
         {activeRoute && (
           <button
             type="button"
-            onClick={() => { setFilterRoute(''); setSelectedRoute(null); }}
+            onClick={() => { setFilterRoute(''); setSelectedRoute(''); }}
             className="text-xs clear-filter hover:text-[#E6EDF3] transition-colors px-2 py-1"
           >
             Clear filter

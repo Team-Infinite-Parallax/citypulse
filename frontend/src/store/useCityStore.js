@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 const useCityStore = create((set) => ({
-  selectedRoute: null,
+  selectedRoute: '',
   setSelectedRoute: (route) => set({ selectedRoute: route }),
   
   timeRange: '7d', // 24h, 7d

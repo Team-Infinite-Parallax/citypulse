@@ -59,7 +59,7 @@ const QueryBar = () => {
             type="text"
             autoComplete="off"
             aria-label="Ask the city"
-            className="flex-1 bg-transparent border-none py-4 px-4 text-[#11502B] placeholder-[#6A8B6F] focus:outline-none"
+            className="flex-1 bg-transparent border-none py-4 px-4 text-[#11502B] placeholder-[#6A8B6F] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
             placeholder="e.g. Which corridor has the worst congestion right now?…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

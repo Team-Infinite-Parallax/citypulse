@@ -7,6 +7,8 @@ Team: **Infinite Parallax**
 
 > CityPulse turns raw urban data — traffic congestion, air quality, and city corridor telemetry — into natural-language answers, forecasts, and actionable recommendations for city planners and citizens alike. Ask it a question the way you'd ask a colleague: *"Which corridors will be worst hit during evening peak, and where should we prioritize?"*
 
+> 🛡️ **Responsible AI:** CityPulse is a decision-**support** tool with a human in the loop — see [RESPONSIBLE_AI.md](RESPONSIBLE_AI.md) for data provenance (synthetic vs. real), model limitations, and the human-approval requirement before any action is dispatched.
+
 ---
 
 ## Table of Contents
@@ -42,11 +44,13 @@ The challenge asks for a platform that helps **individuals, communities, organiz
 
 ## 🚀 Features
 
-- **Live Congestion & AQI Map** — dark-mode, MapLibre-powered real-time view across 5 major city corridors (demo city: Lucknow).
+- **Live Congestion & AQI Map** — dark-mode, MapLibre-powered real-time view across 5 major city corridors (demo city: Lucknow), including a toggleable Public Safety incident layer.
 - **KPI Dashboard** — live trend charts for congestion levels and delay times, built with Recharts.
-- **Anomaly Detection & Alerts** — automatic flagging of severe congestion and logged incidents.
-- **"Ask the City" (Real RAG)** — natural-language query bar powered by Vertex AI Gemini, grounded via vector embeddings + cosine-similarity retrieval over live corridor data (not keyword matching — genuine semantic search).
-- **AI Forecasting & Recommendations** — trend-based forecasting combined with LLM-generated, data-grounded recommendations for city planners.
+- **Anomaly Detection & Alerts** — automatic flagging of severe congestion and public safety incident rate spikes using a shared statistical baseline engine.
+- **"Ask the City" (Cross-Domain RAG)** — natural-language query bar powered by Vertex AI Gemini, grounded via vector embeddings + cosine-similarity retrieval over live mobility, environment (Livability Scores), and public safety data.
+- **AI Forecasting & Recommendations** — trend-based Holt-Winters forecasting with uncertainty bands, combined with LLM-generated, data-grounded recommendations for city planners.
+- **Decision Loop (Action Center & Citizen Reporting)** — AI-drafted Action Memos triggered by anomalies, and a Citizen Report intake that uses Gemini Vision to classify photo-based submissions. 
+  - *Honest Stub Note*: Dispatching an Action Memo currently updates the internal status and timestamp; it does not yet send real SMS/emails or connect to live municipal systems to prevent accidental real-world triggers.
 
 ---
 
@@ -54,17 +58,17 @@ The challenge asks for a platform that helps **individuals, communities, organiz
 
 ```mermaid
 flowchart LR
-    U[Citizen / City Planner] -->|Query / Map interaction| FE[Frontend<br/>Astro + React Islands + Tailwind]
+    U[Citizen / City Planner] -->|Query / Map / Report| FE[Frontend<br/>Astro + React Islands + Tailwind]
     FE -->|REST API| BE[Backend<br/>Express.js on Cloud Run]
-    BE -->|Live queries| BQ[(BigQuery<br/>Traffic + AQI data)]
-    BE -->|Embed + Generate| VX[Vertex AI<br/>Gemini 1.5 Flash + Embeddings]
+    BE -->|Live queries| BQ[(BigQuery / JSON stores<br/>Traffic, Environment, Incidents)]
+    BE -->|Embed + Generate + Vision| VX[Vertex AI<br/>Gemini 1.5 Flash + Embeddings]
     VX -->|Cosine similarity retrieval| BE
     BE -->|JSON response| FE
     CB[Cloud Build] -->|CI/CD| BE
     GH[GitHub Actions] -->|Automated deploy| CB
 ```
 
-**Flow:** the frontend sends a query → backend embeds it and retrieves the most relevant corridor/AQI data via cosine similarity (real RAG, not string matching) → the retrieved context plus the raw metrics are passed to Gemini 1.5 Flash on Vertex AI → the model returns a grounded natural-language answer and recommendation → rendered live on the map and dashboard.
+**Flow:** the frontend sends a query (or citizen report) → backend processes it (using Gemini Vision for classification, or embeddings for RAG retrieval over multiple domains) → the retrieved context plus raw metrics are passed to Gemini 1.5 Flash on Vertex AI → the model returns a grounded natural-language answer, recommendation, or drafted Action Memo → rendered live on the dashboard.
 
 ---
 

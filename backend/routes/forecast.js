@@ -1,31 +1,93 @@
 import express from 'express';
 import { generateRecommendation } from '../lib/gemini.js';
 import { getTrafficData } from '../lib/db.js';
+import { forecastSeries } from '../lib/forecast.js';
+import { detectAnomalies } from '../lib/anomaly.js';
 
 const router = express.Router();
 
+// Short display label for an hourly timestamp, e.g. "Mon 14:00".
+const hourLabel = (iso) => {
+  const d = new Date(iso);
+  const day = d.toLocaleDateString('en-US', { weekday: 'short' });
+  return `${day} ${String(d.getHours()).padStart(2, '0')}:00`;
+};
+
 // GET /api/alerts
-// Returns anomalies (congestion > 90 or has incident notes)
+// Anomalies surfaced via the SHARED rolling-baseline detector (lib/anomaly.js) —
+// the same code path the Public Safety module uses — plus explicit incident
+// notes. Each alert carries an explainability payload (why it fired).
 router.get('/alerts', async (req, res) => {
   const data = await getTrafficData();
-  
-  const alerts = data.filter(record => {
-    const isHighCongestion = record.congestion > 90;
-    const hasIncident = record.notes && record.notes.toLowerCase().includes('incident');
-    return isHighCongestion || hasIncident;
-  }).map(record => ({
-    id: `${record.route_name}-${record.timestamp}`,
-    route_name: record.route_name,
-    timestamp: record.timestamp,
-    severity: record.congestion > 95 ? 'CRITICAL' : 'WARNING',
-    message: record.notes || `Severe congestion detected (${record.congestion}/100)`,
-    metrics: {
-      congestion: record.congestion,
-      delay: record.delay_minutes
-    }
-  }));
 
-  // Sort by latest first
+  // Statistical spikes vs each corridor's own trailing baseline.
+  const spikes = detectAnomalies(data, {
+    groupBy: 'route_name',
+    value: 'congestion',
+    timestamp: 'timestamp',
+    window: 24,
+    z: 2,
+    minBaseline: 6,
+  });
+  const spikeById = new Map(spikes.map((s) => [`${s.key}-${s.timestamp}`, s]));
+
+  const confLabel = (c) => (c >= 0.75 ? 'high' : c >= 0.5 ? 'medium' : 'low');
+  const alerts = [];
+
+  for (const record of data) {
+    const id = `${record.route_name}-${record.timestamp}`;
+    const spike = spikeById.get(id);
+    const hasIncident = record.notes && record.notes.toLowerCase().includes('incident');
+    const highThreshold = record.congestion > 90;
+    if (!spike && !hasIncident && !highThreshold) continue;
+
+    const critical =
+      (spike && (spike.severity === 'CRITICAL' || spike.severity === 'HIGH')) ||
+      record.congestion > 95;
+
+    let message;
+    let explain;
+    if (spike) {
+      message = `Congestion ${spike.value}/100 is ${spike.zscore}σ above ${spike.key}'s rolling baseline (${spike.baseline}).`;
+      explain = {
+        confidence: spike.confidence,
+        confidence_label: confLabel(spike.confidence),
+        rationale: `Flagged because congestion (${spike.value}) sits ${spike.zscore} standard deviations above this corridor's trailing baseline of ${spike.baseline} ± ${spike.std}.`,
+        sources: [record, { baseline: spike.baseline, std: spike.std, zscore: spike.zscore }],
+        method: 'rolling-baseline z-score (shared anomaly detector)',
+      };
+    } else if (hasIncident) {
+      message = record.notes;
+      explain = {
+        confidence: 0.9,
+        confidence_label: 'high',
+        rationale: `Flagged because an incident was explicitly logged for ${record.route_name} at this timestamp.`,
+        sources: [record],
+        method: 'logged incident note',
+      };
+    } else {
+      message = `Severe congestion detected (${record.congestion}/100).`;
+      explain = {
+        confidence: 0.7,
+        confidence_label: 'medium',
+        rationale: `Flagged because congestion (${record.congestion}) exceeded the absolute severe-congestion threshold of 90/100.`,
+        sources: [record],
+        method: 'absolute threshold (>90/100)',
+      };
+    }
+
+    alerts.push({
+      id,
+      route_name: record.route_name,
+      timestamp: record.timestamp,
+      severity: critical ? 'CRITICAL' : 'WARNING',
+      message,
+      metrics: { congestion: record.congestion, delay: record.delay_minutes },
+      explain,
+    });
+  }
+
+  // Latest first.
   alerts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
   res.json(alerts);
@@ -59,13 +121,22 @@ router.get('/recommendations', async (req, res) => {
   const recResults = await Promise.all(
     highCongestionRoutes.map(async ([route_name, stats]) => {
       const avgCongestion = stats.total / stats.count;
-      const suggestion = await generateRecommendation(route_name, stats.sample_data);
+      const rec = await generateRecommendation(route_name, stats.sample_data);
+      const confidence = Math.min(1, Number((avgCongestion / 100).toFixed(2)));
       return {
         id: `rec-${route_name}`,
         route_name,
         issue: `Severe peak-hour congestion (Avg ${Math.round(avgCongestion)}/100)`,
-        suggestion,
-        supporting_data: stats.sample_data
+        suggestion: rec.suggestion,
+        supporting_data: stats.sample_data,
+        // Explainability contract (Task 1.2).
+        explain: {
+          confidence,
+          confidence_label: avgCongestion >= 80 ? 'high' : avgCongestion >= 70 ? 'medium' : 'low',
+          rationale: rec.rationale,
+          sources: stats.sample_data,
+          method: 'peak-hour congestion aggregation (avg over 08:00–10:00 & 17:00–20:00)',
+        },
       };
     })
   );
@@ -73,69 +144,94 @@ router.get('/recommendations', async (req, res) => {
   res.json(recResults);
 });
 
-// GET /api/forecast
-// Seasonal-naive forecast: predicts the next hour for each corridor using the
-// historical average for that hour-of-day (daily seasonality), then corrects
-// with the most recent residual (how far the latest reading sits above/below
-// its own seasonal baseline). This is a real, defensible forecasting method —
-// the prediction is genuinely downstream of the time series, not just a mean.
+// GET /api/forecast?h=6
+// Real time-series forecasting per corridor using additive Holt-Winters
+// exponential smoothing (level + trend + daily seasonality). Returns point
+// forecasts AND a prediction interval (lower/upper bound) for the next N hours,
+// so the UI can render a genuine uncertainty band — not a bare line.
 router.get('/forecast', async (req, res) => {
   const data = await getTrafficData();
-  const routes = [...new Set(data.map(d => d.route_name))];
-  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const horizon = Math.max(1, Math.min(24, parseInt(req.query.h, 10) || 6));
+  const routes = [...new Set(data.map((d) => d.route_name))];
 
-  const forecasts = routes.map(route => {
-    const routeData = data
-      .filter(d => d.route_name === route)
-      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-    if (routeData.length < 4) return null;
+  const forecasts = routes
+    .map((route) => {
+      const routeData = data
+        .filter((d) => d.route_name === route)
+        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      if (routeData.length < 4) return null;
 
-    // Build hour-of-day seasonal profiles.
-    const hourly = Array.from({ length: 24 }, () => ({
-      cong: 0, delay: 0, aqi: 0, aqiN: 0, n: 0,
-    }));
-    for (const r of routeData) {
-      const h = new Date(r.timestamp).getHours();
-      hourly[h].cong += r.congestion;
-      hourly[h].delay += r.delay_minutes;
-      hourly[h].n += 1;
-      if (typeof r.aqi === 'number') { hourly[h].aqi += r.aqi; hourly[h].aqiN += 1; }
-    }
-    const seasonal = (h, field, count) =>
-      hourly[h].n ? hourly[h][field] / (count ? hourly[h][count] : hourly[h].n) : null;
+      const congestion = routeData.map((r) => r.congestion);
+      const aqiSeries = routeData.map((r) =>
+        typeof r.aqi === 'number' ? r.aqi : null
+      );
 
-    const latest = routeData[routeData.length - 1];
-    const latestHour = new Date(latest.timestamp).getHours();
-    const targetHour = (latestHour + 1) % 24;
+      const cong = forecastSeries(congestion, {
+        period: 24,
+        horizon,
+        clamp: [0, 100],
+      });
+      const hasAqi = aqiSeries.every((v) => v != null);
+      const aqi = hasAqi
+        ? forecastSeries(aqiSeries, { period: 24, horizon, clamp: [0, 500] })
+        : null;
 
-    // Residual: how far the latest reading deviates from its seasonal baseline.
-    const baselineNow = seasonal(latestHour, 'cong');
-    const residual = baselineNow == null ? 0 : latest.congestion - baselineNow;
+      // Delay tracks congestion; scale the forecast by the observed ratio
+      // rather than fitting a second model to a near-collinear series.
+      const totalCong = congestion.reduce((s, v) => s + v, 0);
+      const totalDelay = routeData.reduce((s, r) => s + r.delay_minutes, 0);
+      const delayRatio = totalCong > 0 ? totalDelay / totalCong : 0;
 
-    const seasonalCong = seasonal(targetHour, 'cong') ?? latest.congestion;
-    const seasonalDelay = seasonal(targetHour, 'delay') ?? latest.delay_minutes;
-    const seasonalAqi = hourly[targetHour].aqiN
-      ? hourly[targetHour].aqi / hourly[targetHour].aqiN
-      : (typeof latest.aqi === 'number' ? latest.aqi : null);
+      const latest = routeData[routeData.length - 1];
+      const lastTs = new Date(latest.timestamp).getTime();
+      const HOUR = 3600 * 1000;
 
-    // Apply a damped residual correction (0.5) so a single spike doesn't dominate.
-    const predictedCong = clamp(Math.round(seasonalCong + 0.5 * residual), 0, 100);
-    const predictedDelay = clamp(Math.round(seasonalDelay + 0.25 * residual), 0, 999);
+      const forecast_series = cong.point.map((p, k) => {
+        const ts = new Date(lastTs + (k + 1) * HOUR).toISOString();
+        return {
+          ts,
+          label: hourLabel(ts),
+          forecast: p,
+          lower: cong.lower[k],
+          upper: cong.upper[k],
+        };
+      });
 
-    const delta = predictedCong - latest.congestion;
-    const trend = delta > 3 ? 'increasing' : (delta < -3 ? 'decreasing' : 'stable');
+      // Recent actuals for chart context (up to two days).
+      const history = routeData.slice(-48).map((r) => ({
+        ts: r.timestamp,
+        label: hourLabel(r.timestamp),
+        congestion: r.congestion,
+        aqi: typeof r.aqi === 'number' ? r.aqi : null,
+      }));
 
-    return {
-      route_name: route,
-      target_hour: `${String(targetHour).padStart(2, '0')}:00`,
-      current_congestion: latest.congestion,
-      predicted_congestion: predictedCong,
-      predicted_delay: predictedDelay,
-      predicted_aqi: seasonalAqi == null ? null : Math.round(seasonalAqi),
-      trend,
-      method: 'seasonal-naive (hour-of-day) + damped residual',
-    };
-  }).filter(Boolean);
+      const avgForecast =
+        cong.point.reduce((s, v) => s + v, 0) / cong.point.length;
+      const delta = avgForecast - latest.congestion;
+      const trend = delta > 3 ? 'increasing' : delta < -3 ? 'decreasing' : 'stable';
+
+      return {
+        route_name: route,
+        method: cong.method + ' · 90% prediction interval',
+        horizon_hours: horizon,
+        params: cong.params,
+        residual_std: cong.residualStd,
+        current_congestion: latest.congestion,
+        // Legacy convenience fields (first forecast step).
+        predicted_congestion: cong.point[0],
+        target_hour: `${String(new Date(forecast_series[0].ts).getHours()).padStart(2, '0')}:00`,
+        predicted_delay: Math.max(0, Math.round(cong.point[0] * delayRatio)),
+        predicted_aqi: aqi ? aqi.point[0] : null,
+        trend,
+        // Real forecasting deliverable: arrays with an uncertainty band.
+        forecast: cong.point,
+        lower_bound: cong.lower,
+        upper_bound: cong.upper,
+        forecast_series,
+        history,
+      };
+    })
+    .filter(Boolean);
 
   res.json(forecasts);
 });

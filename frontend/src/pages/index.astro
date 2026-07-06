@@ -6,6 +6,9 @@ import QueryBar from '../components/QueryBar.jsx';
 import AlertsPanel from '../components/AlertsPanel.jsx';
 import RecommendationCard from '../components/RecommendationCard.jsx';
 import HealthAdvisory from '../components/HealthAdvisory.jsx';
+import WardDetailPanel from '../components/WardDetailPanel.jsx';
+import ActionCenter from '../components/ActionCenter.jsx';
+import CitizenReport from '../components/CitizenReport.jsx';
 ---
 
 <Layout>
@@ -23,10 +26,11 @@ import HealthAdvisory from '../components/HealthAdvisory.jsx';
         </section>
       </div>
 
-<<<<<<< HEAD
       {/* Second domain: Environmental / Community Wellness */}
-      <HealthAdvisory client:load />
-=======
+      <section aria-label="Health & Air-Quality Advisories">
+        <HealthAdvisory client:load />
+      </section>
+
       <section aria-label="Live Telemetry">
         <h2 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
           <span className="w-1 h-5 rounded-full bg-[#31D0AA]"></span>
@@ -43,7 +47,26 @@ import HealthAdvisory from '../components/HealthAdvisory.jsx';
         <RecommendationCard client:load />
       </section>
 
->>>>>>> 664f51643a605ba6b1964350c6ae99e3434476d3
+      {/* Phase 2: Environment Ward Details */}
+      <section aria-label="Ward Livability">
+        <h2 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
+          <span className="w-1 h-5 rounded-full bg-[#10b981]"></span>
+          Ward Livability Score
+        </h2>
+        <WardDetailPanel client:load />
+      </section>
+
+      {/* Phase 3: Action Center & Citizen Reporting */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <section aria-label="Action Center">
+          <ActionCenter client:load />
+        </section>
+        
+        <section aria-label="Citizen Reporting">
+          <CitizenReport client:load />
+        </section>
+      </div>
+
     </div>
   </div>
 </Layout>

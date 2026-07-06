@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Send, Bot, Loader2, ChevronDown, ChevronUp, AlertCircle, BarChart2, Sparkles } from 'lucide-react';
+import { Send, Bot, Loader2, AlertCircle, BarChart2, Sparkles } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import useCityStore from '../store/useCityStore';
+import ExplainabilityPanel from './ExplainabilityPanel';
 
 const QueryBar = () => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
-  const [showExplanation, setShowExplanation] = useState(false);
-  
+
   const addQueryToHistory = useCityStore((state) => state.addQuery);
 
   const handleSubmit = async (e) => {
@@ -19,7 +19,6 @@ const QueryBar = () => {
     setLoading(true);
     setError(null);
     setResponse(null);
-    setShowExplanation(false);
 
     try {
       const API = import.meta.env.PUBLIC_API_URL || '';
@@ -75,6 +74,22 @@ const QueryBar = () => {
         </label>
       </form>
 
+      {/* Canned cross-domain queries */}
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button
+          onClick={() => setQuery("Which ward has the most incidents and worst AQI?")}
+          className="text-xs px-3 py-1.5 rounded-full bg-[#1B2534] text-[#8896A8] hover:bg-[#263244] hover:text-[#E6EDF3] transition-colors border border-[#263244]"
+        >
+          Which ward has the most incidents and worst AQI?
+        </button>
+        <button
+          onClick={() => setQuery("Is there a correlation between traffic congestion and air quality today?")}
+          className="text-xs px-3 py-1.5 rounded-full bg-[#1B2534] text-[#8896A8] hover:bg-[#263244] hover:text-[#E6EDF3] transition-colors border border-[#263244]"
+        >
+          Traffic congestion vs AQI correlation?
+        </button>
+      </div>
+
       {error && (
         <div className="mt-4 bg-[#FF5A5F]/10 text-[#FF9497] p-4 rounded-xl border border-[#FF5A5F]/30 flex items-start" aria-live="assertive">
           <AlertCircle className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
@@ -112,30 +127,8 @@ const QueryBar = () => {
             </div>
           )}
 
-          {response.cited_points && response.cited_points.length > 0 && (
-            <div className="mt-4 border border-[#263244] rounded-xl overflow-hidden">
-              <button
-                type="button"
-                aria-expanded={showExplanation}
-                className="w-full px-4 py-3 bg-[#0E141E] flex items-center justify-between text-sm font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
-                onClick={() => setShowExplanation(!showExplanation)}
-              >
-                <span className="mono text-xs">grounded on {response.cited_points.length} data point(s)</span>
-                {showExplanation ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </button>
-
-              {showExplanation && (
-                <div className="p-4 bg-[#131A26] border-t border-[#263244] max-h-60 overflow-y-auto custom-scrollbar">
-                  <div className="space-y-3">
-                    {response.cited_points.map((point, idx) => (
-                      <div key={idx} className="text-xs font-mono bg-[#0E141E] p-3 rounded-lg overflow-x-auto text-[#9AA9BD] border border-[#1B2534]">
-                        {JSON.stringify(point, null, 2)}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+          {response.explain && (
+            <ExplainabilityPanel explain={response.explain} title="Why this answer?" />
           )}
         </div>
       )}

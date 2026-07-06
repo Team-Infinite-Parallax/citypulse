@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AlertTriangle, Clock, MapPin, ShieldCheck } from 'lucide-react';
+import ExplainabilityPanel from './ExplainabilityPanel';
 
 const AlertsPanel = () => {
   const [alerts, setAlerts] = useState([]);
@@ -97,6 +98,10 @@ const AlertsPanel = () => {
                   Delay <span className="text-[#E6EDF3]">{alert.metrics.delay}</span>m
                 </span>
               </div>
+
+              {alert.explain && (
+                <ExplainabilityPanel explain={alert.explain} title="Why flagged?" />
+              )}
             </div>
           );
         })}

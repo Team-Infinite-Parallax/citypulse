@@ -11,7 +11,7 @@ const location = process.env.GCP_LOCATION || 'us-central1';
 let vertexai, generativeModel;
 let useVertex = Boolean(projectId);
 
-const SYSTEM_INSTRUCTION = `You are CityPulse, an urban decision-intelligence assistant for city planners. You are given a JSON excerpt of relevant retrieved records (traffic congestion + air-quality AQI) below. Answer the user's question using ONLY this data — do not use outside knowledge. Respond as strict JSON in this exact shape: { "answer": string, "chart_data": array of {label, value} objects suitable for a bar/line chart, "cited_points": array of the raw data records you used }. If the data doesn't answer the question, say so in "answer" and return empty arrays for the others.`;
+const SYSTEM_INSTRUCTION = `You are CityPulse, an urban decision-intelligence assistant for city planners and citizens. You are given a JSON excerpt of retrieved records that may span MULTIPLE domains — mobility (traffic congestion, delay), environment (air-quality AQI, waste-collection efficiency, water quality), and public safety (incident reports). Answer the user's question using ONLY this data — do not use outside knowledge. When records from more than one domain are present, REASON ACROSS them and produce a single synthesized answer (e.g. relate air quality to congestion to incident rate for a ward), not three separate answers concatenated. Respond as strict JSON in this exact shape: { "answer": string, "reasoning": string — ONE plain-language sentence explaining why this answer follows from the retrieved data, "chart_data": array of {label, value} objects suitable for a bar/line chart, "cited_points": array of the raw data records you used }. If the data doesn't answer the question, say so in "answer", explain in "reasoning", and return empty arrays for the others.`;
 
 try {
   if (useVertex) {
@@ -38,6 +38,9 @@ export const generateQueryResponse = async (question, dataChunk) => {
       answer:
         'Vertex AI is not configured (set GCP_PROJECT_ID and authenticate). ' +
         'Retrieval still ran — see the grounded data points below.',
+      reasoning:
+        'Vertex AI is offline, so this response reflects the retrieval step only; ' +
+        'the corridors/wards below are the highest-similarity matches to your question.',
       chart_data: [],
       cited_points: Array.isArray(dataChunk) ? dataChunk.slice(0, 5) : [],
     });
@@ -52,21 +55,105 @@ export const generateQueryResponse = async (question, dataChunk) => {
 };
 
 export const generateRecommendation = async (route_name, supporting_data) => {
-  const fallback = `Review traffic-management strategies for ${route_name} (signal retiming, added bus frequency, or a temporary dedicated lane) to relieve sustained peak-hour congestion.`;
-  if (!useVertex) return fallback;
+  const fallbackSuggestion = `Review traffic-management strategies for ${route_name} (signal retiming, added bus frequency, or a temporary dedicated lane) to relieve sustained peak-hour congestion.`;
+  const fallbackRationale = `Peak-hour congestion on ${route_name} stayed well above the citywide comfort threshold across the sampled window.`;
+  if (!useVertex) return { suggestion: fallbackSuggestion, rationale: fallbackRationale };
 
   const recModel = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-  const prompt = `Based on the following traffic data for ${route_name} showing high peak-hour congestion, provide a single, actionable, one-line recommendation to city planners to alleviate this specific issue (e.g., adjust signal timing, increase bus frequency, add dedicated lanes). Do not explain, just provide the one-line recommendation.
+  const prompt = `You advise city traffic planners. Based on the following traffic data for ${route_name} showing high peak-hour congestion, respond as strict JSON: { "suggestion": a single actionable one-line recommendation (e.g. adjust signal timing, increase bus frequency, add a dedicated lane), "rationale": ONE sentence explaining why this action is warranted, referencing the data }.
 DATA: ${JSON.stringify(supporting_data)}`;
 
   try {
     const response = await recModel.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: 'application/json' },
     });
-    return response.response.candidates[0].content.parts[0].text.trim();
+    const txt = response.response.candidates[0].content.parts[0].text
+      .replace(/```json/g, '')
+      .replace(/```/g, '')
+      .trim();
+    const parsed = JSON.parse(txt);
+    return {
+      suggestion: (parsed.suggestion || fallbackSuggestion).toString().trim(),
+      rationale: (parsed.rationale || fallbackRationale).toString().trim(),
+    };
   } catch (error) {
     console.error('[gemini] Recommendation error:', error.message);
+    return { suggestion: fallbackSuggestion, rationale: fallbackRationale };
+  }
+};
+
+/**
+ * Generic one-sentence generator with a guaranteed fallback. Used for
+ * explainability rationales, ward-livability interpretations, and action memos
+ * so every domain shares one Vertex-or-fallback code path.
+ */
+export const generateOneLiner = async (prompt, fallback) => {
+  if (!useVertex) return fallback;
+  try {
+    const model = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const response = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    });
+    const txt = response.response.candidates[0].content.parts[0].text.trim();
+    return txt || fallback;
+  } catch (error) {
+    console.error('[gemini] oneLiner error:', error.message);
     return fallback;
+  }
+};
+
+/**
+ * Structured JSON generator with a guaranteed fallback object. Used for the
+ * action-memo drafting step (Phase 3).
+ */
+export const generateStructured = async (prompt, fallbackObj) => {
+  if (!useVertex) return fallbackObj;
+  try {
+    const model = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const response = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: 'application/json' },
+    });
+    const txt = response.response.candidates[0].content.parts[0].text
+      .replace(/```json/g, '')
+      .replace(/```/g, '')
+      .trim();
+    return { ...fallbackObj, ...JSON.parse(txt) };
+  } catch (error) {
+    console.error('[gemini] structured error:', error.message);
+    return fallbackObj;
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/*  Vision — Gemini 1.5 Flash handles multimodal requests                     */
+/* -------------------------------------------------------------------------- */
+export const analyzeImage = async (base64Image, prompt, fallbackObj) => {
+  if (!useVertex || !base64Image) return fallbackObj;
+  try {
+    const model = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const imagePart = {
+      inlineData: {
+        data: base64Image,
+        mimeType: 'image/jpeg'
+      }
+    };
+    const textPart = { text: prompt };
+    
+    const response = await model.generateContent({
+      contents: [{ role: 'user', parts: [imagePart, textPart] }],
+      generationConfig: { responseMimeType: 'application/json' },
+    });
+    
+    const txt = response.response.candidates[0].content.parts[0].text
+      .replace(/```json/g, '')
+      .replace(/```/g, '')
+      .trim();
+    return { ...fallbackObj, ...JSON.parse(txt) };
+  } catch (error) {
+    console.error('[gemini] analyzeImage error:', error.message);
+    return fallbackObj;
   }
 };
 

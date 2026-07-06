@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Lightbulb, ChevronDown, ChevronUp, AlertCircle, Sparkles } from 'lucide-react';
+import { Lightbulb, AlertCircle, Sparkles } from 'lucide-react';
+import ExplainabilityPanel from './ExplainabilityPanel';
 
 const RecommendationCard = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -85,33 +85,9 @@ const RecommendationCard = () => {
                   {rec.suggestion}
                 </p>
               </div>
-            </div>
 
-            <div className="border-t border-[#1B2534]">
-              <button
-                type="button"
-                aria-expanded={expandedId === rec.id}
-                className="w-full px-4 py-3 bg-[#131A26] flex items-center justify-between text-xs font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
-                onClick={() => setExpandedId(expandedId === rec.id ? null : rec.id)}
-              >
-                <span>Why this recommendation? (Supporting Data)</span>
-                {expandedId === rec.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </button>
-              
-              {expandedId === rec.id && (
-                <div className="p-4 bg-[#0B0E14] border-t border-[#1B2534]">
-                  <p className="text-xs text-[#9AA9BD] mb-2">
-                    Triggered by sustained high congestion during peak hours:
-                  </p>
-                  <div className="space-y-2">
-                    {rec.supporting_data.map((point, idx) => (
-                      <div key={idx} className="text-xs font-mono bg-[#131A26] p-2 rounded text-[#9AA9BD] border border-[#1B2534] flex justify-between">
-                        <span>{new Date(point.timestamp).toLocaleString()}</span>
-                        <span className="font-semibold text-[#FF5A5F]">Score: {point.congestion}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              {rec.explain && (
+                <ExplainabilityPanel explain={rec.explain} title="Why this recommendation?" />
               )}
             </div>
           </div>

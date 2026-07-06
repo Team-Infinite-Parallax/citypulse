@@ -9,6 +9,9 @@ const useCityStore = create((set) => ({
 
   queryHistory: [],
   addQuery: (query) => set((state) => ({ queryHistory: [...state.queryHistory, query] })),
+
+  showIncidents: false,
+  setShowIncidents: (show) => set({ showIncidents: show }),
 }));
 
 export default useCityStore;

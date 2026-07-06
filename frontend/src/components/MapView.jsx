@@ -9,29 +9,40 @@ import routesGeoJson from '../data/routes.json'; // In Vite/Astro this might nee
 
 const MapView = () => {
   const [summaryData, setSummaryData] = useState([]);
+  const [incidentsData, setIncidentsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   const setSelectedRoute = useCityStore((state) => state.setSelectedRoute);
   const selectedRoute = useCityStore((state) => state.selectedRoute);
+  const showIncidents = useCityStore((state) => state.showIncidents);
+  const setShowIncidents = useCityStore((state) => state.setShowIncidents);
 
   useEffect(() => {
-    const fetchSummary = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
         const API = import.meta.env.PUBLIC_API_URL || '';
-        const res = await fetch(`${API}/api/traffic/summary`);
-        if (!res.ok) throw new Error('Failed to fetch traffic summary');
-        const data = await res.json();
-        setSummaryData(data);
+        const [trafficRes, incidentsRes] = await Promise.all([
+          fetch(`${API}/api/traffic/summary`),
+          fetch(`${API}/api/public-safety/incidents`)
+        ]);
+        if (!trafficRes.ok) throw new Error('Failed to fetch traffic summary');
+        
+        setSummaryData(await trafficRes.json());
+        if (incidentsRes.ok) {
+          setIncidentsData(await incidentsRes.json());
+        }
+        
         setError(null);
       } catch (err) {
         console.error(err);
-        setError('Unable to load traffic data.');
+        setError('Unable to load map data.');
       } finally {
         setLoading(false);
       }
     };
-    fetchSummary();
+    fetchData();
   }, []);
 
   // Merge summary data (average congestion) into GeoJSON properties to drive color
@@ -48,6 +59,24 @@ const MapView = () => {
         }
       };
     })
+  };
+
+  const incidentsGeoJson = {
+    type: 'FeatureCollection',
+    features: incidentsData.map(inc => ({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [inc.lng, inc.lat]
+      },
+      properties: {
+        id: inc.incident_id,
+        type: inc.type,
+        ward: inc.ward,
+        severity: inc.severity,
+        notes: inc.notes
+      }
+    }))
   };
 
   const getLineColor = () => [
@@ -132,7 +161,49 @@ const MapView = () => {
             />
           </Source>
         )}
+
+        {showIncidents && incidentsData.length > 0 && (
+          <Source id="incidents" type="geojson" data={incidentsGeoJson}>
+            <Layer
+              id="incident-points"
+              type="circle"
+              source="incidents"
+              paint={{
+                'circle-radius': [
+                  'case',
+                  ['==', ['get', 'severity'], 'CRITICAL'], 8,
+                  ['==', ['get', 'severity'], 'HIGH'], 6,
+                  ['==', ['get', 'severity'], 'WARNING'], 5,
+                  4
+                ],
+                'circle-color': [
+                  'case',
+                  ['==', ['get', 'severity'], 'CRITICAL'], '#ef4444',
+                  ['==', ['get', 'severity'], 'HIGH'], '#f97316',
+                  ['==', ['get', 'severity'], 'WARNING'], '#eab308',
+                  '#3b82f6'
+                ],
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#fff'
+              }}
+            />
+          </Source>
+        )}
       </Map>
+
+      {/* Control Panel overlays */}
+      <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+        <button
+          onClick={() => setShowIncidents(!showIncidents)}
+          className={`px-3 py-1.5 rounded text-sm font-medium transition-colors border ${
+            showIncidents 
+              ? 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/50' 
+              : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#E6EDF3]'
+          }`}
+        >
+          {showIncidents ? 'Hide Incidents' : 'Show Incidents'}
+        </button>
+      </div>
     </div>
   );
 };

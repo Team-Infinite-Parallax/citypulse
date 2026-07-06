@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
-  ResponsiveContainer, AreaChart, Area
+  ResponsiveContainer, AreaChart, Area, ComposedChart, Line, Legend, ReferenceLine
 } from 'recharts';
 import useCityStore from '../store/useCityStore';
-import { AlertCircle, Clock, Activity, Gauge, Wind, Filter } from 'lucide-react';
+import { AlertCircle, Clock, Activity, Gauge, Wind, Filter, TrendingUp } from 'lucide-react';
 import routesGeoJson from '../data/routes.json';
 
 const FLOW = '#31D0AA', CAUTION = '#F97316', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
@@ -30,6 +30,7 @@ const tooltipStyle = {
 const Dashboard = () => {
   const [summaryData, setSummaryData] = useState([]);
   const [trafficData, setTrafficData] = useState([]);
+  const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filterRoute, setFilterRoute] = useState('');
@@ -48,15 +49,18 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const API = import.meta.env.PUBLIC_API_URL || '';
-        const [summaryRes, trafficRes] = await Promise.all([
+        const [summaryRes, trafficRes, forecastRes] = await Promise.all([
           fetch(`${API}/api/traffic/summary`),
-          fetch(`${API}/api/traffic`)
+          fetch(`${API}/api/traffic`),
+          fetch(`${API}/api/forecast?h=6`)
         ]);
 
         if (!summaryRes.ok || !trafficRes.ok) throw new Error('Failed to fetch data');
 
         setSummaryData(await summaryRes.json());
         setTrafficData(await trafficRes.json());
+        // Forecast is enhancement-only; don't fail the whole dashboard if it errors.
+        setForecastData(forecastRes.ok ? await forecastRes.json() : []);
         setError(null);
       } catch (err) {
         console.error(err);
@@ -90,6 +94,39 @@ const Dashboard = () => {
   const trendData = Object.values(trendDataRaw)
     .map(d => ({ time: d.time, Congestion: Math.round(d.congestion / d.count) }))
     .slice(-24);
+
+  // Forecast: pick the active route's forecast, else the worst current corridor.
+  const activeForecast = useMemo(() => {
+    if (!forecastData.length) return null;
+    if (activeRoute) return forecastData.find(f => f.route_name === activeRoute) || null;
+    return [...forecastData].sort((a, b) => b.current_congestion - a.current_congestion)[0];
+  }, [forecastData, activeRoute]);
+
+  // Combined series: recent actuals + forecast with a prediction band. Keyed on
+  // the ISO timestamp so history and forecast points never collide on the axis.
+  const forecastChartData = useMemo(() => {
+    if (!activeForecast) return [];
+    const hist = activeForecast.history.slice(-24).map(h => ({
+      ts: h.ts, label: h.label, Actual: h.congestion,
+    }));
+    if (hist.length) {
+      // Anchor the forecast line + band to the last observed value.
+      const lastActual = hist[hist.length - 1].Actual;
+      hist[hist.length - 1] = {
+        ...hist[hist.length - 1], Forecast: lastActual, range: [lastActual, lastActual],
+      };
+    }
+    const fc = activeForecast.forecast_series.map(f => ({
+      ts: f.ts, label: f.label, Forecast: f.forecast, range: [f.lower, f.upper],
+    }));
+    return [...hist, ...fc];
+  }, [activeForecast]);
+
+  const boundaryTs = activeForecast?.forecast_series?.[0]?.ts;
+  const fmtHour = (ts) => {
+    const d = new Date(ts);
+    return `${String(d.getHours()).padStart(2, '0')}:00`;
+  };
 
   const overallAvgCongestion = displaySummary.length > 0
     ? Math.round(displaySummary.reduce((a, s) => a + s.avg_congestion, 0) / displaySummary.length)
@@ -263,6 +300,71 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Forecast with prediction interval (Holt-Winters) */}
+      {activeForecast && (
+        <div className="panel">
+          <div className="panel-head">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-[#31D0AA]" />
+              <h3 className="text-base font-semibold text-[#E6EDF3]">
+                Congestion Forecast · next {activeForecast.horizon_hours}h
+              </h3>
+            </div>
+            <span className="eyebrow">{activeForecast.route_name} · 90% band</span>
+          </div>
+          <div className="p-4 h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={forecastChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="bandFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#31D0AA" stopOpacity={0.28} />
+                    <stop offset="100%" stopColor="#31D0AA" stopOpacity={0.06} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
+                <XAxis dataKey="ts" tickFormatter={fmtHour} stroke="#8896A8" fontSize={11}
+                       tickMargin={8} minTickGap={28} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
+                <YAxis domain={[0, 100]} stroke="#8896A8" fontSize={12} tickLine={false} axisLine={false} />
+                <RechartsTooltip
+                  cursor={{ stroke: '#263244' }}
+                  contentStyle={tooltipStyle}
+                  labelFormatter={(ts) => {
+                    const p = forecastChartData.find(d => d.ts === ts);
+                    return p ? p.label : ts;
+                  }}
+                  formatter={(value, name) => {
+                    if (name === 'Uncertainty band' && Array.isArray(value))
+                      return [`${value[0]}–${value[1]}`, name];
+                    return [value, name];
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Area type="monotone" dataKey="range" name="Uncertainty band" stroke="none"
+                      fill="url(#bandFill)" connectNulls={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="Actual" name="Actual" stroke="#8896A8" strokeWidth={2}
+                      dot={false} connectNulls={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="Forecast" name="Forecast" stroke="#31D0AA" strokeWidth={2.5}
+                      strokeDasharray="5 4" dot={false} connectNulls isAnimationActive={false} />
+                {boundaryTs && (
+                  <ReferenceLine x={boundaryTs} stroke="#FFB020" strokeDasharray="2 4"
+                                 label={{ value: 'now', position: 'top', fill: '#FFB020', fontSize: 10 }} />
+                )}
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="px-4 pb-4 -mt-1">
+            <p className="mono text-[11px] text-[#64748B]">
+              {activeForecast.method}
+              {activeForecast.params?.alpha != null && (
+                <> · α={activeForecast.params.alpha} β={activeForecast.params.beta}
+                  {activeForecast.params.gamma != null && <> γ={activeForecast.params.gamma}</>}
+                </>
+              )} · σ={activeForecast.residual_std}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

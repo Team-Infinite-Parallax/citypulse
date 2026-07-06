@@ -25,7 +25,7 @@ describe('CityPulse API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  it('GET /api/forecast should return a seasonal-naive forecast per route', async () => {
+  it('GET /api/forecast should return a Holt-Winters forecast with a prediction interval', async () => {
     const res = await request(app).get('/api/forecast');
     expect(res.statusCode).toEqual(200);
     expect(Array.isArray(res.body)).toBe(true);
@@ -33,7 +33,16 @@ describe('CityPulse API', () => {
       const f = res.body[0];
       expect(f).toHaveProperty('predicted_congestion');
       expect(f).toHaveProperty('target_hour');
-      expect(f.method).toMatch(/seasonal/i);
+      expect(Array.isArray(f.forecast)).toBe(true);
+      expect(Array.isArray(f.lower_bound)).toBe(true);
+      expect(Array.isArray(f.upper_bound)).toBe(true);
+      expect(f.forecast.length).toEqual(f.lower_bound.length);
+      // Band must actually bracket the point forecast.
+      f.forecast.forEach((p, i) => {
+        expect(f.lower_bound[i]).toBeLessThanOrEqual(p);
+        expect(f.upper_bound[i]).toBeGreaterThanOrEqual(p);
+      });
+      expect(f.method).toMatch(/holt-winters|linear|naive/i);
     }
   });
 

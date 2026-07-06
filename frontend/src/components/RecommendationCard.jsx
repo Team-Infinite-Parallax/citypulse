@@ -11,7 +11,8 @@ const RecommendationCard = () => {
     const fetchRecommendations = async () => {
       try {
         setLoading(true);
-        const res = await fetch('http://localhost:3001/api/recommendations');
+        const API = import.meta.env.PUBLIC_API_URL || '';
+        const res = await fetch(`${API}/api/recommendations`);
         if (!res.ok) throw new Error('Failed to fetch recommendations');
         const data = await res.json();
         setRecommendations(data);

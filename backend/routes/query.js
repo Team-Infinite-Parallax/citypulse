@@ -1,25 +1,11 @@
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { generateQueryResponse } from '../lib/gemini.js';
+import { generateQueryResponse, generateEmbeddings, cosineSimilarity } from '../lib/gemini.js';
+import { getTrafficData } from '../lib/db.js';
 
 const router = express.Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DATA_FILE = path.join(__dirname, '..', 'data', 'traffic.json');
-
-const getTrafficData = () => {
-  try {
-    return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-  } catch (error) {
-    return [];
-  }
-};
-
-const getTrafficSummary = () => {
-  const data = getTrafficData();
+const getTrafficSummary = async () => {
+  const data = await getTrafficData();
   const statsByRoute = {};
 
   data.forEach(record => {
@@ -50,43 +36,53 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: "Question is required" });
   }
 
-  const allData = getTrafficData();
-  const lowerQuestion = question.toLowerCase();
-
-  // Basic keyword matching
-  const keywords = ["mg road", "ring road", "airport expressway", "tech park avenue", "station road", "incident", "worst", "highest"];
-  const matchedKeywords = keywords.filter(kw => lowerQuestion.includes(kw));
-
-  let contextData = [];
-
-  if (matchedKeywords.length > 0) {
-    // Filter data if specific route is mentioned
-    const mentionedRoutes = ["mg road", "ring road", "airport expressway", "tech park avenue", "station road"].filter(r => lowerQuestion.includes(r));
-    
-    if (mentionedRoutes.length > 0) {
-      contextData = allData.filter(d => mentionedRoutes.includes(d.route_name.toLowerCase()));
-      // If still too large, just take the last 48 hours for those routes
-      contextData = contextData.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 100); 
-    } else {
-      // If "worst", "highest", "incident" without route, maybe sort and take top
-      contextData = [...allData].sort((a, b) => b.congestion - a.congestion).slice(0, 50);
-    }
-  } else {
-    // Fallback: pass summary data to keep context small
-    contextData = getTrafficSummary();
-  }
-
+  const allData = await getTrafficData();
+  
   try {
+    // 1. Embed the query
+    const queryEmbedding = await generateEmbeddings(question);
+
+    // 2. Chunk data by route and embed them
+    // In a real app, these would be pre-computed and stored in a vector DB (e.g. Pinecone, AlloyDB pgvector)
+    const routes = [...new Set(allData.map(d => d.route_name))];
+    
+    let bestRoute = null;
+    let highestSimilarity = -1;
+
+    for (const route of routes) {
+      const routeData = allData.filter(d => d.route_name === route);
+      // Create a textual representation of the route for embedding
+      const textChunk = `Traffic route ${route} has ${routeData.length} records. Topics: traffic, incident, congestion, delay.`;
+      const chunkEmbedding = await generateEmbeddings(textChunk);
+      const sim = cosineSimilarity(queryEmbedding, chunkEmbedding);
+      
+      if (sim > highestSimilarity) {
+        highestSimilarity = sim;
+        bestRoute = route;
+      }
+    }
+
+    let contextData = [];
+    // 3. Retrieve context
+    if (highestSimilarity > 0.5 && bestRoute) {
+      // Return top 100 recent records for the best matching route
+      contextData = allData
+        .filter(d => d.route_name === bestRoute)
+        .sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .slice(0, 100);
+    } else {
+      // Fallback: pass summary data
+      contextData = await getTrafficSummary();
+    }
+
     let rawResponse = await generateQueryResponse(question, contextData);
     
-    // Robust parsing: strip markdown code fences if present
     rawResponse = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
     
     const parsed = JSON.parse(rawResponse);
     res.json(parsed);
   } catch (error) {
     console.error("Query Error:", error);
-    // Graceful fallback on API failure or parse failure
     res.json({
       answer: "Sorry, I couldn't process that question right now due to a service error.",
       chart_data: [],

@@ -4,10 +4,10 @@ import {
   ResponsiveContainer, AreaChart, Area
 } from 'recharts';
 import useCityStore from '../store/useCityStore';
-import { AlertCircle, Clock, Activity, Gauge } from 'lucide-react';
+import { AlertCircle, Clock, Activity, Gauge, Wind } from 'lucide-react';
 
 // Night Dispatch palette
-const FLOW = '#31D0AA', AMBER = '#FFB020', STOP = '#FF5A5F';
+const FLOW = '#31D0AA', AMBER = '#FFB020', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
 
 // congestion score -> status color (shared by KPI + charts)
 const scoreColor = (v) => (v >= 70 ? STOP : v >= 40 ? AMBER : FLOW);
@@ -33,9 +33,10 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        const API = import.meta.env.PUBLIC_API_URL || '';
         const [summaryRes, trafficRes] = await Promise.all([
-          fetch('http://localhost:3001/api/traffic/summary'),
-          fetch('http://localhost:3001/api/traffic')
+          fetch(`${API}/api/traffic/summary`),
+          fetch(`${API}/api/traffic`)
         ]);
 
         if (!summaryRes.ok || !trafficRes.ok) throw new Error('Failed to fetch data');
@@ -80,7 +81,7 @@ const Dashboard = () => {
     : trafficData;
 
   // Avg Delay by Route (bar)
-  const delayChartData = summaryData.map(s => ({ name: s.route_name, Delay: s.avg_delay_minutes }));
+  const delayChartData = displaySummary.map(s => ({ name: s.route_name, Delay: s.avg_delay_minutes }));
 
   // Congestion trend over time (area)
   const sortedTraffic = [...displayTraffic].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
@@ -96,16 +97,25 @@ const Dashboard = () => {
     .slice(-24);
 
   // KPIs
-  const overallAvgCongestion = Math.round(displaySummary.reduce((a, s) => a + s.avg_congestion, 0) / displaySummary.length) || 0;
-  const overallAvgDelay = Math.round(displaySummary.reduce((a, s) => a + s.avg_delay_minutes, 0) / displaySummary.length) || 0;
-  const peakHour = displaySummary.length === 1 ? displaySummary[0].peak_hour : 'Var';
+  const overallAvgCongestion = displaySummary.length > 0
+    ? Math.round(displaySummary.reduce((a, s) => a + s.avg_congestion, 0) / displaySummary.length)
+    : 0;
+  const overallAvgDelay = displaySummary.length > 0
+    ? Math.round(displaySummary.reduce((a, s) => a + s.avg_delay_minutes, 0) / displaySummary.length)
+    : 0;
+  const peakHour = displaySummary.length === 1 ? displaySummary[0].peak_hour
+    : displaySummary.length > 1 ? 'Var'
+    : '--';
+  const overallAvgAqi = displayTraffic.length > 0
+    ? Math.round(displayTraffic.reduce((a, t) => a + (t.aqi || 50), 0) / displayTraffic.length)
+    : 50;
 
   const congColor = scoreColor(overallAvgCongestion);
 
   return (
     <div className="space-y-6">
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Congestion — with load meter */}
         <div className="panel p-5">
           <div className="flex items-center justify-between mb-3">
@@ -151,6 +161,20 @@ const Dashboard = () => {
             <span className="stat text-4xl text-[#E6EDF3]">{peakHour}</span>
           </div>
           <p className="mono text-[11px] text-[#64748B] mt-3">busiest window</p>
+        </div>
+
+        {/* AQI */}
+        <div className="panel p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="eyebrow">Avg AQI</span>
+            <div className="w-8 h-8 rounded-lg grid place-items-center border" style={{ borderColor: `${AQI_COLOR}44`, backgroundColor: `${AQI_COLOR}1f`, color: AQI_COLOR }}>
+              <Wind className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="flex items-baseline">
+            <span className="stat text-4xl text-[#E6EDF3]">{overallAvgAqi}</span>
+          </div>
+          <p className="mono text-[11px] text-[#64748B] mt-3">air quality index</p>
         </div>
       </div>
 

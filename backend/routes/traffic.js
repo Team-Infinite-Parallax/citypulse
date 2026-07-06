@@ -1,36 +1,19 @@
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { getTrafficData } from '../lib/db.js';
 
 const router = express.Router();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DATA_FILE = path.join(__dirname, '..', 'data', 'traffic.json');
-
-// Helper to read data
-const getTrafficData = () => {
-  try {
-    const data = fs.readFileSync(DATA_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error("Error reading traffic data:", error);
-    return [];
-  }
-};
-
 // GET /api/traffic
 // Serves all time-series data
-router.get('/', (req, res) => {
-  const data = getTrafficData();
+router.get('/', async (req, res) => {
+  const data = await getTrafficData();
   res.json(data);
 });
 
 // GET /api/traffic/summary
 // Returns avg_congestion, avg_delay_minutes, and peak_hour per route
-router.get('/summary', (req, res) => {
-  const data = getTrafficData();
+router.get('/summary', async (req, res) => {
+  const data = await getTrafficData();
   
   const statsByRoute = {};
 

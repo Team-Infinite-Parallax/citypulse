@@ -18,7 +18,8 @@ const MapView = () => {
     const fetchSummary = async () => {
       try {
         setLoading(true);
-        const res = await fetch('http://localhost:3001/api/traffic/summary');
+        const API = import.meta.env.PUBLIC_API_URL || '';
+        const res = await fetch(`${API}/api/traffic/summary`);
         if (!res.ok) throw new Error('Failed to fetch traffic summary');
         const data = await res.json();
         setSummaryData(data);
@@ -108,7 +109,7 @@ const MapView = () => {
         mapStyle="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
         interactive={true}
         onClick={onClick}
-        interactiveLayerIds={['route-lines']}
+        interactiveLayerIds={summaryData.length > 0 ? ['route-lines'] : []}
         cursor="pointer"
       >
         <NavigationControl position="top-right" />

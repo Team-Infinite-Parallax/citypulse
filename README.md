@@ -67,5 +67,3 @@ CityPulse is built as a modern full-stack application and natively integrates wi
 
 ---
 *Built for the Google Cloud Hackathon*
-
-hm,,mmm

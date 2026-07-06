@@ -7422,5 +7422,1541 @@
         "delay_minutes":  6,
         "notes":  "Routine traffic",
         "aqi":  57
+    },
+    {
+        "congestion":  91,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:32:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:58:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:58:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  77,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:05:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  80,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:57:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  97,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:25:00.000Z",
+        "aqi":  89,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:20:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  85,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:23:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  90,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:07:00.000Z",
+        "aqi":  72,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:40:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  85,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:05:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  82,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T08:33:00.000Z",
+        "aqi":  89,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:36:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  80,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:05:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  91,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:46:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:05:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  95,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:16:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  82,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:03:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  97,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:49:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  97,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:50:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  79,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:27:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  87,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:13:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  75,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:26:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T09:52:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  91,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:04:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  90,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:36:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  75,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:15:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  87,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:29:00.000Z",
+        "aqi":  66,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  79,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:28:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  94,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:09:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  89,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:02:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  87,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:42:00.000Z",
+        "aqi":  72,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:09:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:23:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  92,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:56:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  77,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T17:45:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:39:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  82,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:04:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:16:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:19:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  89,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:09:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  77,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:43:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:05:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:02:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  79,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:41:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:06:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  28
+    },
+    {
+        "congestion":  96,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:02:00.000Z",
+        "aqi":  67,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-05T18:02:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:52:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  97,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:03:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  87,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:41:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  79,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:58:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:00:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  80,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:55:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:37:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  97,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:39:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  96,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:16:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  88,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:21:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  80,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:41:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  81,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T08:50:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  96,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:12:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  79,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:02:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  97,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:18:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  94,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:51:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:43:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:57:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  96,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:48:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:38:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  88,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:00:00.000Z",
+        "aqi":  67,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  87,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:41:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  85,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:52:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  96,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T09:20:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  92,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:53:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:30:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:54:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  75,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:23:00.000Z",
+        "aqi":  65,
+        "notes":  "",
+        "delay_minutes":  28
+    },
+    {
+        "congestion":  81,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:20:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  79,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:32:00.000Z",
+        "aqi":  65,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  94,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:31:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  94,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:29:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:52:00.000Z",
+        "aqi":  65,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  78,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:31:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  80,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:31:00.000Z",
+        "aqi":  67,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T17:09:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  82,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:58:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  93,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:43:00.000Z",
+        "aqi":  89,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  90,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:14:00.000Z",
+        "aqi":  71,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  88,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:02:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  83,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:07:00.000Z",
+        "aqi":  71,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  92,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:39:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  85,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:27:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  91,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:51:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  80,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:40:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  84,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:45:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  76,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:27:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  96,
+        "route_name":  "MG Road",
+        "timestamp":  "2026-07-06T18:36:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  80,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:47:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  76,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:27:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  88,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:43:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  97,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:23:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  77,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:39:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  89,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:24:00.000Z",
+        "aqi":  65,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  75,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:45:00.000Z",
+        "aqi":  65,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:47:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  85,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:33:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  92,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:55:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  90,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:12:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T08:15:00.000Z",
+        "aqi":  66,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  94,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:13:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  83,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:00:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  28
+    },
+    {
+        "congestion":  81,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:36:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  88,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:31:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  75,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:29:00.000Z",
+        "aqi":  71,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:08:00.000Z",
+        "aqi":  72,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  94,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:22:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  88,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:40:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  96,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:33:00.000Z",
+        "aqi":  67,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  91,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:55:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  90,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:48:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  87,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T09:38:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  79,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:18:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  79,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:52:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  28
+    },
+    {
+        "congestion":  75,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:14:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  94,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:29:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  88,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:47:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  76,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:58:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:54:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  82,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:44:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  78,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:22:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  84,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:06:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  81,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:21:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  83,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T17:18:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  82,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:58:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  89,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:41:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  75,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:51:00.000Z",
+        "aqi":  78,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:58:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  28
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:16:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  94,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:57:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:32:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  81,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:24:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  81,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:48:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  96,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:48:00.000Z",
+        "aqi":  73,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  94,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:54:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-05T18:35:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  76,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:41:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  30
+    },
+    {
+        "congestion":  78,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:12:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  77,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:35:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:56:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  94,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:04:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  85,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:30:00.000Z",
+        "aqi":  78,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  97,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:32:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  88,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:25:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  96,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:11:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  76,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:58:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:54:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  91,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T08:05:00.000Z",
+        "aqi":  89,
+        "notes":  "",
+        "delay_minutes":  22
+    },
+    {
+        "congestion":  82,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:53:00.000Z",
+        "aqi":  66,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  87,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:11:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  95,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:43:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:49:00.000Z",
+        "aqi":  87,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  96,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:56:00.000Z",
+        "aqi":  80,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  83,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:43:00.000Z",
+        "aqi":  89,
+        "notes":  "",
+        "delay_minutes":  18
+    },
+    {
+        "congestion":  76,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:14:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  75,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:30:00.000Z",
+        "aqi":  81,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  92,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:17:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  89,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:26:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  24
+    },
+    {
+        "congestion":  95,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:30:00.000Z",
+        "aqi":  72,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  96,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T09:39:00.000Z",
+        "aqi":  65,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  92,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:07:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  82,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:50:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:48:00.000Z",
+        "aqi":  85,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:50:00.000Z",
+        "aqi":  72,
+        "notes":  "",
+        "delay_minutes":  29
+    },
+    {
+        "congestion":  85,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:45:00.000Z",
+        "aqi":  77,
+        "notes":  "",
+        "delay_minutes":  33
+    },
+    {
+        "congestion":  89,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:13:00.000Z",
+        "aqi":  86,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  82,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:36:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  91,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:10:00.000Z",
+        "aqi":  84,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  79,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:30:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  95,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:56:00.000Z",
+        "aqi":  75,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  81,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:58:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  20
+    },
+    {
+        "congestion":  92,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T17:53:00.000Z",
+        "aqi":  79,
+        "notes":  "",
+        "delay_minutes":  28
+    },
+    {
+        "congestion":  90,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:13:00.000Z",
+        "aqi":  89,
+        "notes":  "",
+        "delay_minutes":  23
+    },
+    {
+        "congestion":  85,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:33:00.000Z",
+        "aqi":  70,
+        "notes":  "",
+        "delay_minutes":  26
+    },
+    {
+        "congestion":  92,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:41:00.000Z",
+        "aqi":  82,
+        "notes":  "",
+        "delay_minutes":  31
+    },
+    {
+        "congestion":  92,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:43:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  21
+    },
+    {
+        "congestion":  83,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:29:00.000Z",
+        "aqi":  68,
+        "notes":  "",
+        "delay_minutes":  27
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:26:00.000Z",
+        "aqi":  69,
+        "notes":  "",
+        "delay_minutes":  25
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:55:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  34
+    },
+    {
+        "congestion":  97,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:22:00.000Z",
+        "aqi":  88,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  95,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:17:00.000Z",
+        "aqi":  76,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  86,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:27:00.000Z",
+        "aqi":  83,
+        "notes":  "",
+        "delay_minutes":  19
+    },
+    {
+        "congestion":  93,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:39:00.000Z",
+        "aqi":  72,
+        "notes":  "",
+        "delay_minutes":  32
+    },
+    {
+        "congestion":  96,
+        "route_name":  "Ring Road",
+        "timestamp":  "2026-07-06T18:04:00.000Z",
+        "aqi":  74,
+        "notes":  "",
+        "delay_minutes":  29
     }
 ]

@@ -50,7 +50,7 @@ const WardDetailPanel = () => {
           <div className="flex items-center justify-between">
             <h3 className="font-bold text-lg text-[#E6EDF3]">{ward.ward}</h3>
             <div className="flex items-center gap-2">
-              <span className="eyebrow text-[#8896A8]">Livability Score</span>
+              <span className="eyebrow text-[#31D0AA]">Livability Score</span>
               <span className={`px-2 py-1 rounded text-sm font-bold ${
                 ward.livability_score >= 80 ? 'bg-[#10b981]/20 text-[#10b981]' :
                 ward.livability_score >= 60 ? 'bg-[#f97316]/20 text-[#f97316]' :

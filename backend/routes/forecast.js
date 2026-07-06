@@ -116,7 +116,7 @@ router.get('/recommendations', async (req, res) => {
   });
 
   const highCongestionRoutes = Object.entries(peakStatsByRoute)
-    .filter(([, stats]) => (stats.total / stats.count) > 70);
+    .filter(([, stats]) => (stats.total / stats.count) > 50);
 
   const recResults = await Promise.all(
     highCongestionRoutes.map(async ([route_name, stats]) => {

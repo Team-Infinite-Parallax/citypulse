@@ -33,5 +33,6 @@
   "31": "CommunityImpactPanel.jsx",
   "32": "HealthAdvisory.jsx",
   "33": "TourismPanel.jsx",
-  "34": "deploy_gcp.ps1"
+  "34": "deploy_gcp.ps1",
+  "35": "copy-vercel.js"
 }

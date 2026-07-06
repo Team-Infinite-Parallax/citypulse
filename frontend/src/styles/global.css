@@ -256,7 +256,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text
 .high-contrast *:focus-visible { outline: 3px solid #FFB020 !important; outline-offset: 3px !important; }
 
 /* ---------- Lite Mode ---------- */
-[data-lite-mode="true"] .map-wrapper { display: none; }
+/* React conditionally handles rendering alternative content for the map inside .map-wrapper, so we do not display: none it. */
 [data-lite-mode="true"] .recharts-responsive-container { display: none; }
 [data-lite-mode="true"] .lite-hidden { display: none; }
 

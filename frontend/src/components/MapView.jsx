@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Map, { Source, Layer, NavigationControl } from 'react-map-gl/maplibre';
-import 'maplibre-gl/dist/maplibre-gl.css';
+import { Map as MapIcon } from 'lucide-react';
 import useCityStore from '../store/useCityStore';
 import routesGeoJson from '../data/routes.json'; // In Vite/Astro this might need special handling, let's fetch or import it properly. Wait, it's better to fetch it if it's in public, or just import as JSON.
 
@@ -17,9 +17,24 @@ const MapView = () => {
   const selectedRoute = useCityStore((state) => state.selectedRoute);
   const showIncidents = useCityStore((state) => state.showIncidents);
   const setShowIncidents = useCityStore((state) => state.setShowIncidents);
+  
+  const [isLiteMode, setIsLiteMode] = useState(false);
+
+  useEffect(() => {
+    // Check lite mode
+    const checkLite = () => {
+      if (document.getElementById('main-content')?.getAttribute('data-lite-mode') === 'true') {
+        setIsLiteMode(true);
+      }
+    };
+    checkLite();
+    window.addEventListener('litemodechange', () => setIsLiteMode(true));
+    return () => window.removeEventListener('litemodechange', () => setIsLiteMode(true));
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (document.getElementById('main-content')?.getAttribute('data-lite-mode') === 'true') return;
       try {
         setLoading(true);
         const API = import.meta.env.PUBLIC_API_URL || '';
@@ -111,6 +126,15 @@ const MapView = () => {
   };
 
   const mapContainerRef = React.useRef(null);
+
+  if (isLiteMode) {
+    return (
+      <div className="map-wrapper relative w-full h-[50vh] min-h-[300px] lg:h-[560px] panel overflow-hidden flex flex-col items-center justify-center bg-[#050B14]">
+        <MapIcon className="w-10 h-10 text-[#38BDF8] mb-3 opacity-50" />
+        <p className="text-[#9AA9BD] text-sm">Interactive map disabled in Lite Mode to save data.</p>
+      </div>
+    );
+  }
 
   return (
     <div

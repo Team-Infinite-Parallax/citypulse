@@ -34,5 +34,11 @@
   "32": "HealthAdvisory.jsx",
   "33": "TourismPanel.jsx",
   "34": "deploy_gcp.ps1",
-  "35": "copy-vercel.js"
+  "35": "copy-vercel.js",
+  "36": "environment.js",
+  "37": "plan.js",
+  "38": "community.js",
+  "39": "education.js",
+  "40": "waste.js",
+  "41": "WardDetailPanel.jsx"
 }

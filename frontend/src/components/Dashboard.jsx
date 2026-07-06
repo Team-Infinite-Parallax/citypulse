@@ -4,7 +4,7 @@ import {
   ResponsiveContainer, AreaChart, Area, ComposedChart, Line, Legend, ReferenceLine
 } from 'recharts';
 import useCityStore from '../store/useCityStore';
-import { AlertCircle, Clock, Activity, Gauge, Wind, Filter, TrendingUp } from 'lucide-react';
+import { AlertCircle, Clock, Activity, Gauge, Wind, Filter, TrendingUp, BarChart3 as BarChartIcon } from 'lucide-react';
 import routesGeoJson from '../data/routes.json';
 
 const FLOW = '#38BDF8', CAUTION = '#F97316', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
@@ -36,6 +36,18 @@ const Dashboard = () => {
   const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLiteMode, setIsLiteMode] = useState(false);
+
+  useEffect(() => {
+    const checkLite = () => {
+      if (document.getElementById('main-content')?.getAttribute('data-lite-mode') === 'true') {
+        setIsLiteMode(true);
+      }
+    };
+    checkLite();
+    window.addEventListener('litemodechange', () => setIsLiteMode(true));
+    return () => window.removeEventListener('litemodechange', () => setIsLiteMode(true));
+  }, []);
   const [filterRoute, setFilterRoute] = useState('');
 
   const selectedRoute = useCityStore((state) => state.selectedRoute);
@@ -299,7 +311,13 @@ const Dashboard = () => {
             <h3 className="text-base font-semibold text-[#38BDF8]">Congestion Trend · 24h</h3>
             <span className="eyebrow">{activeRoute || 'All corridors'}</span>
           </div>
-          <div className="p-4 h-64">
+          {isLiteMode ? (
+          <div className="h-64 flex flex-col items-center justify-center bg-[#050B14] rounded-xl border border-[#1B2534]">
+            <BarChartIcon className="w-8 h-8 text-[#38BDF8] mb-2 opacity-50" />
+            <p className="text-[#9AA9BD] text-sm">Charts disabled in Lite Mode to save data.</p>
+          </div>
+        ) : (
+          <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={trendData} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
                 <defs>
@@ -317,6 +335,7 @@ const Dashboard = () => {
               </AreaChart>
             </ResponsiveContainer>
           </div>
+        )}
         </div>
 
         <div className="panel">
@@ -325,15 +344,22 @@ const Dashboard = () => {
             <span className="eyebrow">minutes</span>
           </div>
           <div className="p-4 h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={delayChartData} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
-                <XAxis dataKey="name" stroke="var(--text-dim)" fontSize={12} tickMargin={8} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
-                <YAxis stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
-                <RechartsTooltip cursor={{ fill: 'var(--glass-border)' }} contentStyle={tooltipStyle} />
-                <Bar dataKey="Delay" fill={CAUTION} radius={[4, 4, 0, 0]} maxBarSize={44} />
-              </BarChart>
-            </ResponsiveContainer>
+            {isLiteMode ? (
+              <div className="h-full flex flex-col items-center justify-center bg-[#050B14] rounded-xl border border-[#1B2534]">
+                <BarChartIcon className="w-8 h-8 text-[#38BDF8] mb-2 opacity-50" />
+                <p className="text-[#9AA9BD] text-sm">Charts disabled in Lite Mode to save data.</p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={delayChartData} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
+                  <XAxis dataKey="name" stroke="var(--text-dim)" fontSize={12} tickMargin={8} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
+                  <YAxis stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
+                  <RechartsTooltip cursor={{ fill: 'var(--glass-border)' }} contentStyle={tooltipStyle} />
+                  <Bar dataKey="Delay" fill={CAUTION} radius={[4, 4, 0, 0]} maxBarSize={44} />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
           </div>
         </div>
       </div>
@@ -351,44 +377,51 @@ const Dashboard = () => {
             <span className="eyebrow">{activeForecast.route_name} · 90% band</span>
           </div>
           <div className="p-4 h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <ComposedChart data={forecastChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="bandFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#38BDF8" stopOpacity={0.28} />
-                    <stop offset="100%" stopColor="#38BDF8" stopOpacity={0.06} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
-                <XAxis dataKey="ts" tickFormatter={fmtHour} stroke="var(--text-dim)" fontSize={11}
-                       tickMargin={8} minTickGap={28} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
-                <YAxis domain={[0, 100]} stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
-                <RechartsTooltip
-                  cursor={{ stroke: 'var(--glass-border)' }}
-                  contentStyle={tooltipStyle}
-                  labelFormatter={(ts) => {
-                    const p = forecastChartData.find(d => d.ts === ts);
-                    return p ? p.label : ts;
-                  }}
-                  formatter={(value, name) => {
-                    if (name === 'Uncertainty band' && Array.isArray(value))
-                      return [`${value[0]}–${value[1]}`, name];
-                    return [value, name];
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Area type="monotone" dataKey="range" name="Uncertainty band" stroke="none"
-                      fill="url(#bandFill)" connectNulls={false} isAnimationActive={false} />
-                <Line type="monotone" dataKey="Actual" name="Actual" stroke="#8896A8" strokeWidth={2}
-                      dot={false} connectNulls={false} isAnimationActive={false} />
-                <Line type="monotone" dataKey="Forecast" name="Forecast" stroke="#38BDF8" strokeWidth={2.5}
-                      strokeDasharray="5 4" dot={false} connectNulls isAnimationActive={false} />
-                {boundaryTs && (
-                  <ReferenceLine x={boundaryTs} stroke="#FFB020" strokeDasharray="2 4"
-                                 label={{ value: 'now', position: 'top', fill: '#FFB020', fontSize: 10 }} />
-                )}
-              </ComposedChart>
-            </ResponsiveContainer>
+            {isLiteMode ? (
+              <div className="h-full flex flex-col items-center justify-center bg-[#050B14] rounded-xl border border-[#1B2534]">
+                <TrendingUp className="w-8 h-8 text-[#38BDF8] mb-2 opacity-50" />
+                <p className="text-[#9AA9BD] text-sm">Forecast disabled in Lite Mode.</p>
+              </div>
+            ) : (
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={forecastChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="bandFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#38BDF8" stopOpacity={0.28} />
+                      <stop offset="100%" stopColor="#38BDF8" stopOpacity={0.06} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
+                  <XAxis dataKey="ts" tickFormatter={fmtHour} stroke="var(--text-dim)" fontSize={11}
+                         tickMargin={8} minTickGap={28} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
+                  <YAxis domain={[0, 100]} stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
+                  <RechartsTooltip
+                    cursor={{ stroke: 'var(--glass-border)' }}
+                    contentStyle={tooltipStyle}
+                    labelFormatter={(ts) => {
+                      const p = forecastChartData.find(d => d.ts === ts);
+                      return p ? p.label : ts;
+                    }}
+                    formatter={(value, name) => {
+                      if (name === 'Uncertainty band' && Array.isArray(value))
+                        return [`${value[0]}–${value[1]}`, name];
+                      return [value, name];
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
+                  <Area type="monotone" dataKey="range" name="Uncertainty band" stroke="none"
+                        fill="url(#bandFill)" connectNulls={false} isAnimationActive={false} />
+                  <Line type="monotone" dataKey="Actual" name="Actual" stroke="#8896A8" strokeWidth={2}
+                        dot={false} connectNulls={false} isAnimationActive={false} />
+                  <Line type="monotone" dataKey="Forecast" name="Forecast" stroke="#38BDF8" strokeWidth={2.5}
+                        strokeDasharray="5 4" dot={false} connectNulls isAnimationActive={false} />
+                  {boundaryTs && (
+                    <ReferenceLine x={boundaryTs} stroke="#FFB020" strokeDasharray="2 4"
+                                   label={{ value: 'now', position: 'top', fill: '#FFB020', fontSize: 10 }} />
+                  )}
+                </ComposedChart>
+              </ResponsiveContainer>
+            )}
           </div>
           <div className="px-4 pb-4 -mt-1">
             <p className="mono text-[11px] text-[#64748B]">

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 ---
 <!doctype html>
 <html lang="en">
@@ -160,14 +161,11 @@ import '../styles/global.css';
 				const ct = navigator.connection.effectiveType;
 				if (ct === 'slow-2g' || ct === '2g') {
 					document.getElementById('main-content').setAttribute('data-lite-mode', 'true');
-				}
-			}
-
-			// Lite mode detection
-			if ('connection' in navigator && navigator.connection.effectiveType) {
-				const ct = navigator.connection.effectiveType;
-				if (ct === 'slow-2g' || ct === '2g') {
-					document.getElementById('main-content').setAttribute('data-lite-mode', 'true');
+					try {
+						import('zustand').then(() => {
+							window.dispatchEvent(new CustomEvent('litemodechange', { detail: true }));
+						});
+					} catch(e) {}
 				}
 			}
 		</script>

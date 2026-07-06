@@ -1,16 +1,16 @@
 # Graph Report - citypulse  (2026-07-07)
 
 ## Corpus Check
-- 83 files · ~99,686 words
+- 84 files · ~99,744 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 423 nodes · 594 edges · 35 communities (31 shown, 4 thin omitted)
+- 424 nodes · 594 edges · 36 communities (32 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.65)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d6a10143`
+- Built from commit: `92614bdc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -76,7 +76,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (35 total, 4 thin omitted)
+## Communities (36 total, 4 thin omitted)
 
 ### Community 0 - "Backend API & Server"
 Cohesion: 0.12
@@ -207,7 +207,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `../layouts/Layout.astro` connect `Frontend App Assets` to `Frontend React Components`?**
   _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Why does `MapView()` connect `useCityStore` to `Frontend App Assets`?**
-  _High betweenness centrality (0.017) - this node is a cross-community bridge._
+  _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **What connects `__filename`, `__dirname`, `DATA_FILE` to the rest of the system?**
   _199 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Backend API & Server` be split into smaller, more focused modules?**

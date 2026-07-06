@@ -20,13 +20,13 @@
     "semantic_hash": ""
   },
   "backend/lib/gemini.js": {
-    "mtime": 1783356023.099821,
-    "ast_hash": "85ed1ddabff5174c25215eb29000a9a1",
+    "mtime": 1783375760.1743023,
+    "ast_hash": "81d23b217f413b9de38f031f85dc96a8",
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1783356109.132396,
-    "ast_hash": "f4d7763535869c4c819df0e524f901d4",
+    "mtime": 1783369269.7900293,
+    "ast_hash": "0889ba3b187b0c26fdc85d9a9831cd52",
     "semantic_hash": ""
   },
   "backend/routes/forecast.js": {
@@ -50,13 +50,13 @@
     "semantic_hash": ""
   },
   "backend/server.js": {
-    "mtime": 1783356627.6786616,
+    "mtime": 1783372802.2803402,
     "ast_hash": "874a4c761dc1bda72f986e2a29f01434",
     "semantic_hash": ""
   },
   "frontend/astro.config.mjs": {
-    "mtime": 1783367380.8869376,
-    "ast_hash": "fefff0aaa1eeb599c809a05c08135c35",
+    "mtime": 1783377480.1557715,
+    "ast_hash": "b91dfeaa78c4e704e4a494e3e7be5f10",
     "semantic_hash": ""
   },
   "frontend/package.json": {
@@ -70,13 +70,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/Dashboard.jsx": {
-    "mtime": 1783357523.1033435,
-    "ast_hash": "9e814017afe2d93eb4736a1e2be46ccc",
+    "mtime": 1783377469.249843,
+    "ast_hash": "e0c41bc9b9032607c04fbab448dcdb0a",
     "semantic_hash": ""
   },
   "frontend/src/components/MapView.jsx": {
-    "mtime": 1783353515.2879066,
-    "ast_hash": "90607c4020b045c3fd43fac914592e09",
+    "mtime": 1783377459.486444,
+    "ast_hash": "95428a2b1042021d38f7b6d46832099a",
     "semantic_hash": ""
   },
   "frontend/src/components/QueryBar.jsx": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "frontend/src/layouts/Layout.astro": {
-    "mtime": 1783357696.4480288,
-    "ast_hash": "cf0785315a6bb8e26f666b6339fd7d34",
+    "mtime": 1783373595.7710397,
+    "ast_hash": "2877efaed991641cb4c38034dcaaaad6",
     "semantic_hash": ""
   },
   "frontend/src/pages/index.astro": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "backend/data/chunks_cache.json": {
-    "mtime": 1783356258.5869489,
-    "ast_hash": "3de156c3fa1a925711cd7bb8219d8a60",
+    "mtime": 1783369457.7614982,
+    "ast_hash": "4f6004499b2fd1bb509689fef373d103",
     "semantic_hash": ""
   },
   "backend/data/community.json": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "deploy_gcp.ps1": {
-    "mtime": 1783358284.3504555,
-    "ast_hash": "ad4f1009cbd6502fc39ab3c54ae35c07",
+    "mtime": 1783369900.911982,
+    "ast_hash": "146a5645a91d2ed33b1ea115c2de2b13",
     "semantic_hash": ""
   },
   "frontend/src/components/AgenticPlanner.jsx": {
@@ -447,6 +447,11 @@
   "copy-vercel.js": {
     "mtime": 1783367878.5704758,
     "ast_hash": "110ae1a1621c434df6e5ae4069ae9e3e",
+    "semantic_hash": ""
+  },
+  "backend/test-gemini.js": {
+    "mtime": 1783369221.7701008,
+    "ast_hash": "a2052ba2490bd80fb0676e554e9ac35e",
     "semantic_hash": ""
   }
 }

@@ -487,17 +487,27 @@
       "label": "useVertex",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "backend_lib_gemini_usevertex",
       "community": 10,
       "norm_label": "usevertex"
     },
     {
+      "label": "useGoogleAI",
+      "file_type": "code",
+      "source_file": "backend/lib/gemini.js",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "backend_lib_gemini_usegoogleai",
+      "community": 10,
+      "norm_label": "usegoogleai"
+    },
+    {
       "label": "isVertexEnabled()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L38",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "backend_lib_gemini_isvertexenabled",
       "community": 10,
@@ -507,57 +517,57 @@
       "label": "generateQueryResponse()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L40",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "backend_lib_gemini_generatequeryresponse",
-      "community": 23,
+      "community": 10,
       "norm_label": "generatequeryresponse()"
     },
     {
       "label": "generateRecommendation()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L62",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "backend_lib_gemini_generaterecommendation",
-      "community": 10,
+      "community": 0,
       "norm_label": "generaterecommendation()"
     },
     {
       "label": "generateOneLiner()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L96",
+      "source_location": "L105",
       "_origin": "ast",
       "id": "backend_lib_gemini_generateoneliner",
-      "community": 23,
+      "community": 36,
       "norm_label": "generateoneliner()"
     },
     {
       "label": "generateStructured()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L115",
+      "source_location": "L124",
       "_origin": "ast",
       "id": "backend_lib_gemini_generatestructured",
-      "community": 24,
+      "community": 39,
       "norm_label": "generatestructured()"
     },
     {
       "label": "analyzeImage()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L137",
+      "source_location": "L146",
       "_origin": "ast",
       "id": "backend_lib_gemini_analyzeimage",
-      "community": 24,
+      "community": 10,
       "norm_label": "analyzeimage()"
     },
     {
       "label": "embedCache",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L180",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "backend_lib_gemini_embedcache",
       "community": 10,
@@ -567,7 +577,7 @@
       "label": "getAuthClient()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L182",
+      "source_location": "L190",
       "_origin": "ast",
       "id": "backend_lib_gemini_getauthclient",
       "community": 10,
@@ -577,7 +587,7 @@
       "label": "localEmbed()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L194",
+      "source_location": "L202",
       "_origin": "ast",
       "id": "backend_lib_gemini_localembed",
       "community": 10,
@@ -587,7 +597,7 @@
       "label": "l2Normalize()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L214",
+      "source_location": "L222",
       "_origin": "ast",
       "id": "backend_lib_gemini_l2normalize",
       "community": 10,
@@ -597,7 +607,7 @@
       "label": "vertexEmbedBatch()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L224",
+      "source_location": "L232",
       "_origin": "ast",
       "id": "backend_lib_gemini_vertexembedbatch",
       "community": 10,
@@ -607,7 +617,7 @@
       "label": "embedTexts()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L265",
+      "source_location": "L273",
       "_origin": "ast",
       "id": "backend_lib_gemini_embedtexts",
       "community": 10,
@@ -617,7 +627,7 @@
       "label": "generateEmbeddings()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L311",
+      "source_location": "L333",
       "_origin": "ast",
       "id": "backend_lib_gemini_generateembeddings",
       "community": 10,
@@ -627,7 +637,7 @@
       "label": "embeddingMode()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L316",
+      "source_location": "L338",
       "_origin": "ast",
       "id": "backend_lib_gemini_embeddingmode",
       "community": 10,
@@ -637,7 +647,7 @@
       "label": "embeddingSpace()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L321",
+      "source_location": "L343",
       "_origin": "ast",
       "id": "backend_lib_gemini_embeddingspace",
       "community": 10,
@@ -647,7 +657,7 @@
       "label": "cosineSimilarity()",
       "file_type": "code",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L326",
+      "source_location": "L350",
       "_origin": "ast",
       "id": "backend_lib_gemini_cosinesimilarity",
       "community": 10,
@@ -964,10 +974,20 @@
       "norm_label": "@google-cloud/vertexai"
     },
     {
-      "label": "cors",
+      "label": "@google/generative-ai",
       "file_type": "code",
       "source_file": "backend/package.json",
       "source_location": "L21",
+      "_origin": "ast",
+      "id": "backend_package_dependencies_google_generative_ai",
+      "community": 3,
+      "norm_label": "@google/generative-ai"
+    },
+    {
+      "label": "cors",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "backend_package_dependencies_cors",
       "community": 3,
@@ -977,7 +997,7 @@
       "label": "dotenv",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "backend_package_dependencies_dotenv",
       "community": 3,
@@ -987,7 +1007,7 @@
       "label": "express",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "backend_package_dependencies_express",
       "community": 3,
@@ -997,7 +1017,7 @@
       "label": "express-rate-limit",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "backend_package_dependencies_express_rate_limit",
       "community": 3,
@@ -1007,7 +1027,7 @@
       "label": "pg",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "backend_package_dependencies_pg",
       "community": 3,
@@ -1017,7 +1037,7 @@
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "backend_package_devdependencies",
       "community": 3,
@@ -1027,7 +1047,7 @@
       "label": "jest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "backend_package_devdependencies_jest",
       "community": 3,
@@ -1037,7 +1057,7 @@
       "label": "supertest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "backend_package_devdependencies_supertest",
       "community": 3,
@@ -1090,7 +1110,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_community",
-      "community": 23,
+      "community": 38,
       "norm_label": "community.js"
     },
     {
@@ -1100,7 +1120,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_routes_community_router",
-      "community": 23,
+      "community": 38,
       "norm_label": "router"
     },
     {
@@ -1110,7 +1130,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "backend_routes_community_filename",
-      "community": 23,
+      "community": 38,
       "norm_label": "__filename"
     },
     {
@@ -1120,7 +1140,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_routes_community_dirname",
-      "community": 23,
+      "community": 38,
       "norm_label": "__dirname"
     },
     {
@@ -1130,7 +1150,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "backend_routes_community_loadcommunitydata",
-      "community": 23,
+      "community": 38,
       "norm_label": "loadcommunitydata()"
     },
     {
@@ -1140,7 +1160,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "backend_routes_community_loadincidents",
-      "community": 23,
+      "community": 38,
       "norm_label": "loadincidents()"
     },
     {
@@ -1150,7 +1170,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "backend_routes_community_loadenvdata",
-      "community": 23,
+      "community": 38,
       "norm_label": "loadenvdata()"
     },
     {
@@ -1160,7 +1180,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_education",
-      "community": 23,
+      "community": 39,
       "norm_label": "education.js"
     },
     {
@@ -1170,7 +1190,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_routes_education_router",
-      "community": 23,
+      "community": 39,
       "norm_label": "router"
     },
     {
@@ -1180,7 +1200,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "backend_routes_education_filename",
-      "community": 23,
+      "community": 39,
       "norm_label": "__filename"
     },
     {
@@ -1190,7 +1210,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_routes_education_dirname",
-      "community": 23,
+      "community": 39,
       "norm_label": "__dirname"
     },
     {
@@ -1200,7 +1220,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "backend_routes_education_loadeducationdata",
-      "community": 23,
+      "community": 39,
       "norm_label": "loadeducationdata()"
     },
     {
@@ -1250,7 +1270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_environment",
-      "community": 23,
+      "community": 36,
       "norm_label": "environment.js"
     },
     {
@@ -1260,7 +1280,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "backend_routes_environment_router",
-      "community": 23,
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -1270,7 +1290,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_routes_environment_filename",
-      "community": 23,
+      "community": 36,
       "norm_label": "__filename"
     },
     {
@@ -1280,7 +1300,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_routes_environment_dirname",
-      "community": 23,
+      "community": 36,
       "norm_label": "__dirname"
     },
     {
@@ -1290,7 +1310,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "backend_routes_environment_loadenvfile",
-      "community": 23,
+      "community": 36,
       "norm_label": "loadenvfile()"
     },
     {
@@ -1300,7 +1320,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "backend_routes_environment_loadincidentsfile",
-      "community": 23,
+      "community": 36,
       "norm_label": "loadincidentsfile()"
     },
     {
@@ -1310,7 +1330,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_forecast",
-      "community": 21,
+      "community": 0,
       "norm_label": "forecast.js"
     },
     {
@@ -1330,7 +1350,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_routes_forecast_hourlabel",
-      "community": 21,
+      "community": 0,
       "norm_label": "hourlabel()"
     },
     {
@@ -1380,7 +1400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_plan",
-      "community": 24,
+      "community": 37,
       "norm_label": "plan.js"
     },
     {
@@ -1390,7 +1410,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_routes_plan_router",
-      "community": 24,
+      "community": 37,
       "norm_label": "router"
     },
     {
@@ -1400,7 +1420,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_routes_plan_filename",
-      "community": 24,
+      "community": 37,
       "norm_label": "__filename"
     },
     {
@@ -1410,7 +1430,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "backend_routes_plan_dirname",
-      "community": 24,
+      "community": 37,
       "norm_label": "__dirname"
     },
     {
@@ -1420,7 +1440,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "backend_routes_plan_loadenvdata",
-      "community": 24,
+      "community": 37,
       "norm_label": "loadenvdata()"
     },
     {
@@ -1430,7 +1450,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "backend_routes_plan_loadincidents",
-      "community": 24,
+      "community": 37,
       "norm_label": "loadincidents()"
     },
     {
@@ -1440,7 +1460,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "backend_routes_plan_tourism_poi",
-      "community": 24,
+      "community": 37,
       "norm_label": "tourism_poi"
     },
     {
@@ -1450,7 +1470,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "backend_routes_plan_energy_data",
-      "community": 24,
+      "community": 37,
       "norm_label": "energy_data"
     },
     {
@@ -1460,7 +1480,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "backend_routes_plan_createsteptracker",
-      "community": 24,
+      "community": 37,
       "norm_label": "createsteptracker()"
     },
     {
@@ -1470,7 +1490,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "backend_routes_plan_plan_types",
-      "community": 24,
+      "community": 37,
       "norm_label": "plan_types"
     },
     {
@@ -1650,7 +1670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_tourism",
-      "community": 23,
+      "community": 36,
       "norm_label": "tourism.js"
     },
     {
@@ -1660,7 +1680,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "backend_routes_tourism_router",
-      "community": 23,
+      "community": 36,
       "norm_label": "router"
     },
     {
@@ -1670,7 +1690,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "backend_routes_tourism_points_of_interest",
-      "community": 23,
+      "community": 36,
       "norm_label": "points_of_interest"
     },
     {
@@ -1680,7 +1700,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "backend_routes_tourism_local_events",
-      "community": 23,
+      "community": 36,
       "norm_label": "local_events"
     },
     {
@@ -1710,7 +1730,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_routes_waste",
-      "community": 23,
+      "community": 40,
       "norm_label": "waste.js"
     },
     {
@@ -1720,7 +1740,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_routes_waste_router",
-      "community": 23,
+      "community": 40,
       "norm_label": "router"
     },
     {
@@ -1730,7 +1750,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "backend_routes_waste_filename",
-      "community": 23,
+      "community": 40,
       "norm_label": "__filename"
     },
     {
@@ -1740,7 +1760,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_routes_waste_dirname",
-      "community": 23,
+      "community": 40,
       "norm_label": "__dirname"
     },
     {
@@ -1750,7 +1770,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "backend_routes_waste_loadenvfile",
-      "community": 23,
+      "community": 40,
       "norm_label": "loadenvfile()"
     },
     {
@@ -1760,7 +1780,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "backend_routes_waste_loadwardsfile",
-      "community": 23,
+      "community": 40,
       "norm_label": "loadwardsfile()"
     },
     {
@@ -2162,6 +2182,16 @@
       "id": "backend_server_authenticatekey",
       "community": 23,
       "norm_label": "authenticatekey()"
+    },
+    {
+      "label": "test-gemini.js",
+      "file_type": "code",
+      "source_file": "backend/test-gemini.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "backend_test_gemini",
+      "community": 10,
+      "norm_label": "test-gemini.js"
     },
     {
       "label": "api.test.js",
@@ -3000,7 +3030,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_warddetailpanel",
-      "community": 26,
+      "community": 41,
       "norm_label": "warddetailpanel.jsx"
     },
     {
@@ -3010,7 +3040,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_src_components_warddetailpanel_livabilityemoji",
-      "community": 26,
+      "community": 41,
       "norm_label": "livabilityemoji()"
     },
     {
@@ -3020,7 +3050,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_src_components_warddetailpanel_livabilityword",
-      "community": 26,
+      "community": 41,
       "norm_label": "livabilityword()"
     },
     {
@@ -3030,7 +3060,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_src_components_warddetailpanel_warddetailpanel",
-      "community": 26,
+      "community": 41,
       "norm_label": "warddetailpanel()"
     },
     {
@@ -3118,7 +3148,7 @@
       "label": "saved",
       "file_type": "code",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L108",
+      "source_location": "L109",
       "_origin": "ast",
       "id": "frontend_src_layouts_layout_saved",
       "community": 2,
@@ -3128,7 +3158,7 @@
       "label": "accToggle",
       "file_type": "code",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L112",
+      "source_location": "L113",
       "_origin": "ast",
       "id": "frontend_src_layouts_layout_acctoggle",
       "community": 2,
@@ -3138,7 +3168,7 @@
       "label": "themeToggle",
       "file_type": "code",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L130",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "frontend_src_layouts_layout_themetoggle",
       "community": 2,
@@ -3148,7 +3178,7 @@
       "label": "themeIconDark",
       "file_type": "code",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L131",
+      "source_location": "L132",
       "_origin": "ast",
       "id": "frontend_src_layouts_layout_themeicondark",
       "community": 2,
@@ -3158,7 +3188,7 @@
       "label": "themeIconLight",
       "file_type": "code",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L132",
+      "source_location": "L133",
       "_origin": "ast",
       "id": "frontend_src_layouts_layout_themeiconlight",
       "community": 2,
@@ -3183,6 +3213,16 @@
       "id": "c_users_himan_desktop_citypulse_frontend_src_styles_global_css",
       "community": 2,
       "norm_label": "../styles/global.css"
+    },
+    {
+      "label": "maplibre-gl/dist/maplibre-gl.css",
+      "file_type": "code",
+      "source_file": "maplibre-gl/dist/maplibre-gl.css",
+      "confidence": "EXTRACTED",
+      "_origin": "ast",
+      "id": "maplibre_gl_css",
+      "community": 2,
+      "norm_label": "maplibre-gl/dist/maplibre-gl.css"
     },
     {
       "label": "index.astro",
@@ -5494,7 +5534,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L137",
+      "source_location": "L146",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_analyzeimage",
@@ -5504,7 +5544,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L326",
+      "source_location": "L350",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_cosinesimilarity",
@@ -5514,7 +5554,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L180",
+      "source_location": "L188",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_embedcache",
@@ -5524,7 +5564,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L316",
+      "source_location": "L338",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_embeddingmode",
@@ -5534,7 +5574,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L321",
+      "source_location": "L343",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_embeddingspace",
@@ -5544,7 +5584,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L265",
+      "source_location": "L273",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_embedtexts",
@@ -5554,7 +5594,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L311",
+      "source_location": "L333",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_generateembeddings",
@@ -5564,7 +5604,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L96",
+      "source_location": "L105",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_generateoneliner",
@@ -5574,7 +5614,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L40",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_generatequeryresponse",
@@ -5584,7 +5624,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L62",
+      "source_location": "L71",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_generaterecommendation",
@@ -5594,7 +5634,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L115",
+      "source_location": "L124",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_generatestructured",
@@ -5604,7 +5644,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L182",
+      "source_location": "L190",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_getauthclient",
@@ -5614,7 +5654,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L38",
+      "source_location": "L47",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_isvertexenabled",
@@ -5624,7 +5664,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L214",
+      "source_location": "L222",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_l2normalize",
@@ -5634,7 +5674,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L194",
+      "source_location": "L202",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_localembed",
@@ -5644,7 +5684,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L17",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "backend_lib_gemini",
+      "target": "backend_lib_gemini_usegoogleai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/lib/gemini.js",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_usevertex",
@@ -5654,7 +5704,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L224",
+      "source_location": "L232",
       "weight": 1.0,
       "source": "backend_lib_gemini",
       "target": "backend_lib_gemini_vertexembedbatch",
@@ -5804,6 +5854,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/test-gemini.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_test_gemini",
+      "target": "backend_lib_gemini",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5822,6 +5883,17 @@
       "source_location": "L2",
       "weight": 1.0,
       "source": "backend_routes_tourism",
+      "target": "backend_lib_gemini_generatequeryresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/test-gemini.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "backend_test_gemini",
       "target": "backend_lib_gemini_generatequeryresponse",
       "confidence_score": 1.0
     },
@@ -5973,7 +6045,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L225",
+      "source_location": "L233",
       "weight": 1.0,
       "source": "backend_lib_gemini_vertexembedbatch",
       "target": "backend_lib_gemini_getauthclient",
@@ -5984,7 +6056,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L303",
+      "source_location": "L325",
       "weight": 1.0,
       "source": "backend_lib_gemini_embedtexts",
       "target": "backend_lib_gemini_localembed",
@@ -5995,7 +6067,18 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L246",
+      "source_location": "L288",
+      "weight": 1.0,
+      "source": "backend_lib_gemini_embedtexts",
+      "target": "backend_lib_gemini_l2normalize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/lib/gemini.js",
+      "source_location": "L254",
       "weight": 1.0,
       "source": "backend_lib_gemini_vertexembedbatch",
       "target": "backend_lib_gemini_l2normalize",
@@ -6006,7 +6089,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L282",
+      "source_location": "L304",
       "weight": 1.0,
       "source": "backend_lib_gemini_embedtexts",
       "target": "backend_lib_gemini_vertexembedbatch",
@@ -6017,7 +6100,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/lib/gemini.js",
-      "source_location": "L312",
+      "source_location": "L334",
       "weight": 1.0,
       "source": "backend_lib_gemini_generateembeddings",
       "target": "backend_lib_gemini_embedtexts",
@@ -6463,7 +6546,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "backend_package",
       "target": "backend_package_devdependencies",
@@ -6573,7 +6656,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "source": "backend_package_dependencies",
       "target": "backend_package_dependencies_cors",
@@ -6583,7 +6666,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "backend_package_dependencies",
       "target": "backend_package_dependencies_dotenv",
@@ -6593,7 +6676,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "backend_package_dependencies",
       "target": "backend_package_dependencies_express",
@@ -6603,7 +6686,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "backend_package_dependencies",
       "target": "backend_package_dependencies_express_rate_limit",
@@ -6643,7 +6726,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L25",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_google_generative_ai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L26",
       "weight": 1.0,
       "source": "backend_package_dependencies",
       "target": "backend_package_dependencies_pg",
@@ -6653,7 +6746,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "backend_package_devdependencies",
       "target": "backend_package_devdependencies_jest",
@@ -6663,7 +6756,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0,
       "source": "backend_package_devdependencies",
       "target": "backend_package_devdependencies_supertest",
@@ -8414,12 +8507,23 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/package.json",
+      "source_location": "L19",
+      "weight": 1.0,
+      "context": "import",
+      "source": "frontend_package_dependencies_maplibre_gl",
+      "target": "maplibre_gl_css",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/components/MapView.jsx",
-      "source_location": "L113",
+      "source_location": "L128",
       "weight": 1.0,
       "source": "frontend_src_components_mapview_mapview",
       "target": "frontend_package_dependencies_react"
@@ -8817,7 +8921,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Dashboard.jsx",
-      "source_location": "L148",
+      "source_location": "L160",
       "weight": 1.0,
       "source": "frontend_src_components_dashboard_dashboard",
       "target": "frontend_src_components_dashboard_scorecolor",
@@ -8828,7 +8932,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Dashboard.jsx",
-      "source_location": "L216",
+      "source_location": "L228",
       "weight": 1.0,
       "source": "frontend_src_components_dashboard_dashboard",
       "target": "frontend_src_components_dashboard_congestionword",
@@ -8839,7 +8943,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Dashboard.jsx",
-      "source_location": "L224",
+      "source_location": "L236",
       "weight": 1.0,
       "source": "frontend_src_components_dashboard_dashboard",
       "target": "frontend_src_components_dashboard_aqiword",
@@ -8850,7 +8954,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Dashboard.jsx",
-      "source_location": "L41",
+      "source_location": "L53",
       "weight": 1.0,
       "source": "frontend_src_components_dashboard_dashboard",
       "target": "frontend_src_store_usecitystore_usecitystore",
@@ -9438,7 +9542,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L112",
+      "source_location": "L113",
       "weight": 1.0,
       "source": "frontend_src_layouts_layout",
       "target": "frontend_src_layouts_layout_acctoggle",
@@ -9448,7 +9552,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L108",
+      "source_location": "L109",
       "weight": 1.0,
       "source": "frontend_src_layouts_layout",
       "target": "frontend_src_layouts_layout_saved",
@@ -9458,7 +9562,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L131",
+      "source_location": "L132",
       "weight": 1.0,
       "source": "frontend_src_layouts_layout",
       "target": "frontend_src_layouts_layout_themeicondark",
@@ -9468,7 +9572,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L132",
+      "source_location": "L133",
       "weight": 1.0,
       "source": "frontend_src_layouts_layout",
       "target": "frontend_src_layouts_layout_themeiconlight",
@@ -9478,10 +9582,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/layouts/Layout.astro",
-      "source_location": "L130",
+      "source_location": "L131",
       "weight": 1.0,
       "source": "frontend_src_layouts_layout",
       "target": "frontend_src_layouts_layout_themetoggle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/layouts/Layout.astro",
+      "source": "frontend_src_layouts_layout",
+      "target": "maplibre_gl_css",
       "confidence_score": 1.0
     },
     {
@@ -10390,5 +10502,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "92614bdc219b4f9c841ce22ea4ebc2e1e8feeabe"
+  "built_at_commit": "24850d7fa8aa1465e62430d23129ad846a03e8a7"
 }

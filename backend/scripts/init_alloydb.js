@@ -1,6 +1,6 @@
 import pg from 'pg';
 import { getTrafficData } from '../lib/db.js';
-import { embedTexts } from '../lib/gemini.js';
+import { embedTexts, embeddingSpace } from '../lib/gemini.js';
 import { upsertChunks } from '../lib/vectorStore.js';
 import { buildDomainSummaries } from '../routes/query.js';
 import fs from 'fs/promises';
@@ -39,10 +39,13 @@ async function initAlloyDB() {
           domain VARCHAR(255) NOT NULL,
           text TEXT NOT NULL,
           embedding vector(768) NOT NULL,
+          embed_space VARCHAR(128),
           stats JSONB NOT NULL,
           updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
       `);
+      // Migration for tables created before embed_space existed.
+      await client.query('ALTER TABLE document_chunks ADD COLUMN IF NOT EXISTS embed_space VARCHAR(128);');
       console.log('document_chunks table created/ensured.');
       await client.end();
     } catch (err) {
@@ -76,6 +79,7 @@ async function initAlloyDB() {
       domain: c.domain,
       text: c.text,
       embedding: embeddings[i],
+      embed_space: embeddingSpace(),
       stats: c.stats
     }));
 

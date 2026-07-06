@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { AlertCircle, Leaf, ShieldAlert, Trash2 } from 'lucide-react';
+import useCityStore from '../store/useCityStore';
+
+const livabilityEmoji = (score) => score >= 80 ? '🟢' : score >= 60 ? '🟡' : '🔴';
+const livabilityWord = (score) => score >= 80 ? 'Great' : score >= 60 ? 'Okay' : 'Needs Work';
 
 const WardDetailPanel = () => {
+  const viewMode = useCityStore((s) => s.viewMode);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,6 +44,23 @@ const WardDetailPanel = () => {
       <div className="panel p-6 text-[#FF9497] flex items-center gap-2">
         <AlertCircle className="w-5 h-5" />
         {error}
+      </div>
+    );
+  }
+
+  if (viewMode === 'citizen') {
+    return (
+      <div className="space-y-3">
+        <p className="eyebrow mb-2">My Neighborhood</p>
+        {data.map((ward) => (
+          <div key={ward.ward} className="panel p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-bold text-lg text-[#38BDF8]">{ward.ward}</h3>
+              <span className="text-lg">{livabilityEmoji(ward.livability_score)} {livabilityWord(ward.livability_score)}</span>
+            </div>
+            <p className="text-sm text-[#8896A8] leading-relaxed">{ward.interpretation}</p>
+          </div>
+        ))}
       </div>
     );
   }

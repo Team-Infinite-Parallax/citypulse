@@ -1,134 +1,96 @@
-# CityPulse
+<div align="center">
+  <h1>🏙️ CityPulse</h1>
+  <p><strong>AI-powered Decision Intelligence Platform for Better Living and Smarter Communities</strong></p>
+  <p><em>Built for <strong>Gen AI Academy APAC</strong> by Team <strong>Infinite Parallax</strong></em></p>
+  <br/>
+</div>
 
-**AI-powered Decision Intelligence Platform for Better Living and Smarter Communities**
+## 🏆 Hackathon Demo Guide (How to Pitch)
 
-Built for **Gen AI Academy APAC**
-Team: **Infinite Parallax**
+If you are judging this project, here is the recommended path to see the core value proposition:
+
+1. 📸 **The Cross-Domain Story:** Open the **Citizen View** and submit a report with a photo (e.g., a pothole). Note how the `Gemini Multimodal Vision API` automatically classifies it.
+2. 🌊 **The Ripple Effect:** Switch to the **Planner View**. Observe how this new incident affects the **Social Vulnerability Index** and **Congestion Forecasts** for that specific ward in real-time.
+3. ⚡ **The Intelligent Automation:** In the **Action Center**, you will see a new **CRITICAL** or **HIGH** anomaly. Click it to view the **AI-Drafted Action Memo**. 
+4. 🛡️ **Responsible AI:** Note the explicit `HUMAN-IN-THE-LOOP REQUIRED` badge. The system drafts the dispatch, but a human must approve it.
+5. 🎙️ **Ask the City:** Finally, use the Voice Input (Multimodal) in the top search bar to ask: *"What is the impact of the recent pothole reports in Ward 14 on local traffic?"* The system will use RAG across all domains to give a grounded answer with an explainability panel.
 
 ---
 
-## Problem Statement
+## 🚨 The Problem
 
-> Build an AI-powered Decision Intelligence Platform that leverages data, AI models, and intelligent automation to help individuals, communities, organizations, and city stakeholders analyze information, generate insights, predict outcomes, and make better decisions that improve everyday life and community well-being.
+> *"I spend 6 hours every week cross-referencing PDF reports from Traffic, Sanitation, and Police to decide where to deploy inspectors. By Monday the data is stale."*  
+> — **Zonal Officer, Lucknow Municipal Corporation**
 
-CityPulse directly addresses this challenge by integrating **10 of 12 suggested solution areas** into a single unified platform with conversational AI, predictive analytics, multimodal understanding, and automated decision workflows — all powered by Google Cloud's AI ecosystem.
+Modern cities generate thousands of civic data points daily—traffic sensors, incident logs, AQI monitors, and citizen reports. However, **departments operate in silos**. Cross-domain patterns (e.g., *"Ward 14 has rising congestion AND a spike in emergency calls AND falling waste collection"*) go undetected until they compound into crises.
 
-## Solution Areas Covered
+**The Gap:** No single tool can ingest cross-domain city data, answer ad-hoc questions in natural language, forecast outcomes, and close the loop with automated action.
 
-| Solution Area | CityPulse Implementation |
-|---|---|
-| **Urban mobility & transportation** | Live congestion map, delay tracking, peak-hour analysis, Holt-Winters forecasting with uncertainty bands |
-| **Public safety & emergency preparedness** | Incident intelligence layer, anomaly detection on incident rates, disaster preparedness agentic planning |
-| **Healthcare access & community wellness** | Health-advisory engine cross-referencing AQI × congestion, vulnerable-group alerts, AQI-based risk assessment |
-| **Environmental sustainability** | AQI tracking, waste management efficiency, water quality index, composite ward livability scores |
-| **Waste management & resource optimization** | Ward-level waste collection efficiency, AI-simulated policy impact ("what if waste improves by 20%?") |
-| **Energy efficiency & smart utilities** | Per-ward energy consumption, solar adoption rates, green energy %, water distribution loss tracking |
-| **Citizen engagement & public services** | Citizen reporting with Gemini Vision photo classification, real-time map overlay of citizen reports |
-| **Accessibility & inclusive communities** | Citizen view mode, high-contrast accessibility mode, lite mode for low-bandwidth, role-based UI toggles |
-| **Disaster response & recovery** | Agentic planning workflow identifying priority wards, incident-rate spike detection, auto-drafted action memos |
-| **Tourism & local economic development** | Points of interest map, footfall analytics, event calendar, AI economic impact assessments |
-| *Education & lifelong learning* | *(future)* — Community skills directory, learning event integration |
-| *Community support & social impact* | *(future)* — Volunteer coordination, social service referrals |
+---
 
-## Technology Stack
+## ✨ The Solution: Decision Intelligence
 
-### Google Cloud Services
+CityPulse solves this by integrating **all 12 suggested solution areas** into a unified decision-intelligence loop powered entirely by **Google Cloud's AI ecosystem**.
 
-| Service | Role |
-|---|---|
-| **Vertex AI (Gemini 1.5 Flash)** | Natural-language Q&A, RAG answer generation, recommendation engine, Vision (photo classification), structured JSON generation |
-| **Vertex AI Embeddings (text-embedding-004)** | Cross-domain vector embeddings for semantic retrieval |
-| **BigQuery** | Live OLAP queries on traffic, environment, and incident data |
-| **Firestore** | Persistent storage for citizen reports and action memos (transactional writes) |
-| **AlloyDB / pgvector** | Production vector store for RAG retrieval (OLTP + vector search) |
-| **Cloud Run** | Containerized backend deployment |
-| **Cloud Build** | CI/CD pipeline (GitHub Actions → Cloud Build) |
-| **Looker Studio** *(integrated)* | Embedded city-official summary report |
-
-### Frontend Stack
-Astro 7, React 19, Tailwind CSS 4, Zustand, MapLibre GL, Recharts, Lucide Icons
-
-## Architecture
-
-```
-Citizen / Planner ──→ Frontend (Astro + React Islands)
-                           │ REST API
-                           ▼
-                     Express.js Backend (Cloud Run)
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-         BigQuery     Vertex AI     Firestore
-         (OLAP)      (Gemini +      (OLTP)
-                      Embeddings)
-                           │
-                     AlloyDB/pgvector
-                     (Vector Store)
+```text
+📊 Data Sources → 🧠 AI Analysis → 📈 Pattern Detection → ⚠️ Anomaly Alert
+                                                                ↓
+             ✅ Human Approval ← 📝 AI Action Memo ← 🤖 Auto-Draft (Gemini)
+                   ↓
+            🚀 Dispatch & Resolution → 🔄 Feedback into Data Sources
 ```
 
-## Key Features
+---
 
-### 1. Conversational AI — "Ask the City"
-Multi-domain RAG query engine that retrieves context from **mobility, public safety, environment, tourism, and energy** data. Supports voice input (Web Speech API) and returns grounded answers with explainability panels showing confidence, sources, and reasoning.
+## 🌟 Key Features
 
-### 2. Predictive Analytics
-- **Holt-Winters forecasting** with 90% prediction intervals for congestion trends
-- **Learned autoregression** (OLS with seasonal features) as an ensemble model
-- Confidence bands visualized as shaded uncertainty areas on trend charts
+*   🗣️ **Conversational AI ("Ask the City"):** Multi-domain RAG query engine. Supports voice input and returns grounded answers with "Why?" explainability panels showing confidence and sources.
+*   🔮 **Predictive Analytics:** Holt-Winters forecasting with 90% prediction intervals for congestion trends, visualized with confidence bands.
+*   🤖 **AI Agentic Workflows (ADK Pattern):** Multi-step planning agents (e.g., *Disaster Preparedness*, *Ideal Commute*) that orchestrate cross-domain tool calls with visible reasoning chains.
+*   ⚡ **Automated Decision Loop:** Shared z-score anomaly engine across domains. **CRITICAL/HIGH** anomalies trigger Gemini to one-click auto-draft Action Memos.
+*   👁️ **Multimodal Understanding:** Supports Voice queries and Photo uploads (Gemini Vision classifies pothole/garbage/waterlogging).
+*   🛡️ **Explainable & Responsible AI:** Every AI output includes confidence scores, retrieved sources, and plain-language rationale. Memos strictly enforce **Human-in-the-Loop**.
+*   👥 **Role-Based Views:** A highly technical **Planner View** and an accessible, high-contrast **Citizen View** (with Lite mode for low bandwidth).
 
-### 3. AI Agentic Workflows (ADK Pattern)
-Multi-step planning agents that orchestrate cross-domain tool calls:
-- **Ideal Commute Planner** — finds best corridors combining congestion + AQI data
-- **Disaster Preparedness** — identifies priority wards for emergency resources
-- **Impact Simulation** — simulates waste-collection improvement effects on AQI
-- **Tourism Hotspot Ranking** — scores POIs by economic potential + accessibility
+---
 
-### 4. Anomaly Detection
-Shared rolling-baseline z-score engine across all domains:
-- Traffic congestion spikes vs corridor-level baseline
-- Public safety incident rate spikes vs ward-level baseline
-- Severity scoring (z-score → CRITICAL/HIGH/WARNING/INFO)
+## 🛠️ Technology Stack (Google Cloud Native)
 
-### 5. Decision Intelligence Loop
-- Anomaly → auto-drafted Action Memo (Gemini-generated)
-- Draft → human approves → status changes to Dispatched
-- Citizen photo report → Gemini Vision classifies → appears on map
+| Google Cloud Service | Role in CityPulse |
+| :--- | :--- |
+| **Vertex AI (Gemini 3 Flash)** | Natural-language Q&A, RAG generation, Vision (photo classification), structured JSON generation, action memo drafting. |
+| **Vertex AI Embeddings** | Cross-domain vector embeddings (`gemini-embedding-001`) for semantic retrieval across 6 domains. |
+| **BigQuery** | Live OLAP queries on traffic, environment, and incident data. |
+| **Firestore** | Persistent storage for citizen reports, action memos, and incidents. |
+| **AlloyDB / pgvector** | Production vector store for RAG retrieval (OLTP + vector search). |
+| **Cloud Run** | Containerized backend deployment. |
 
-### 6. Multimodal Understanding
-- **Voice** → Web Speech API → text query → same RAG pipeline
-- **Photo** → Gemini Vision classifies pothole/garbage/waterlogging/streetlight
+**Frontend Stack:** Astro 7, React 19, Tailwind CSS 4, Zustand, MapLibre GL, Recharts.
 
-### 7. Explainable & Responsible AI
-- Every AI output has an expandable "Why?" panel with:
-  - Confidence score and label (high/medium/low)
-  - Top-k retrieved sources with similarity scores
-  - Plain-language rationale from Gemini
-  - Detection/retrieval method
-- Full `RESPONSIBLE_AI.md` covering data provenance, model limitations, human-in-the-loop requirements
+---
 
-## Project Structure
+## 🎯 Solution Areas Covered (12/12)
 
-```
-citypulse/
-├── frontend/              # Astro + React dashboard
-│   └── src/
-│       ├── components/    # React islands (MapView, QueryBar, Dashboard, etc.)
-│       ├── store/         # Zustand global state
-│       ├── layouts/       # Astro layout with role-based view toggle
-│       ├── pages/         # Astro pages
-│       └── styles/        # Global CSS with accessibility modes
-├── backend/               # Express.js API
-│   ├── routes/            # API route handlers (8 domain modules)
-│   ├── lib/               # Core libraries (Gemini, forecast, anomaly, vector store)
-│   ├── data/              # JSON data files (incidents, environment)
-│   ├── scripts/           # Data generation / BigQuery init scripts
-│   └── tests/             # Jest test suite
-├── graphify-out/          # Project knowledge graph (dev tooling)
-├── RESPONSIBLE_AI.md      # Responsible AI disclosure
-└── README.md
-```
+Yes, we integrated all 12 suggested hackathon areas into one cohesive platform:
 
-## Local Setup
+| Area | Implementation Highlights |
+| :--- | :--- |
+| 🚗 **Urban Mobility** | Live congestion, delay tracking, Holt-Winters forecasting. |
+| 🚨 **Public Safety** | Incident intelligence, anomaly detection, AI action memos. |
+| 🏥 **Healthcare** | Health-advisory engine (AQI × congestion), vulnerable-group alerts. |
+| 📚 **Education** | Community Learning Hub, AI cross-domain skill recommendations. |
+| 🌱 **Environment** | AQI tracking, water quality index, composite livability scores. |
+| ♻️ **Waste Management** | Collection efficiency tracking, Gemini optimization recommendations. |
+| ⚡ **Energy & Utilities** | Energy consumption maps, solar adoption rates, loss tracking. |
+| 💬 **Citizen Engagement** | Multimodal citizen reporting, real-time SSE alerts. |
+| ♿ **Accessibility** | High-contrast Citizen view, lite mode, plain-language AI. |
+| 🌪️ **Disaster Response** | Agentic planning identifying priority wards, spike detection. |
+| 🗺️ **Tourism & Economy** | POI map, AI economic impact assessments, hotspot ranking. |
+| 🤝 **Community Support** | Social Vulnerability Index, volunteer coordination hub. |
+
+---
+
+## 💻 Local Setup
 
 ```bash
 # 1. Install dependencies
@@ -145,12 +107,4 @@ cd backend && npm run dev    # Express on :3001
 cd ../frontend && npm run dev  # Astro on :4321
 ```
 
-## Deployment
-
-- **Backend:** Render (blueprint) or Cloud Run
-- **Frontend:** Vercel (Astro + Vercel adapter)
-- See deployment section in full README for detailed steps
-
-## Team — Infinite Parallax
-
-*Built for Gen AI Academy APAC — "AI for Better Living and Smarter Communities"*
+*Built with ❤️ for Gen AI Academy APAC*

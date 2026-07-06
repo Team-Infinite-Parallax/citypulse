@@ -8,6 +8,11 @@ const projectId =
   process.env.GCP_PROJECT_ID || process.env.GOOGLE_CLOUD_PROJECT || '';
 const location = process.env.GCP_LOCATION || 'us-central1';
 
+// Model IDs are env-overridable so the deployment can track Google's model
+// lifecycle without a code change (Gemini 1.x/2.0 and text-embedding-004 are
+// retired on Vertex AI as of 2026).
+const GEN_MODEL = process.env.GEMINI_MODEL || 'gemini-3-flash';
+
 let vertexai, generativeModel;
 let useVertex = Boolean(projectId);
 
@@ -17,7 +22,7 @@ try {
   if (useVertex) {
     vertexai = new VertexAI({ project: projectId, location });
     generativeModel = vertexai.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: GEN_MODEL,
       systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
     });
   } else {
@@ -59,7 +64,7 @@ export const generateRecommendation = async (route_name, supporting_data) => {
   const fallbackRationale = `Peak-hour congestion on ${route_name} stayed well above the citywide comfort threshold across the sampled window.`;
   if (!useVertex) return { suggestion: fallbackSuggestion, rationale: fallbackRationale };
 
-  const recModel = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const recModel = vertexai.getGenerativeModel({ model: GEN_MODEL });
   const prompt = `You advise city traffic planners. Based on the following traffic data for ${route_name} showing high peak-hour congestion, respond as strict JSON: { "suggestion": a single actionable one-line recommendation (e.g. adjust signal timing, increase bus frequency, add a dedicated lane), "rationale": ONE sentence explaining why this action is warranted, referencing the data }.
 DATA: ${JSON.stringify(supporting_data)}`;
 
@@ -91,7 +96,7 @@ DATA: ${JSON.stringify(supporting_data)}`;
 export const generateOneLiner = async (prompt, fallback) => {
   if (!useVertex) return fallback;
   try {
-    const model = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = vertexai.getGenerativeModel({ model: GEN_MODEL });
     const response = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
     });
@@ -110,7 +115,7 @@ export const generateOneLiner = async (prompt, fallback) => {
 export const generateStructured = async (prompt, fallbackObj) => {
   if (!useVertex) return fallbackObj;
   try {
-    const model = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = vertexai.getGenerativeModel({ model: GEN_MODEL });
     const response = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       generationConfig: { responseMimeType: 'application/json' },
@@ -127,12 +132,12 @@ export const generateStructured = async (prompt, fallbackObj) => {
 };
 
 /* -------------------------------------------------------------------------- */
-/*  Vision — Gemini 1.5 Flash handles multimodal requests                     */
+/*  Vision — Gemini Flash handles multimodal requests                         */
 /* -------------------------------------------------------------------------- */
 export const analyzeImage = async (base64Image, prompt, fallbackObj) => {
   if (!useVertex || !base64Image) return fallbackObj;
   try {
-    const model = vertexai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = vertexai.getGenerativeModel({ model: GEN_MODEL });
     const imagePart = {
       inlineData: {
         data: base64Image,
@@ -158,12 +163,15 @@ export const analyzeImage = async (base64Image, prompt, fallbackObj) => {
 };
 
 /* -------------------------------------------------------------------------- */
-/*  Embeddings — real Vertex AI text-embedding-004 with a deterministic        */
+/*  Embeddings — real Vertex AI gemini-embedding-001 with a deterministic      */
 /*  offline fallback so retrieval works without cloud credentials.             */
 /* -------------------------------------------------------------------------- */
 
-const EMBED_DIM = 768; // text-embedding-004 output size; fallback matches it.
-const EMBED_MODEL = 'text-embedding-004';
+// gemini-embedding-001 defaults to 3072 dims; we request a 768-dim Matryoshka
+// (MRL) truncation to keep vectors compact, and re-normalize since truncated
+// outputs are not unit-length. The local fallback produces the same dims.
+const EMBED_DIM = 768;
+const EMBED_MODEL = process.env.GEMINI_EMBED_MODEL || 'gemini-embedding-001';
 
 // 'vertex' until a call fails, then permanently 'local' so query + document
 // vectors are always produced by the same method (comparable cosine space).
@@ -203,27 +211,50 @@ const localEmbed = (text) => {
   return mag ? vec.map((v) => v / mag) : vec;
 };
 
+const l2Normalize = (vec) => {
+  const mag = Math.sqrt(vec.reduce((s, v) => s + v * v, 0));
+  return mag ? vec.map((v) => v / mag) : vec;
+};
+
+// Vertex AI accepts only ONE input text per gemini-embedding-001 request, so
+// we fan out individual requests with bounded concurrency instead of batching
+// instances (the old text-embedding-004 multi-instance API is retired).
+const EMBED_CONCURRENCY = 8;
+
 const vertexEmbedBatch = async (texts, taskType) => {
   const client = await getAuthClient();
   const token = await client.getAccessToken();
   const url = `https://${location}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${location}/publishers/google/models/${EMBED_MODEL}:predict`;
-  const body = {
-    instances: texts.map((content) => ({ content, task_type: taskType })),
+
+  const embedOne = async (content) => {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        instances: [{ content, task_type: taskType }],
+        parameters: { outputDimensionality: EMBED_DIM },
+      }),
+    });
+    if (!resp.ok) {
+      const detail = await resp.text();
+      throw new Error(`Vertex embeddings HTTP ${resp.status}: ${detail.slice(0, 200)}`);
+    }
+    const json = await resp.json();
+    return l2Normalize(json.predictions[0].embeddings.values);
   };
-  const resp = await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-  if (!resp.ok) {
-    const detail = await resp.text();
-    throw new Error(`Vertex embeddings HTTP ${resp.status}: ${detail.slice(0, 200)}`);
+
+  const out = new Array(texts.length);
+  for (let start = 0; start < texts.length; start += EMBED_CONCURRENCY) {
+    const slice = texts.slice(start, start + EMBED_CONCURRENCY);
+    const vecs = await Promise.all(slice.map(embedOne));
+    vecs.forEach((v, k) => {
+      out[start + k] = v;
+    });
   }
-  const json = await resp.json();
-  return json.predictions.map((p) => p.embeddings.values);
+  return out;
 };
 
 /**
@@ -243,7 +274,8 @@ export const embedTexts = async (texts, taskType = 'RETRIEVAL_DOCUMENT') => {
 
   if (embedMode === 'vertex') {
     try {
-      // Vertex allows up to 250 instances/request; we batch conservatively.
+      // Outer batching just bounds memory; per-request fan-out happens inside
+      // vertexEmbedBatch (gemini-embedding-001 takes one instance per call).
       const BATCH = 25;
       for (let start = 0; start < misses.length; start += BATCH) {
         const idxs = misses.slice(start, start + BATCH);
@@ -282,6 +314,14 @@ export const generateEmbeddings = async (text, taskType = 'RETRIEVAL_QUERY') => 
 };
 
 export const embeddingMode = () => embedMode;
+
+// Identifies the vector space vectors were produced in. Stored alongside each
+// chunk so cached vectors from a retired model (or the offline fallback) are
+// re-embedded instead of being cosine-compared against incompatible vectors.
+export const embeddingSpace = () =>
+  embedMode === 'vertex'
+    ? `vertex:${EMBED_MODEL}:${EMBED_DIM}`
+    : `local:hashed-bow:${EMBED_DIM}`;
 
 export const cosineSimilarity = (vecA, vecB) => {
   let dotProduct = 0;

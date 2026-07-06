@@ -61,11 +61,12 @@ export const upsertChunks = async (chunks) => {
       try {
         await client.query('BEGIN');
         const queryText = `
-          INSERT INTO document_chunks (id, route_name, domain, text, embedding, stats, updated_at)
-          VALUES ($1, $2, $3, $4, $5, $6, NOW())
+          INSERT INTO document_chunks (id, route_name, domain, text, embedding, embed_space, stats, updated_at)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
           ON CONFLICT (id) DO UPDATE SET
             text = EXCLUDED.text,
             embedding = EXCLUDED.embedding,
+            embed_space = EXCLUDED.embed_space,
             stats = EXCLUDED.stats,
             updated_at = NOW();
         `;
@@ -77,6 +78,7 @@ export const upsertChunks = async (chunks) => {
             chunk.domain,
             chunk.text,
             embeddingStr,
+            chunk.embed_space || null,
             JSON.stringify(chunk.stats)
           ]);
         }
@@ -107,7 +109,7 @@ export const upsertChunks = async (chunks) => {
 export const getAllChunks = async () => {
   if (useAlloyDB && pool) {
     try {
-      const { rows } = await pool.query('SELECT id, route_name, domain, text, embedding, stats FROM document_chunks');
+      const { rows } = await pool.query('SELECT id, route_name, domain, text, embedding, embed_space, stats FROM document_chunks');
       return rows.map(r => {
         let embedding = r.embedding;
         if (typeof embedding === 'string') {
@@ -119,6 +121,7 @@ export const getAllChunks = async () => {
           domain: r.domain,
           text: r.text,
           embedding,
+          embed_space: r.embed_space || null,
           stats: typeof r.stats === 'string' ? JSON.parse(r.stats) : r.stats
         };
       });

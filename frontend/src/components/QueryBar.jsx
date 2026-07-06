@@ -103,7 +103,7 @@ const QueryBar = () => {
             aria-label={listening ? 'Stop listening' : 'Voice input'}
           >
             {listening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
-            {listening ? 'Listening...' : 'Voice'}
+            {listening ? 'Listening...' : 'Voice (Multimodal)'}
           </button>
         )}
       </div>

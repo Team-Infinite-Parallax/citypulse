@@ -13,6 +13,10 @@ import citizenRoutes from './routes/citizen.js';
 import tourismRoutes from './routes/tourism.js';
 import energyRoutes from './routes/energy.js';
 import planRoutes from './routes/plan.js';
+import educationRoutes from './routes/education.js';
+import communityRoutes from './routes/community.js';
+import sseRoutes from './routes/sse.js';
+import wasteRoutes from './routes/waste.js';
 
 dotenv.config();
 
@@ -61,6 +65,7 @@ app.use('/api', healthRoutes);
 // Phase 2 Routes
 app.use('/api/public-safety', publicSafetyRoutes);
 app.use('/api/environment', environmentRoutes);
+app.use('/api/waste', wasteRoutes);
 
 // Phase 3 Routes
 app.use('/api/actions', actionsRoutes);
@@ -70,6 +75,13 @@ app.use('/api/citizen', citizenRoutes);
 app.use('/api/tourism', tourismRoutes);
 app.use('/api/energy', energyRoutes);
 app.use('/api/plan', planRoutes);
+
+// Phase 5 Routes — Education & Lifelong Learning, Community Support & Social Impact
+app.use('/api/education', educationRoutes);
+app.use('/api/community', communityRoutes);
+
+// Real-time Server-Sent Events
+app.use('/api/events', sseRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

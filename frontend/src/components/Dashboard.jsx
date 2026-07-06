@@ -19,13 +19,16 @@ const KPI_ICONS = {
 };
 
 const tooltipStyle = {
-  background: 'rgba(19, 26, 38, 0.85)', 
+  background: 'var(--panel)', 
   backdropFilter: 'blur(12px)',
   WebkitBackdropFilter: 'blur(12px)',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-  borderRadius: '12px', color: '#38BDF8', fontSize: 12,
+  border: '1px solid var(--glass-border)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+  borderRadius: '12px', color: 'var(--amber)', fontSize: 12,
 };
+
+const congestionWord = (v) => v >= 70 ? 'Heavy' : v >= 40 ? 'Moderate' : 'Light';
+const aqiWord = (v) => v >= 150 ? 'Unhealthy' : v >= 100 ? 'Fair' : v >= 50 ? 'Moderate' : 'Good';
 
 const Dashboard = () => {
   const [summaryData, setSummaryData] = useState([]);
@@ -37,6 +40,7 @@ const Dashboard = () => {
 
   const selectedRoute = useCityStore((state) => state.selectedRoute);
   const setSelectedRoute = useCityStore((state) => state.setSelectedRoute);
+  const viewMode = useCityStore((state) => state.viewMode);
 
   const routeNames = useMemo(() => {
     if (!routesGeoJson?.features) return [];
@@ -150,7 +154,7 @@ const Dashboard = () => {
       unit: '/100',
       color: congColor,
       extra: (
-        <div className="mt-3 h-1.5 rounded-full bg-[#0E141E] overflow-hidden">
+        <div className="mt-3 h-1.5 rounded-full bg-[var(--ink-2)] overflow-hidden">
           <div className="h-full rounded-full transition-all" style={{ width: `${overallAvgCongestion}%`, background: congColor }} />
         </div>
       ),
@@ -198,6 +202,39 @@ const Dashboard = () => {
       <div className="panel p-6 flex items-center text-[#FF9497] border-[#FF5A5F]/30" aria-live="assertive">
         <AlertCircle className="w-6 h-6 mr-3 flex-shrink-0" />
         <p className="font-semibold">{error}</p>
+      </div>
+    );
+  }
+
+  // Citizen simplified view
+  if (viewMode === 'citizen') {
+    return (
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="panel p-6 text-center">
+            <Gauge className="w-8 h-8 mx-auto mb-3" style={{ color: congColor }} />
+            <h3 className="text-2xl font-bold" style={{ color: congColor }}>{congestionWord(overallAvgCongestion)}</h3>
+            <p className="text-sm text-[#8896A8] mt-1">Current Traffic</p>
+            <div className="mt-3 h-2 rounded-full bg-[var(--ink-2)] overflow-hidden">
+              <div className="h-full rounded-full transition-all" style={{ width: `${overallAvgCongestion}%`, background: congColor }} />
+            </div>
+          </div>
+          <div className="panel p-6 text-center">
+            <Wind className="w-8 h-8 mx-auto mb-3 text-[#8B5CF6]" />
+            <h3 className="text-2xl font-bold text-[#8B5CF6]">{aqiWord(overallAvgAqi)}</h3>
+            <p className="text-sm text-[#8896A8] mt-1">Air Quality</p>
+            <p className="text-xs text-[#64748B] mt-2">AQI: {overallAvgAqi}</p>
+          </div>
+        </div>
+        <div className="panel p-4">
+          <p className="text-sm text-[#8896A8] leading-relaxed">
+            {overallAvgCongestion >= 70
+              ? '⚠️ Traffic is heavy across the city. Consider using public transport or delaying non-essential trips.'
+              : overallAvgCongestion >= 40
+              ? '🚗 Moderate traffic levels. Some routes may have delays during peak hours.'
+              : '✅ Roads are relatively clear. Good time to travel.'}
+          </p>
+        </div>
       </div>
     );
   }
@@ -271,10 +308,10 @@ const Dashboard = () => {
                     <stop offset="100%" stopColor={FLOW} stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
-                <XAxis dataKey="time" stroke="#8896A8" fontSize={12} tickMargin={8} minTickGap={30} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
-                <YAxis stroke="#8896A8" fontSize={12} tickLine={false} axisLine={false} />
-                <RechartsTooltip cursor={{ stroke: '#263244' }} contentStyle={tooltipStyle} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
+                <XAxis dataKey="time" stroke="var(--text-dim)" fontSize={12} tickMargin={8} minTickGap={30} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
+                <YAxis stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
+                <RechartsTooltip cursor={{ stroke: 'var(--glass-border)' }} contentStyle={tooltipStyle} />
                 <Area type="monotone" dataKey="Congestion" stroke={FLOW} strokeWidth={2.5}
                       fill="url(#congFill)" dot={false} activeDot={{ r: 5, fill: FLOW, stroke: '#0B0E14', strokeWidth: 2 }} />
               </AreaChart>
@@ -290,10 +327,10 @@ const Dashboard = () => {
           <div className="p-4 h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={delayChartData} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
-                <XAxis dataKey="name" stroke="#8896A8" fontSize={12} tickMargin={8} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
-                <YAxis stroke="#8896A8" fontSize={12} tickLine={false} axisLine={false} />
-                <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={tooltipStyle} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
+                <XAxis dataKey="name" stroke="var(--text-dim)" fontSize={12} tickMargin={8} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
+                <YAxis stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
+                <RechartsTooltip cursor={{ fill: 'var(--glass-border)' }} contentStyle={tooltipStyle} />
                 <Bar dataKey="Delay" fill={CAUTION} radius={[4, 4, 0, 0]} maxBarSize={44} />
               </BarChart>
             </ResponsiveContainer>
@@ -322,12 +359,12 @@ const Dashboard = () => {
                     <stop offset="100%" stopColor="#38BDF8" stopOpacity={0.06} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
-                <XAxis dataKey="ts" tickFormatter={fmtHour} stroke="#8896A8" fontSize={11}
-                       tickMargin={8} minTickGap={28} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
-                <YAxis domain={[0, 100]} stroke="#8896A8" fontSize={12} tickLine={false} axisLine={false} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--line)" />
+                <XAxis dataKey="ts" tickFormatter={fmtHour} stroke="var(--text-dim)" fontSize={11}
+                       tickMargin={8} minTickGap={28} tickLine={false} axisLine={{ stroke: 'var(--line)' }} />
+                <YAxis domain={[0, 100]} stroke="var(--text-dim)" fontSize={12} tickLine={false} axisLine={false} />
                 <RechartsTooltip
-                  cursor={{ stroke: '#263244' }}
+                  cursor={{ stroke: 'var(--glass-border)' }}
                   contentStyle={tooltipStyle}
                   labelFormatter={(ts) => {
                     const p = forecastChartData.find(d => d.ts === ts);

@@ -13,197 +13,236 @@ import TourismPanel from '../components/TourismPanel.jsx';
 import EnergyPanel from '../components/EnergyPanel.jsx';
 import AgenticPlanner from '../components/AgenticPlanner.jsx';
 import LookerEmbed from '../components/LookerEmbed.jsx';
+import EducationPanel from '../components/EducationPanel.jsx';
+import CommunityImpactPanel from '../components/CommunityImpactPanel.jsx';
+import WasteManagementPanel from '../components/WasteManagementPanel.jsx';
 ---
 
 <Layout>
-  <!-- Sticky section nav -->
-  <nav class="section-nav" aria-label="Section quick navigation">
-    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto custom-scrollbar">
-      <a href="#operations" class="section-nav-link">Operations</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#health" class="section-nav-link">Health</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#telemetry" class="section-nav-link">Telemetry</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#wards" class="section-nav-link">Wards</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#community" class="section-nav-link">Community</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#economy" class="section-nav-link">Economy</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#utilities" class="section-nav-link">Utilities</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#planning" class="section-nav-link">AI Planning</a>
-      <span class="section-nav-divider" aria-hidden="true"></span>
-      <a href="#analytics" class="section-nav-link">Analytics</a>
-    </div>
-  </nav>
-
-  <div class="page-content">
-    <!-- ───── Section 1: AI Query Bar ───── -->
-    <section id="query" class="content-section">
-      <div class="section-inner">
-        <QueryBar client:load />
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar" aria-label="Dashboard Navigation">
+      <div class="mb-6 hidden lg:block">
+        <p class="eyebrow ml-4 text-xs font-semibold" style="color: var(--amber)">Modules</p>
       </div>
-    </section>
+      
+      <button class="sidebar-nav-item active" data-tab="overview">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+        Overview
+      </button>
+      
+      <button class="sidebar-nav-item" data-tab="environment">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Environment
+      </button>
+      
+      <button class="sidebar-nav-item" data-tab="community">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        Community
+      </button>
+      
+      <button class="sidebar-nav-item planner-only" data-tab="economy">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        Economy & Services
+      </button>
+      
+      <button class="sidebar-nav-item planner-only" data-tab="planning">
+        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+        AI Planning
+      </button>
+    </aside>
 
-    <!-- ───── Section 2: Live Operations (Map + Alerts) ───── -->
-    <section id="operations" class="content-section">
-      <div class="section-header">
-        <span class="section-indicator" style="background:var(--amber)"></span>
-        <h2 class="section-title">Live Operations</h2>
-        <span class="section-eyebrow">Map · Anomalies · Recommendations</span>
-      </div>
-
-      <div class="layout-ops">
-        <div class="layout-ops-main">
-          <MapView client:only="react" />
-        </div>
-        <div class="layout-ops-side">
-          <AlertsPanel client:load />
-          <div class="mt-4">
-            <RecommendationCard client:load />
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <!-- ───── TAB: OVERVIEW ───── -->
+      <div class="tab-pane active" id="tab-overview">
+        <!-- ───── Section 1: AI Query Bar ───── -->
+        <section id="query" class="content-section mb-8">
+          <div class="section-inner">
+            <QueryBar client:load />
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- ───── Section 3: Health & Air Quality ───── -->
-    <section id="health" class="content-section">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#8B5CF6"></span>
-        <h2 class="section-title">Health &amp; Air Quality</h2>
-        <span class="section-eyebrow">AQI · Advisories · Vulnerable Groups</span>
-      </div>
-      <HealthAdvisory client:load />
-    </section>
+        <!-- ───── Section 2: Live Operations (Map + Alerts) ───── -->
+        <section id="operations" class="content-section">
+          <div class="section-header">
+            <span class="section-indicator" style="background:var(--amber)"></span>
+            <h2 class="section-title">Live Operations</h2>
+            <span class="section-eyebrow">Map · Anomalies · Recommendations</span>
+          </div>
 
-    <!-- ───── Section 4: Live Telemetry ───── -->
-    <section id="telemetry" class="content-section">
-      <div class="section-header">
-        <span class="section-indicator" style="background:var(--flow)"></span>
-        <h2 class="section-title">Live Telemetry</h2>
-        <span class="section-eyebrow">KPIs · Trends · Forecasts</span>
-      </div>
-      <Dashboard client:load />
-    </section>
+          <div class="layout-ops">
+            <div class="layout-ops-main">
+              <MapView client:only="react" />
+            </div>
+            <div class="layout-ops-side">
+              <AlertsPanel client:load />
+              <div class="mt-4">
+                <RecommendationCard client:load />
+              </div>
+            </div>
+          </div>
+        </section>
 
-    <!-- ───── Section 5: Ward Livability ───── -->
-    <section id="wards" class="content-section">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#10B981"></span>
-        <h2 class="section-title">Ward Livability</h2>
-        <span class="section-eyebrow">Scores · Metrics · Interpretation</span>
+        <!-- ───── Section 4: Live Telemetry ───── -->
+        <section id="telemetry" class="content-section mt-12">
+          <div class="section-header">
+            <span class="section-indicator" style="background:var(--flow)"></span>
+            <h2 class="section-title">Live Telemetry</h2>
+            <span class="section-eyebrow">KPIs · Trends · Forecasts</span>
+          </div>
+          <Dashboard client:load />
+        </section>
       </div>
-      <WardDetailPanel client:load />
-    </section>
 
-    <!-- ───── Section 6: Community & Actions ───── -->
-    <section id="community" class="content-section">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#F59E0B"></span>
-        <h2 class="section-title">Community &amp; Actions</h2>
-        <span class="section-eyebrow">Action Center · Citizen Reporting</span>
-      </div>
-      <div class="layout-community">
-        <ActionCenter client:load />
-        <CitizenReport client:load />
-      </div>
-    </section>
+      <!-- ───── TAB: ENVIRONMENT ───── -->
+      <div class="tab-pane" id="tab-environment">
+        <!-- ───── Section 3: Health & Air Quality ───── -->
+        <section id="health" class="content-section">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#8B5CF6"></span>
+            <h2 class="section-title">Health &amp; Air Quality</h2>
+            <span class="section-eyebrow">AQI · Advisories · Vulnerable Groups</span>
+          </div>
+          <HealthAdvisory client:load />
+        </section>
 
-    <!-- ───── Section 7: Tourism & Local Economy ───── -->
-    <section id="economy" class="content-section planner-only">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#10B981"></span>
-        <h2 class="section-title">Tourism &amp; Local Economy</h2>
-        <span class="section-eyebrow">POIs · Events · Economic Impact</span>
+        <!-- ───── Section 6: Waste Management & Resources ───── -->
+        <section id="waste" class="content-section mt-12">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#10B981"></span>
+            <h2 class="section-title">Waste Management &amp; Resources</h2>
+            <span class="section-eyebrow">Collection · Recycling · Water Quality</span>
+          </div>
+          <WasteManagementPanel client:load />
+        </section>
       </div>
-      <TourismPanel client:load />
-    </section>
 
-    <!-- ───── Section 8: Energy & Smart Utilities ───── -->
-    <section id="utilities" class="content-section planner-only">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#F59E0B"></span>
-        <h2 class="section-title">Energy &amp; Smart Utilities</h2>
-        <span class="section-eyebrow">Consumption · Efficiency · Water Quality</span>
-      </div>
-      <EnergyPanel client:load />
-    </section>
+      <!-- ───── TAB: COMMUNITY ───── -->
+      <div class="tab-pane" id="tab-community">
+        <!-- ───── Section 5: Ward Livability ───── -->
+        <section id="wards" class="content-section">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#10B981"></span>
+            <h2 class="section-title">Ward Livability</h2>
+            <span class="section-eyebrow">Scores · Metrics · Interpretation</span>
+          </div>
+          <WardDetailPanel client:load />
+        </section>
 
-    <!-- ───── Section 9: AI Agentic Planning (ADK) ───── -->
-    <section id="planning" class="content-section">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#8B5CF6"></span>
-        <h2 class="section-title">AI Multi-Step Planning</h2>
-        <span class="section-eyebrow">Agentic Workflows · Cross-Domain Reasoning</span>
-      </div>
-      <AgenticPlanner client:load />
-    </section>
+        <!-- ───── Section 6: Community & Actions ───── -->
+        <section id="community" class="content-section mt-12">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#F59E0B"></span>
+            <h2 class="section-title">Community &amp; Actions</h2>
+            <span class="section-eyebrow">Action Center · Citizen Reporting</span>
+          </div>
+          <div class="layout-community">
+            <ActionCenter client:load />
+            <CitizenReport client:load />
+          </div>
+        </section>
 
-    <!-- ───── Section 10: Looker Studio Analytics ───── -->
-    <section id="analytics" class="content-section planner-only">
-      <div class="section-header">
-        <span class="section-indicator" style="background:#8B5CF6"></span>
-        <h2 class="section-title">City Analytics</h2>
-        <span class="section-eyebrow">Looker Studio · Embedded Reports</span>
+        <!-- ───── Section 7: Community Support & Social Impact ───── -->
+        <section id="social-impact" class="content-section mt-12">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#10B981"></span>
+            <h2 class="section-title">Community Support &amp; Social Impact</h2>
+            <span class="section-eyebrow">Vulnerability Index · Volunteers · Services</span>
+          </div>
+          <CommunityImpactPanel client:load />
+        </section>
       </div>
-      <LookerEmbed client:load />
-    </section>
+
+      <!-- ───── TAB: ECONOMY ───── -->
+      <div class="tab-pane" id="tab-economy">
+        <!-- ───── Section 8: Education & Lifelong Learning ───── -->
+        <section id="education" class="content-section">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#8B5CF6"></span>
+            <h2 class="section-title">Education &amp; Lifelong Learning</h2>
+            <span class="section-eyebrow">Programs · Skills · AI Recommendations</span>
+          </div>
+          <EducationPanel client:load />
+        </section>
+
+        <!-- ───── Section 9: Tourism & Local Economy ───── -->
+        <section id="economy-sec" class="content-section mt-12 planner-only">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#10B981"></span>
+            <h2 class="section-title">Tourism &amp; Local Economy</h2>
+            <span class="section-eyebrow">POIs · Events · Economic Impact</span>
+          </div>
+          <TourismPanel client:load />
+        </section>
+
+        <!-- ───── Section 10: Energy & Smart Utilities ───── -->
+        <section id="utilities" class="content-section mt-12 planner-only">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#F59E0B"></span>
+            <h2 class="section-title">Energy &amp; Smart Utilities</h2>
+            <span class="section-eyebrow">Consumption · Efficiency · Water Quality</span>
+          </div>
+          <EnergyPanel client:load />
+        </section>
+      </div>
+
+      <!-- ───── TAB: PLANNING ───── -->
+      <div class="tab-pane" id="tab-planning">
+        <!-- ───── Section 11: AI Agentic Planning (ADK) ───── -->
+        <section id="planning-sec" class="content-section">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#8B5CF6"></span>
+            <h2 class="section-title">AI Multi-Step Planning</h2>
+            <span class="section-eyebrow">Agentic Workflows · Cross-Domain Reasoning</span>
+          </div>
+          <AgenticPlanner client:load />
+        </section>
+
+        <!-- ───── Section 12: Looker Studio Analytics ───── -->
+        <section id="analytics" class="content-section mt-12 planner-only">
+          <div class="section-header">
+            <span class="section-indicator" style="background:#8B5CF6"></span>
+            <h2 class="section-title">City Analytics</h2>
+            <span class="section-eyebrow">Looker Studio · Embedded Reports</span>
+          </div>
+          <LookerEmbed client:load />
+        </section>
+      </div>
+
+    </main>
   </div>
 </Layout>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('.sidebar-nav-item');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        // Remove active class from all
+        navItems.forEach(nav => nav.classList.remove('active'));
+        tabPanes.forEach(tab => tab.classList.remove('active'));
+
+        // Add active class to clicked item
+        item.classList.add('active');
+        
+        // Show corresponding tab
+        const tabId = item.getAttribute('data-tab');
+        const targetTab = document.getElementById(`tab-${tabId}`);
+        if (targetTab) {
+          targetTab.classList.add('active');
+        }
+        
+        // Scroll to top of main area smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  });
+</script>
+
 <style is:global>
-  /* ─── Section Navigation Bar ─── */
-  .section-nav {
-    position: sticky;
-    top: 60px;
-    z-index: 20;
-    background: rgba(5, 11, 20, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 0.35rem 0;
-  }
-
-  .section-nav-link {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    white-space: nowrap;
-    transition: color 0.2s, background 0.2s;
-    text-decoration: none;
-  }
-  .section-nav-link:hover {
-    color: var(--amber);
-    background: var(--amber-soft);
-  }
-
-  .section-nav-divider {
-    width: 1px;
-    height: 14px;
-    background: rgba(255,255,255,0.08);
-    flex-shrink: 0;
-  }
-
-  /* ─── Page Content ─── */
-  .page-content {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 1rem 1rem 2.5rem;
-  }
-
-  @media (min-width: 640px) {
-    .page-content { padding: 1.25rem 1.5rem 3rem; }
-  }
-  @media (min-width: 1024px) {
-    .page-content { padding: 1.5rem 2rem 4rem; }
-  }
-
   /* ─── Section Container ─── */
   .content-section {
     scroll-margin-top: 130px;
@@ -218,7 +257,7 @@ import LookerEmbed from '../components/LookerEmbed.jsx';
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
@@ -231,7 +270,7 @@ import LookerEmbed from '../components/LookerEmbed.jsx';
   }
 
   .section-title {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--text);
     font-family: var(--font-display);
@@ -254,7 +293,7 @@ import LookerEmbed from '../components/LookerEmbed.jsx';
     gap: 1.25rem;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .layout-ops {
       grid-template-columns: 1fr 380px;
     }
@@ -268,7 +307,7 @@ import LookerEmbed from '../components/LookerEmbed.jsx';
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    max-height: 600px;
+    max-height: 650px;
     overflow-y: auto;
   }
 

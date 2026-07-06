@@ -17,6 +17,8 @@ human must stay in the loop.
 | Action memos | **Synthetic** | Structured decision drafts. In production mode, memos persist in Firestore (still requiring manual approval/dispatch). |
 | Tourism POIs / events | **Static demo data** | 8 points of interest + 4 events in `routes/tourism.js`. Illustrative only. |
 | Energy / water utility data | **Static demo data** | 5 wards tracked in `routes/energy.js`. Not a live SCADA feed. |
+| Education / Learning programs | **Synthetic** | Ward-level stats and program enrollment (`backend/data/education.json`). |
+| Community support / Social impact | **Synthetic** | Vulnerability index and service coverage (`backend/data/community.json`). |
 
 All coordinates sit near the demo map center so markers render; they are
 illustrative, **not** a real municipal feed. In production these become BigQuery

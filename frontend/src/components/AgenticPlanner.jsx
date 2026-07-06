@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Cpu, Loader2, Sparkles, AlertCircle, Map, Shield, TestTube, Compass } from 'lucide-react';
+import { Cpu, Loader2, Sparkles, AlertCircle, Map, Shield, TestTube, Compass, Database, Brain, BarChart3, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import ExplainabilityPanel from './ExplainabilityPanel';
 
 const PLAN_ICONS = {
@@ -9,12 +9,26 @@ const PLAN_ICONS = {
   tourism_hotspots: Compass,
 };
 
+const STEP_ICONS = {
+  traffic_data: Database,
+  environment_data: Database,
+  incident_data: Database,
+  tourism_data: Database,
+  analysis: BarChart3,
+  simulation: TestTube,
+  ranking: BarChart3,
+  gemini: Brain,
+  complete: CheckCircle2,
+};
+
 const AgenticPlanner = () => {
   const [planTypes, setPlanTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [executing, setExecuting] = useState(null);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [showSteps, setShowSteps] = useState(true);
+  const [visibleSteps, setVisibleSteps] = useState(0);
 
   useEffect(() => {
     const fetchTypes = async () => {
@@ -31,10 +45,27 @@ const AgenticPlanner = () => {
     fetchTypes();
   }, []);
 
+  // Animate steps appearing one by one
+  useEffect(() => {
+    if (!result?.steps) return;
+    setVisibleSteps(0);
+    const timer = setInterval(() => {
+      setVisibleSteps(prev => {
+        if (prev >= result.steps.length) {
+          clearInterval(timer);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 300);
+    return () => clearInterval(timer);
+  }, [result]);
+
   const executePlan = async (planType) => {
     setExecuting(planType);
     setResult(null);
     setError(null);
+    setShowSteps(true);
     try {
       const API = import.meta.env.PUBLIC_API_URL || '';
       const res = await fetch(`${API}/api/plan`, {
@@ -97,6 +128,51 @@ const AgenticPlanner = () => {
 
       {result && (
         <div className="mt-5 border-t border-[#263244] pt-5 space-y-4">
+          {/* Agent Thinking Steps Visualization */}
+          {result.steps && result.steps.length > 0 && (
+            <div className="mb-4">
+              <button
+                onClick={() => setShowSteps(!showSteps)}
+                className="flex items-center gap-2 mb-3 text-sm hover:opacity-80 transition-opacity"
+              >
+                <Brain className="w-4 h-4 text-[#8B5CF6]" />
+                <span className="eyebrow">Agent Reasoning Chain</span>
+                <span className="text-[10px] text-[#64748B] ml-1">({result.steps.length} steps)</span>
+                {showSteps ? <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" /> : <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />}
+              </button>
+
+              {showSteps && (
+                <div className="relative ml-3 pl-4 border-l-2 border-[#8B5CF6]/20 space-y-2">
+                  {result.steps.map((step, i) => {
+                    const StepIcon = STEP_ICONS[step.tool] || Cpu;
+                    const isVisible = i < visibleSteps;
+                    const isLast = i === result.steps.length - 1;
+                    return (
+                      <div
+                        key={i}
+                        className={`relative transition-all duration-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+                      >
+                        {/* Timeline dot */}
+                        <div className={`absolute -left-[21px] w-3 h-3 rounded-full border-2 ${
+                          isLast && isVisible ? 'bg-[#10B981] border-[#10B981]' : isVisible ? 'bg-[#8B5CF6] border-[#8B5CF6]' : 'bg-[#1B2534] border-[#263244]'
+                        }`} />
+
+                        <div className="bg-[#0E141E] rounded-lg p-3 border border-[#1B2534] ml-1">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <StepIcon className={`w-3.5 h-3.5 ${isLast ? 'text-[#10B981]' : 'text-[#8B5CF6]'}`} />
+                            <span className="text-xs font-medium text-[#E2E8F0]">{step.action}</span>
+                            <span className="text-[10px] text-[#64748B] ml-auto mono">{step.duration_ms}ms</span>
+                          </div>
+                          <p className="text-[11px] text-[#64748B] ml-5">{step.detail}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-[#8B5CF6]" />
             <span className="eyebrow">Planning Result</span>
@@ -169,8 +245,8 @@ const AgenticPlanner = () => {
             explain={{
               confidence: 0.85,
               confidence_label: 'high',
-              rationale: `Multi-step agentic workflow executed across ${result.plan_type} domain, synthesizing data from traffic, environment, public safety, tourism, and energy modules.`,
-              sources: [{ plan_type: result.plan_type, executed_at: result.executed_at }],
+              rationale: `Multi-step agentic workflow executed ${result.steps?.length || 0} tool calls across ${result.plan_type} domain, synthesizing data from traffic, environment, public safety, tourism, and energy modules.`,
+              sources: [{ plan_type: result.plan_type, executed_at: result.executed_at, steps_executed: result.steps?.length || 0 }],
               method: 'ADK-style agentic planning (multi-tool orchestration)',
             }}
             title="How this was planned"

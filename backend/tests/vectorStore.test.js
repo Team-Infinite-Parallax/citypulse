@@ -8,7 +8,13 @@ app.use(express.json());
 app.use('/api/query', queryRoutes);
 
 describe('CityPulse pgvector/AlloyDB Integration (Fallback Mode)', () => {
-  it('should successfully load seeded chunks from fallback local cache', async () => {
+  it('should seed and load chunks from the fallback local cache', async () => {
+    // A query triggers syncVectorStore(), which builds + embeds the domain
+    // chunks — so this passes on a fresh clone with no pre-built cache file.
+    await request(app)
+      .post('/api/query')
+      .send({ question: 'seed the vector store' });
+
     const chunks = await getAllChunks();
     expect(Array.isArray(chunks)).toBe(true);
     expect(chunks.length).toBeGreaterThan(0);

@@ -82,16 +82,19 @@ const CitizenReport = () => {
           {error && <p className="text-[#FF9497] text-xs">{error}</p>}
           
           <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 cursor-pointer text-sm text-[#8896A8] hover:text-[#38BDF8] transition-colors">
-              <Camera className="w-4 h-4" />
-              <span>{photoBase64 ? 'Photo Attached' : 'Attach Photo'}</span>
-              <input 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                onChange={handlePhotoUpload} 
-              />
-            </label>
+            <div className="flex flex-col gap-1">
+              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#8896A8] hover:text-[#38BDF8] transition-colors">
+                <Camera className="w-4 h-4" />
+                <span>{photoBase64 ? 'Photo Attached' : 'Attach Photo'}</span>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  className="hidden" 
+                  onChange={handlePhotoUpload} 
+                />
+              </label>
+              <span className="text-[10px] text-[#FFB020] font-semibold tracking-wide">✨ Gemini Multimodal Vision API</span>
+            </div>
             
             <button
               type="submit"

@@ -85,7 +85,14 @@ const ActionCenter = () => {
           <div key={memo.id} className="panel p-5 border border-[#263244] hover:border-[#38BDF8]/30 transition-colors">
             <div className="flex justify-between items-start mb-3">
               <div>
-                <h4 className="font-semibold text-[#38BDF8]">{memo.title}</h4>
+                <h4 className="font-semibold text-[#38BDF8] flex items-center gap-2 flex-wrap">
+                  {memo.title}
+                  {memo.status === 'DRAFT' && (
+                    <span className="text-[10px] px-1.5 py-0.5 bg-[#FFB020]/20 text-[#FFB020] rounded border border-[#FFB020]/30 tracking-wider font-bold shadow-[0_0_8px_rgba(255,176,32,0.2)]">
+                      HUMAN-IN-THE-LOOP REQUIRED
+                    </span>
+                  )}
+                </h4>
                 <p className="text-xs text-[#8896A8] mt-1 flex items-center gap-1">
                   <AlertTriangle className="w-3 h-3" /> Dept: {memo.department}
                 </p>

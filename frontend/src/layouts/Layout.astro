@@ -16,6 +16,11 @@ import '../styles/global.css';
 		<meta name="description" content="AI-powered Decision Intelligence Platform for urban mobility, public safety, environmental sustainability, citizen engagement, and community well-being." />
 	</head>
 	<body>
+		<script is:inline>
+			/* Prevent theme flickering (FOUT) */
+			if (localStorage.getItem('citypulse-theme') === 'light') document.body.classList.add('light-mode');
+			if (localStorage.getItem('citypulse-access') === 'high-contrast') document.body.classList.add('high-contrast');
+		</script>
 		<header class="site-header border-b border-[var(--glass-border)] backdrop-blur-xl sticky top-0 z-30 shadow-lg transition-colors" style="background: var(--panel)">
 			<div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-3 sm:gap-5">
 				<!-- Wordmark -->
@@ -28,19 +33,25 @@ import '../styles/global.css';
 				</a>
 
 				<!-- View mode toggle -->
-				<div class="flex items-center gap-1 bg-[#0E141E] rounded-lg border border-[#263244] p-0.5 shrink-0" role="radiogroup" aria-label="View mode">
+				<div class="flex items-center gap-1 bg-[var(--ink-2)] rounded-lg border border-[var(--glass-border)] p-0.5 shrink-0" role="radiogroup" aria-label="View mode">
 					<button id="view-planner" class="view-toggle text-xs px-3 py-1.5 rounded-md font-medium transition-colors" data-mode="planner" aria-pressed="true">Planner</button>
-					<button id="view-citizen" class="view-toggle text-xs px-3 py-1.5 rounded-md text-[#64748B] hover:text-[#38BDF8] transition-colors" data-mode="citizen" aria-pressed="false">Citizen</button>
+					<button id="view-citizen" class="view-toggle text-xs px-3 py-1.5 rounded-md text-[var(--text-dim)] hover:text-[var(--amber)] transition-colors" data-mode="citizen" aria-pressed="false">Citizen</button>
 				</div>
 
+				<!-- Theme toggle -->
+				<button id="theme-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[var(--glass-border)] text-[var(--text-dim)] hover:text-[var(--amber)] bg-[var(--panel-2)] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle light/dark mode">
+					<svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+					<svg id="theme-icon-light" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+				</button>
+
 				<!-- Accessibility toggle -->
-				<button id="access-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[#263244] text-[#64748B] hover:text-[#38BDF8] bg-[#0E141E] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle accessibility mode">
+				<button id="access-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[var(--glass-border)] text-[var(--text-dim)] hover:text-[var(--amber)] bg-[var(--panel-2)] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle accessibility mode">
 					<span aria-hidden="true">Aa</span>
 				</button>
 
 				<!-- Live clock / status -->
 				<div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto" aria-live="polite">
-					<span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[#38BDF8]/30 bg-[#38BDF8]/10 shadow-[0_0_10px_rgba(56,189,248,0.15)]">
+					<span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[var(--amber-soft)] bg-[var(--amber-soft)] shadow-[0_0_10px_var(--amber-soft)]">
 						<span class="livedot" aria-hidden="true"></span>
 						<span class="eyebrow text-[10px] sm:text-[11px]" style="color:var(--flow)">Live</span>
 					</span>
@@ -72,11 +83,11 @@ import '../styles/global.css';
 					const pressed = btn.dataset.mode === mode;
 					btn.setAttribute('aria-pressed', pressed);
 					if (pressed) {
-						btn.style.background = 'rgba(56,189,248,0.15)';
-						btn.style.color = '#38BDF8';
+						btn.style.background = 'var(--amber-soft)';
+						btn.style.color = 'var(--amber)';
 					} else {
 						btn.style.background = 'transparent';
-						btn.style.color = '#64748B';
+						btn.style.color = 'var(--text-dim)';
 					}
 				});
 				document.getElementById('main-content').setAttribute('data-view-mode', mode);
@@ -86,15 +97,15 @@ import '../styles/global.css';
 						window.dispatchEvent(new CustomEvent('viewmodechange', { detail: mode }));
 					});
 				} catch(e) {}
-				// Store in session for persistence
-				sessionStorage.setItem('citypulse-view', mode);
+				// Store in local for persistence
+				localStorage.setItem('citypulse-view', mode);
 			};
 
 			document.getElementById('view-planner').addEventListener('click', () => setViewMode('planner'));
 			document.getElementById('view-citizen').addEventListener('click', () => setViewMode('citizen'));
 
 			// Restore saved view
-			const saved = sessionStorage.getItem('citypulse-view');
+			const saved = localStorage.getItem('citypulse-view');
 			if (saved) setViewMode(saved);
 
 			// Accessibility mode toggle
@@ -106,12 +117,49 @@ import '../styles/global.css';
 					const next = current === 'high-contrast' ? 'default' : 'high-contrast';
 					main.setAttribute('data-access-mode', next);
 					document.body.classList.toggle('high-contrast', next === 'high-contrast');
-					sessionStorage.setItem('citypulse-access', next);
+					localStorage.setItem('citypulse-access', next);
 				});
-				const savedAcc = sessionStorage.getItem('citypulse-access');
+				const savedAcc = localStorage.getItem('citypulse-access');
 				if (savedAcc === 'high-contrast') {
 					document.getElementById('main-content').setAttribute('data-access-mode', 'high-contrast');
 					document.body.classList.add('high-contrast');
+				}
+			}
+
+			// Theme toggle
+			const themeToggle = document.getElementById('theme-toggle');
+			const themeIconDark = document.getElementById('theme-icon-dark');
+			const themeIconLight = document.getElementById('theme-icon-light');
+
+			if (themeToggle) {
+				themeToggle.addEventListener('click', () => {
+					const isLight = document.body.classList.toggle('light-mode');
+					localStorage.setItem('citypulse-theme', isLight ? 'light' : 'dark');
+					if (themeIconDark && themeIconLight) {
+						themeIconDark.classList.toggle('hidden', !isLight);
+						themeIconLight.classList.toggle('hidden', isLight);
+					}
+				});
+				
+				const savedTheme = localStorage.getItem('citypulse-theme');
+				if (savedTheme === 'light') {
+					document.body.classList.add('light-mode');
+					if (themeIconDark && themeIconLight) {
+						themeIconDark.classList.remove('hidden');
+						themeIconLight.classList.add('hidden');
+					}
+				} else {
+                    // Default to dark
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('citypulse-theme', 'dark');
+                }
+			}
+
+			// Lite mode detection
+			if ('connection' in navigator && navigator.connection.effectiveType) {
+				const ct = navigator.connection.effectiveType;
+				if (ct === 'slow-2g' || ct === '2g') {
+					document.getElementById('main-content').setAttribute('data-lite-mode', 'true');
 				}
 			}
 

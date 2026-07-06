@@ -38,12 +38,40 @@ const ENERGY_DATA = [
   { ward: 'Jayanagar', solar_adoption_pct: 32, green_pct: 38 },
 ];
 
+// Helper: track execution steps for agent visualization
+const createStepTracker = () => {
+  const steps = [];
+  const startTime = Date.now();
+  return {
+    add: (tool, action, detail) => {
+      steps.push({
+        step: steps.length + 1,
+        tool,
+        action,
+        detail,
+        duration_ms: Date.now() - startTime,
+        timestamp: new Date().toISOString(),
+      });
+    },
+    get: () => steps,
+  };
+};
+
 // ADK-style multi-step agentic planner
 // Each "plan" is a sequence of tool calls (data retrievals) synthesized by Gemini
 const PLAN_TYPES = {
   'ideal_commute': async () => {
+    const tracker = createStepTracker();
+
+    tracker.add('traffic_data', 'Retrieving hourly traffic records', 'Fetching congestion and delay data across all corridors');
     const traffic = await getTrafficData();
+    tracker.add('traffic_data', `Processed ${traffic.length} traffic records`, `Found data for ${[...new Set(traffic.map(t => t.route_name))].length} corridors`);
+
+    tracker.add('environment_data', 'Loading environmental metrics', 'Fetching AQI and air quality data per ward');
     const env = await loadEnvData();
+    tracker.add('environment_data', `Loaded ${env.length} environment records`, 'AQI data available for cross-referencing');
+
+    tracker.add('analysis', 'Computing combined congestion + AQI scores', 'Ranking corridors by multi-domain composite metric');
     const routeCong = {};
     const routeAqi = {};
     traffic.forEach(t => {
@@ -62,18 +90,32 @@ const PLAN_TYPES = {
     }).sort((a, b) => a.combined_score - b.combined_score);
 
     const top3 = results.slice(0, 3);
+    tracker.add('ranking', `Ranked ${results.length} corridors`, `Top corridor: ${top3[0]?.route} (score: ${top3[0]?.combined_score})`);
+
+    tracker.add('gemini', 'Generating AI recommendation', 'Calling Gemini to synthesize cross-domain insights');
     const fallback = `Based on multi-domain analysis, the best commute corridors (lowest combined congestion + AQI) are: ${top3.map(r => `${r.route} (congestion: ${r.avg_congestion}, AQI: ${r.avg_aqi})`).join(', ')}.`;
     const prompt = `As a city planning AI, analyze this multi-domain commute data and recommend the best 3 corridors for commuting based on LOW congestion AND LOW AQI (combined score = avg of both). For each, explain WHY it ranks well. Data: ${JSON.stringify(results.slice(0, 5))}. Respond as JSON: { "top_choices": [{ "route": string, "reason": string, "congestion": number, "aqi": number }], "summary": "one-sentence overall recommendation" }`;
 
     const structured = await generateStructured(prompt, { top_choices: top3.map(r => ({ route: r.route, reason: `Lowest combined congestion (${r.avg_congestion}) and AQI (${r.avg_aqi})`, congestion: r.avg_congestion, aqi: r.avg_aqi })), summary: fallback });
-    return structured;
+    tracker.add('complete', 'Plan complete', 'Generated recommendation with cross-domain reasoning');
+
+    return { ...structured, steps: tracker.get() };
   },
 
   'disaster_preparedness': async () => {
+    const tracker = createStepTracker();
+
+    tracker.add('incident_data', 'Loading incident records', 'Fetching public safety incident history');
     const incidents = await loadIncidents();
+    tracker.add('incident_data', `Found ${incidents.length} incidents`, `Analyzing severity distribution across wards`);
+
+    tracker.add('traffic_data', 'Retrieving traffic data', 'Checking corridor accessibility for emergency response');
     const traffic = await getTrafficData();
+
+    tracker.add('environment_data', 'Loading environmental data', 'Cross-referencing AQI and waste management');
     const env = await loadEnvData();
 
+    tracker.add('analysis', 'Computing ward risk assessments', 'Cross-domain analysis: incidents × AQI × waste efficiency');
     const byWard = {};
     incidents.forEach(inc => {
       if (!byWard[inc.ward]) byWard[inc.ward] = { ward: inc.ward, incidents: [], critical_count: 0 };
@@ -93,6 +135,9 @@ const PLAN_TYPES = {
     })).sort((a, b) => b.critical_incidents - a.critical_incidents);
 
     const topPriority = wardAssessments.slice(0, 3);
+    tracker.add('ranking', `Assessed ${wardAssessments.length} wards`, `Priority ward: ${topPriority[0]?.ward} (${topPriority[0]?.critical_incidents} critical incidents)`);
+
+    tracker.add('gemini', 'Generating AI assessment', 'Calling Gemini for disaster preparedness analysis');
     const fallback = `Priority wards for disaster preparedness: ${topPriority.map(w => `${w.ward} (${w.critical_incidents} critical incidents, AQI: ${w.aqi})`).join(', ')}.`;
     const prompt = `As a disaster response AI, assess these wards for emergency preparedness priority based on incident frequency, severity, and environmental factors. Identify the top 3 wards needing most attention. Data: ${JSON.stringify(wardAssessments.slice(0, 6))}. Respond as JSON: { "priority_wards": [{ "ward": string, "risk_score": number(0-100), "reason": string, "recommended_action": string }], "summary": string }`;
 
@@ -100,14 +145,24 @@ const PLAN_TYPES = {
       priority_wards: topPriority.map(w => ({ ward: w.ward, risk_score: Math.min(100, w.critical_incidents * 25), reason: `${w.critical_incidents} critical incidents, AQI ${w.aqi}`, recommended_action: 'Increase emergency resource allocation' })),
       summary: fallback,
     });
-    return structured;
+    tracker.add('complete', 'Plan complete', 'Generated disaster preparedness priority assessment');
+
+    return { ...structured, steps: tracker.get() };
   },
 
   'simulate_impact': async () => {
+    const tracker = createStepTracker();
+
+    tracker.add('environment_data', 'Loading ward environment data', 'Fetching current waste and AQI metrics');
     const env = await loadEnvData();
+
+    tracker.add('traffic_data', 'Loading traffic baseline', 'For cross-domain congestion correlation');
     const traffic = await getTrafficData();
+
+    tracker.add('incident_data', 'Loading incident data', 'For safety impact correlation');
     const incidents = await loadIncidents();
 
+    tracker.add('simulation', 'Running impact simulation', 'Modeling 20% waste collection improvement → AQI effect');
     const wardMetrics = {};
     env.forEach(e => {
       wardMetrics[e.wardId] = { ...wardMetrics[e.wardId], aqi: e.aqi, waste: e.waste_collection_efficiency_pct };
@@ -121,6 +176,9 @@ const PLAN_TYPES = {
       }
     });
 
+    tracker.add('analysis', 'Computed projected improvements', `Average AQI reduction: ${Math.round(Object.values(wardMetrics).reduce((s, w) => s + (w.improvement || 0), 0) / Math.max(1, Object.keys(wardMetrics).length))} points`);
+
+    tracker.add('gemini', 'Generating AI policy analysis', 'Calling Gemini for simulation interpretation');
     const fallback = `Simulating 20% improvement in waste collection across all wards: average AQI reduction of ${Math.round(Object.values(wardMetrics).reduce((s, w) => s + (w.improvement || 0), 0) / Math.max(1, Object.keys(wardMetrics).length))} points projected.`;
     const prompt = `Simulate the impact of improving waste collection efficiency by 20% across all wards. Analyze how this affects AQI (air quality) and overall livability. Data: ${JSON.stringify(wardMetrics)}. Respond as JSON: { "simulation": [{ "ward": string, "current_aqi": number, "projected_aqi": number, "improvement": number }], "summary": string, "policy_recommendation": string }`;
 
@@ -129,17 +187,25 @@ const PLAN_TYPES = {
       summary: fallback,
       policy_recommendation: 'Prioritize waste management infrastructure in wards with highest AQI to maximize health co-benefits.',
     });
-    return structured;
+    tracker.add('complete', 'Simulation complete', 'Generated policy recommendation with projected outcomes');
+
+    return { ...structured, steps: tracker.get() };
   },
 
   'tourism_hotspots': async () => {
+    const tracker = createStepTracker();
+
+    tracker.add('traffic_data', 'Loading traffic data', 'Analyzing accessibility by congestion levels per ward');
     const traffic = await getTrafficData();
+
+    tracker.add('tourism_data', 'Loading POI database', `${TOURISM_POI.length} points of interest`);
     const wardCong = {};
     traffic.forEach(t => {
       if (!wardCong[t.route_name]) wardCong[t.route_name] = [];
       wardCong[t.route_name].push(t.congestion);
     });
 
+    tracker.add('analysis', 'Computing accessibility scores', 'Combining footfall, rating, and congestion data');
     const poisWithCong = TOURISM_POI.map(poi => ({
       ...poi,
       avg_congestion: wardCong[poi.ward] ? Math.round(wardCong[poi.ward].reduce((a, b) => a + b, 0) / wardCong[poi.ward].length) : 50,
@@ -147,6 +213,9 @@ const PLAN_TYPES = {
     })).sort((a, b) => (b.rating * 10 + b.accessibility_score) - (a.rating * 10 + a.accessibility_score));
 
     const topPois = poisWithCong.slice(0, 4);
+    tracker.add('ranking', `Ranked ${poisWithCong.length} POIs`, `Top: ${topPois[0]?.name} (score: ${Math.round(topPois[0]?.rating * 20 + topPois[0]?.accessibility_score * 0.8)})`);
+
+    tracker.add('gemini', 'Generating AI economic analysis', 'Calling Gemini for tourism development insights');
     const fallback = `Top tourism hotspots by popularity and accessibility: ${topPois.map(p => `${p.name} (rating ${p.rating}, accessibility ${p.accessibility_score}/100)`).join(', ')}.`;
     const prompt = `As a tourism development AI, rank these points of interest by their potential for local economic development. Consider rating, footfall, and accessibility (lower congestion = higher accessibility). Data: ${JSON.stringify(poisWithCong)}. Respond as JSON: { "top_hotspots": [{ "name": string, "rank": number, "potential_score": number, "recommendation": string }], "summary": string }`;
 
@@ -154,7 +223,9 @@ const PLAN_TYPES = {
       top_hotspots: topPois.map((p, i) => ({ name: p.name, rank: i + 1, potential_score: Math.round(p.rating * 20 + p.accessibility_score * 0.8), recommendation: `Improve connectivity to ${p.name} for tourism boost` })),
       summary: fallback,
     });
-    return structured;
+    tracker.add('complete', 'Plan complete', 'Generated tourism hotspot rankings with economic analysis');
+
+    return { ...structured, steps: tracker.get() };
   },
 };
 

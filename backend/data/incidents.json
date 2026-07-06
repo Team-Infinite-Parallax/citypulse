@@ -1017,5 +1017,38 @@
     "severity": "INFO",
     "source": "citizen_report",
     "notes": "Large pothole in the middle lane"
+  },
+  {
+    "incident_id": "CIT-1783355632085-1c16",
+    "type": "pothole",
+    "ward": "TestWard-1783355631971",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "timestamp": "2026-07-06T16:33:52.087Z",
+    "severity": "INFO",
+    "source": "citizen_report",
+    "notes": "Large pothole in the middle lane"
+  },
+  {
+    "incident_id": "CIT-1783356129071-285c",
+    "type": "pothole",
+    "ward": "TestWard-1783356128941",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "timestamp": "2026-07-06T16:42:09.073Z",
+    "severity": "INFO",
+    "source": "citizen_report",
+    "notes": "Large pothole in the middle lane"
+  },
+  {
+    "incident_id": "CIT-1783356180322-c87c",
+    "type": "pothole",
+    "ward": "TestWard-1783356180078",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "timestamp": "2026-07-06T16:43:00.324Z",
+    "severity": "INFO",
+    "source": "citizen_report",
+    "notes": "Large pothole in the middle lane"
   }
 ]

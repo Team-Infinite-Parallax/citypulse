@@ -8,6 +8,7 @@ import {
   generateEmbeddings,
   cosineSimilarity,
   embeddingMode,
+  embeddingSpace,
 } from '../lib/gemini.js';
 import { getTrafficData } from '../lib/db.js';
 import { getAllChunks, upsertChunks, searchSimilar } from '../lib/vectorStore.js';
@@ -208,12 +209,19 @@ const syncVectorStore = async () => {
     s.id = chunkId;
 
     const existing = existingMap.get(chunkId);
-    if (existing && existing.text === s.text && Array.isArray(existing.embedding) && existing.embedding.length > 0) {
-      // Content has not changed, reuse existing embedding
+    if (
+      existing &&
+      existing.text === s.text &&
+      existing.embed_space === embeddingSpace() &&
+      Array.isArray(existing.embedding) &&
+      existing.embedding.length > 0
+    ) {
+      // Content unchanged AND same vector space — safe to reuse the embedding.
       s.embedding = existing.embedding;
+      s.embed_space = existing.embed_space;
       chunksToUpsert.push(s);
     } else {
-      // Content has changed or is new, needs embedding
+      // New, changed, or embedded under a different model — re-embed.
       textsToEmbed.push(s.text);
       textIndexMap.push(i);
     }
@@ -226,6 +234,7 @@ const syncVectorStore = async () => {
       const summaryIdx = textIndexMap[k];
       const s = summaries[summaryIdx];
       s.embedding = newEmbeddings[k];
+      s.embed_space = embeddingSpace(); // read after embedTexts — reflects any fallback
       chunksToUpsert.push(s);
     }
   }

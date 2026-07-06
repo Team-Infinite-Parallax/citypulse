@@ -53,7 +53,9 @@ describe('CityPulse Firestore Integration (Fallback Mode)', () => {
     expect(postRes.statusCode).toEqual(200);
     expect(postRes.body).toHaveProperty('id');
     expect(postRes.body.status).toEqual('DRAFT');
-    expect(postRes.body.justification).toEqual(detailsText);
+    // The endpoint drafts a memo AROUND the provided details, so the input
+    // must be incorporated into the justification, not echoed verbatim.
+    expect(postRes.body.justification).toEqual(expect.stringContaining(detailsText));
 
     const memoId = postRes.body.id;
 
@@ -65,7 +67,7 @@ describe('CityPulse Firestore Integration (Fallback Mode)', () => {
     expect(Array.isArray(getRes.body)).toBe(true);
     const found = getRes.body.find(m => m.id === memoId);
     expect(found).toBeDefined();
-    expect(found.justification).toEqual(detailsText);
+    expect(found.justification).toEqual(expect.stringContaining(detailsText));
   });
 
   it('POST /api/actions/dispatch/:id updates status of a memo', async () => {

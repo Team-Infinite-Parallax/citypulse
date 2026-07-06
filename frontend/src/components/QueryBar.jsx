@@ -68,7 +68,7 @@ const QueryBar = () => {
           <button
             type="submit"
             disabled={!query.trim() || loading}
-            className="btn-signal px-6 py-4 flex items-center gap-2"
+            className="btn-signal px-6 py-4 flex items-center gap-2 active:scale-95 transition-transform"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Send className="w-4 h-4" /> Ask</>}
           </button>
@@ -115,7 +115,7 @@ const QueryBar = () => {
               <button
                 type="button"
                 aria-expanded={showExplanation}
-                className="w-full px-4 py-3 bg-[#0E141E] flex items-center justify-between text-sm font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
+                className="w-full px-4 py-3 bg-[#0E141E] flex items-center justify-between text-sm font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
                 onClick={() => setShowExplanation(!showExplanation)}
               >
                 <span className="mono text-xs">grounded on {response.cited_points.length} data point(s)</span>

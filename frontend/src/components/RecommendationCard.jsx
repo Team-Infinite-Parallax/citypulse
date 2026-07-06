@@ -68,7 +68,7 @@ const RecommendationCard = () => {
       
       <div className="p-4 space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar flex-grow">
         {recommendations.map(rec => (
-          <div key={rec.id} className="border border-[#1B2534] rounded-xl overflow-hidden bg-[#0E141E] hover:border-[#FFB020]/50 transition-colors shadow-lg">
+          <div key={rec.id} className="border border-[#1B2534] rounded-xl overflow-hidden bg-[#0E141E] hover:border-[#FFB020]/50 transition-all hover:-translate-y-0.5 shadow-lg">
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
                 <span className="mono text-[10px] font-bold px-2 py-1 rounded tracking-wider bg-[#31D0AA]/10 text-[#31D0AA] border border-[#31D0AA]/20 uppercase">
@@ -91,7 +91,7 @@ const RecommendationCard = () => {
               <button
                 type="button"
                 aria-expanded={expandedId === rec.id}
-                className="w-full px-4 py-3 bg-[#131A26] flex items-center justify-between text-xs font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
+                className="w-full px-4 py-3 bg-[#131A26] flex items-center justify-between text-xs font-medium text-[#9AA9BD] hover:bg-[#182233] transition-colors active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FFB020]"
                 onClick={() => setExpandedId(expandedId === rec.id ? null : rec.id)}
               >
                 <span>Why this recommendation? (Supporting Data)</span>

@@ -8,34 +8,36 @@ import RecommendationCard from '../components/RecommendationCard.jsx';
 ---
 
 <Layout>
-  <div className="p-6">
-    <div className="max-w-7xl mx-auto space-y-6">
-      {/* Query Bar for NLP interaction */}
+  <div className="p-4 sm:p-6">
+    <div className="max-w-[1600px] mx-auto space-y-6 sm:space-y-8">
+
       <QueryBar client:load />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Map View */}
-        <div className="lg:col-span-1">
+        <section className="lg:col-span-2" aria-label="Traffic Map">
           <MapView client:only="react" />
-        </div>
-
-        {/* Dashboard Panels */}
-        <div className="lg:col-span-2">
-          <Dashboard client:load />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Alerts Panel */}
-        <div className="lg:col-span-1">
+        </section>
+        <section className="lg:col-span-1" aria-label="Active Alerts">
           <AlertsPanel client:load />
-        </div>
-
-        {/* AI Recommendations */}
-        <div className="lg:col-span-2">
-          <RecommendationCard client:load />
-        </div>
+        </section>
       </div>
+
+      <section aria-label="Live Telemetry">
+        <h2 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
+          <span className="w-1 h-5 rounded-full bg-[#31D0AA]"></span>
+          Live Telemetry
+        </h2>
+        <Dashboard client:load />
+      </section>
+
+      <section aria-label="AI Recommendations">
+        <h2 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
+          <span className="w-1 h-5 rounded-full bg-[#FFB020]"></span>
+          AI Insights
+        </h2>
+        <RecommendationCard client:load />
+      </section>
+
     </div>
   </div>
 </Layout>

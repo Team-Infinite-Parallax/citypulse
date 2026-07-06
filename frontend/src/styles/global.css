@@ -14,12 +14,12 @@
   --line-soft:  rgba(27, 37, 52, 0.5);
   --text:       #E6EDF3;   /* primary ink               */
   --text-mid:   #9AA9BD;   /* secondary                 */
-  --text-dim:   #64748B;   /* captions / muted          */
+  --text-dim:   #8896A8;   /* captions / muted          */
 
-  --amber:      #FFB020;   /* sodium-vapor brand accent */
-  --amber-soft: rgba(255,176,32,0.14);
-  --flow:       #31D0AA;   /* free-flowing / good       */
-  --caution:    #FFB020;   /* slowing                   */
+  --amber:      #1FB6FF;   /* primary accent (skyline) */
+  --amber-soft: rgba(31,182,255,0.12);
+  --flow:       #2EE6B6;   /* free-flowing / good       */
+  --caution:    #FF8C42;   /* slowing (distinct orange) */
   --stop:       #FF5A5F;   /* congested / critical      */
   
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -36,8 +36,8 @@ body {
   background-color: var(--ink);
   /* Rich animated mesh gradient + grid */
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(49, 208, 170, 0.05), transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(255, 176, 32, 0.05), transparent 40%),
+    radial-gradient(circle at 15% 50%, rgba(46, 230, 182, 0.05), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(31, 182, 255, 0.05), transparent 40%),
     linear-gradient(rgba(38,50,68,0.35) 1px, transparent 1px),
     linear-gradient(90deg, rgba(38,50,68,0.35) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
@@ -53,10 +53,24 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text
 
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
+  font-size: 11px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-dim);
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.section-head::before {
+  content: '';
+  width: 4px;
+  height: 1.25rem;
+  border-radius: 999px;
+  flex-shrink: 0;
 }
 
 .panel {
@@ -97,13 +111,13 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text
 .livedot {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--flow);
-  box-shadow: 0 0 0 0 rgba(49,208,170,0.7);
+  box-shadow: 0 0 0 0 rgba(46,230,182,0.7);
   animation: ping 2s cubic-bezier(0,0,0.2,1) infinite;
 }
 @keyframes ping {
-  0%   { box-shadow: 0 0 0 0 rgba(49,208,170,0.6); }
-  70%  { box-shadow: 0 0 0 8px rgba(49,208,170,0); }
-  100% { box-shadow: 0 0 0 0 rgba(49,208,170,0); }
+  0%   { box-shadow: 0 0 0 0 rgba(46,230,182,0.6); }
+  70%  { box-shadow: 0 0 0 8px rgba(46,230,182,0); }
+  100% { box-shadow: 0 0 0 0 rgba(46,230,182,0); }
 }
 
 /* ---------- Signature: the EKG pulse line ---------- */
@@ -118,7 +132,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text
   stroke: var(--flow);
   stroke-width: 2;
   fill: none;
-  filter: drop-shadow(0 0 6px rgba(49,208,170,0.8));
+  filter: drop-shadow(0 0 6px rgba(46,230,182,0.8));
   animation: ekg-scroll 3.2s linear infinite;
 }
 @keyframes ekg-scroll { from { transform: translateX(0); } to { transform: translateX(-240px); } }
@@ -127,20 +141,20 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text
 
 .btn-signal {
   background: var(--amber);
-  color: #1A1206;
+  color: #042A3B;
   font-weight: 700;
   font-family: var(--font-display);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 16px rgba(255, 176, 32, 0.2);
+  box-shadow: 0 0 16px rgba(31, 182, 255, 0.2);
 }
 .btn-signal:hover:not(:disabled) { 
   filter: brightness(1.1);
-  box-shadow: 0 0 24px rgba(255, 176, 32, 0.4);
+  box-shadow: 0 0 24px rgba(31, 182, 255, 0.4);
   transform: translateY(-1px);
 }
 .btn-signal:active:not(:disabled) { 
   transform: translateY(1px); 
-  box-shadow: 0 0 8px rgba(255, 176, 32, 0.3);
+  box-shadow: 0 0 8px rgba(31, 182, 255, 0.3);
 }
 .btn-signal:disabled { 
   background: #26303F; 

@@ -70,7 +70,7 @@ const AlertsPanel = () => {
           const critical = alert.severity === 'CRITICAL';
           const accent = critical ? '#FF5A5F' : '#FFB020';
           return (
-            <div key={alert.id} className="rounded-xl bg-[#0E141E] border border-[#1B2534] p-4 hover:border-[#FF5A5F]/50 transition-colors shadow-lg"
+            <div key={alert.id} className="rounded-xl bg-[#0E141E] border border-[#1B2534] p-4 hover:border-[#FF5A5F]/50 transition-all hover:-translate-y-0.5 shadow-lg"
                  style={{ borderLeft: `3px solid ${accent}` }}>
               <div className="flex justify-between items-center mb-2">
                 <span className="mono text-[10px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider"

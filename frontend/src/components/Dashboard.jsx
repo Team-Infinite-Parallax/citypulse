@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
   ResponsiveContainer, AreaChart, Area
 } from 'recharts';
 import useCityStore from '../store/useCityStore';
-import { AlertCircle, Clock, Activity, Gauge, Wind } from 'lucide-react';
+import { AlertCircle, Clock, Activity, Gauge, Wind, Filter } from 'lucide-react';
+import routesGeoJson from '../data/routes.json';
 
-// Night Dispatch palette
-const FLOW = '#31D0AA', AMBER = '#FFB020', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
+const FLOW = '#31D0AA', CAUTION = '#F97316', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
 
-// congestion score -> status color (shared by KPI + charts)
-const scoreColor = (v) => (v >= 70 ? STOP : v >= 40 ? AMBER : FLOW);
+const scoreColor = (v) => (v >= 70 ? STOP : v >= 40 ? CAUTION : FLOW);
+
+const KPI_ICONS = {
+  congestion: { icon: Gauge, label: 'Avg Congestion', unit: '/100' },
+  delay: { icon: Clock, label: 'Avg Delay', unit: 'min' },
+  peak: { icon: Activity, label: 'Peak Hour', unit: '' },
+  aqi: { icon: Wind, label: 'Avg AQI', unit: '' },
+};
 
 const tooltipStyle = {
   background: 'rgba(19, 26, 38, 0.85)', 
@@ -26,8 +32,16 @@ const Dashboard = () => {
   const [trafficData, setTrafficData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filterRoute, setFilterRoute] = useState('');
 
   const selectedRoute = useCityStore((state) => state.selectedRoute);
+  const setSelectedRoute = useCityStore((state) => state.setSelectedRoute);
+
+  const routeNames = useMemo(() => {
+    if (!routesGeoJson?.features) return [];
+    const names = routesGeoJson.features.map(f => f.properties?.name).filter(Boolean);
+    return [...new Set(names)];
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +68,85 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  const activeRoute = filterRoute || selectedRoute;
+
+  const displaySummary = activeRoute
+    ? summaryData.filter(s => s.route_name === activeRoute)
+    : summaryData;
+  const displayTraffic = activeRoute
+    ? trafficData.filter(t => t.route_name === activeRoute)
+    : trafficData;
+
+  const delayChartData = displaySummary.map(s => ({ name: s.route_name, Delay: s.avg_delay_minutes }));
+
+  const sortedTraffic = [...displayTraffic].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+  const trendDataRaw = {};
+  sortedTraffic.forEach(t => {
+    const time = new Date(t.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    if (!trendDataRaw[time]) trendDataRaw[time] = { time, congestion: 0, count: 0 };
+    trendDataRaw[time].congestion += t.congestion;
+    trendDataRaw[time].count += 1;
+  });
+  const trendData = Object.values(trendDataRaw)
+    .map(d => ({ time: d.time, Congestion: Math.round(d.congestion / d.count) }))
+    .slice(-24);
+
+  const overallAvgCongestion = displaySummary.length > 0
+    ? Math.round(displaySummary.reduce((a, s) => a + s.avg_congestion, 0) / displaySummary.length)
+    : 0;
+  const overallAvgDelay = displaySummary.length > 0
+    ? Math.round(displaySummary.reduce((a, s) => a + s.avg_delay_minutes, 0) / displaySummary.length)
+    : 0;
+  const peakHour = displaySummary.length === 1 ? displaySummary[0].peak_hour
+    : displaySummary.length > 1 ? 'Var'
+    : '--';
+  const overallAvgAqi = displayTraffic.length > 0
+    ? Math.round(displayTraffic.reduce((a, t) => a + (t.aqi || 50), 0) / displayTraffic.length)
+    : 50;
+
+  const congColor = scoreColor(overallAvgCongestion);
+
+  const kpiCards = [
+    {
+      key: 'congestion',
+      value: overallAvgCongestion,
+      unit: '/100',
+      color: congColor,
+      extra: (
+        <div className="mt-3 h-1.5 rounded-full bg-[#0E141E] overflow-hidden">
+          <div className="h-full rounded-full transition-all" style={{ width: `${overallAvgCongestion}%`, background: congColor }} />
+        </div>
+      ),
+    },
+    {
+      key: 'delay',
+      value: overallAvgDelay,
+      unit: 'min',
+      color: '#F97316',
+      extra: <p className="mono text-[11px] text-[#8896A8] mt-3">vs. free-flow baseline</p>,
+    },
+    {
+      key: 'peak',
+      value: peakHour,
+      unit: '',
+      color: '#31D0AA',
+      extra: <p className="mono text-[11px] text-[#8896A8] mt-3">busiest window</p>,
+    },
+    {
+      key: 'aqi',
+      value: overallAvgAqi,
+      unit: '',
+      color: AQI_COLOR,
+      extra: <p className="mono text-[11px] text-[#8896A8] mt-3">air quality index</p>,
+    },
+  ];
+
+  const handleRouteFilter = (e) => {
+    const val = e.target.value;
+    setFilterRoute(val);
+    setSelectedRoute(val);
+  };
+
   if (loading) {
     return (
       <div className="panel h-64 flex flex-col justify-center items-center gap-3" aria-live="polite">
@@ -72,110 +165,57 @@ const Dashboard = () => {
     );
   }
 
-  // Filter by selected route
-  const displaySummary = selectedRoute
-    ? summaryData.filter(s => s.route_name === selectedRoute)
-    : summaryData;
-  const displayTraffic = selectedRoute
-    ? trafficData.filter(t => t.route_name === selectedRoute)
-    : trafficData;
-
-  // Avg Delay by Route (bar)
-  const delayChartData = displaySummary.map(s => ({ name: s.route_name, Delay: s.avg_delay_minutes }));
-
-  // Congestion trend over time (area)
-  const sortedTraffic = [...displayTraffic].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-  const trendDataRaw = {};
-  sortedTraffic.forEach(t => {
-    const time = new Date(t.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    if (!trendDataRaw[time]) trendDataRaw[time] = { time, congestion: 0, count: 0 };
-    trendDataRaw[time].congestion += t.congestion;
-    trendDataRaw[time].count += 1;
-  });
-  const trendData = Object.values(trendDataRaw)
-    .map(d => ({ time: d.time, Congestion: Math.round(d.congestion / d.count) }))
-    .slice(-24);
-
-  // KPIs
-  const overallAvgCongestion = displaySummary.length > 0
-    ? Math.round(displaySummary.reduce((a, s) => a + s.avg_congestion, 0) / displaySummary.length)
-    : 0;
-  const overallAvgDelay = displaySummary.length > 0
-    ? Math.round(displaySummary.reduce((a, s) => a + s.avg_delay_minutes, 0) / displaySummary.length)
-    : 0;
-  const peakHour = displaySummary.length === 1 ? displaySummary[0].peak_hour
-    : displaySummary.length > 1 ? 'Var'
-    : '--';
-  const overallAvgAqi = displayTraffic.length > 0
-    ? Math.round(displayTraffic.reduce((a, t) => a + (t.aqi || 50), 0) / displayTraffic.length)
-    : 50;
-
-  const congColor = scoreColor(overallAvgCongestion);
-
   return (
     <div className="space-y-6">
+      {/* Route Filter */}
+      <div className="flex items-center gap-3">
+        <Filter className="w-4 h-4 text-[#8896A8]" />
+        <select
+          aria-label="Filter by route"
+          value={activeRoute}
+          onChange={handleRouteFilter}
+          className="bg-[#0E141E] border border-[#263244] text-[#E6EDF3] text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-[#FFB020] transition-colors cursor-pointer"
+        >
+          <option value="">All routes</option>
+          {routeNames.map(name => (
+            <option key={name} value={name}>{name}</option>
+          ))}
+        </select>
+        {activeRoute && (
+          <button
+            type="button"
+            onClick={() => { setFilterRoute(''); setSelectedRoute(null); }}
+            className="text-xs text-[#8896A8] hover:text-[#E6EDF3] transition-colors px-2 py-1"
+          >
+            Clear filter
+          </button>
+        )}
+      </div>
+
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Congestion — with load meter */}
-        <div className="panel p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="eyebrow">Avg Congestion</span>
-            <div className="w-8 h-8 rounded-lg grid place-items-center border"
-                 style={{ background: `${congColor}1f`, borderColor: `${congColor}44`, color: congColor }}>
-              <Gauge className="w-4 h-4" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {kpiCards.map(({ key, value, unit, color, extra }) => {
+          const meta = KPI_ICONS[key];
+          const Icon = meta.icon;
+          return (
+            <div key={key} className="panel p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-3">
+                <span className="eyebrow">{meta.label}</span>
+                <div className="w-8 h-8 rounded-lg grid place-items-center border"
+                     style={{ background: `${color}1a`, borderColor: `${color}44`, color }}>
+                  <Icon className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="stat text-2xl sm:text-4xl" style={{ color: key === 'congestion' ? color : '#E6EDF3' }}>
+                  {value}
+                </span>
+                {unit && <span className="text-[#8896A8] text-sm">{unit}</span>}
+              </div>
+              {extra}
             </div>
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="stat text-4xl" style={{ color: congColor }}>{overallAvgCongestion}</span>
-            <span className="text-[#64748B] text-sm">/100</span>
-          </div>
-          <div className="mt-3 h-1.5 rounded-full bg-[#0E141E] overflow-hidden">
-            <div className="h-full rounded-full transition-all" style={{ width: `${overallAvgCongestion}%`, background: congColor }} />
-          </div>
-        </div>
-
-        {/* Avg Delay */}
-        <div className="panel p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="eyebrow">Avg Delay</span>
-            <div className="w-8 h-8 rounded-lg grid place-items-center border border-[#FFB020]/30 bg-[#FFB020]/12 text-[#FFB020]">
-              <Clock className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="stat text-4xl text-[#E6EDF3]">{overallAvgDelay}</span>
-            <span className="text-[#64748B] text-sm">min</span>
-          </div>
-          <p className="mono text-[11px] text-[#64748B] mt-3">vs. free-flow baseline</p>
-        </div>
-
-        {/* Peak Hour */}
-        <div className="panel p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="eyebrow">Peak Hour</span>
-            <div className="w-8 h-8 rounded-lg grid place-items-center border border-[#31D0AA]/30 bg-[#31D0AA]/12 text-[#31D0AA]">
-              <Activity className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="flex items-baseline">
-            <span className="stat text-4xl text-[#E6EDF3]">{peakHour}</span>
-          </div>
-          <p className="mono text-[11px] text-[#64748B] mt-3">busiest window</p>
-        </div>
-
-        {/* AQI */}
-        <div className="panel p-5">
-          <div className="flex items-center justify-between mb-3">
-            <span className="eyebrow">Avg AQI</span>
-            <div className="w-8 h-8 rounded-lg grid place-items-center border" style={{ borderColor: `${AQI_COLOR}44`, backgroundColor: `${AQI_COLOR}1f`, color: AQI_COLOR }}>
-              <Wind className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="flex items-baseline">
-            <span className="stat text-4xl text-[#E6EDF3]">{overallAvgAqi}</span>
-          </div>
-          <p className="mono text-[11px] text-[#64748B] mt-3">air quality index</p>
-        </div>
+          );
+        })}
       </div>
 
       {/* Charts */}
@@ -183,7 +223,7 @@ const Dashboard = () => {
         <div className="panel">
           <div className="panel-head">
             <h3 className="text-base font-semibold text-[#E6EDF3]">Congestion Trend · 24h</h3>
-            <span className="eyebrow">{selectedRoute || 'All corridors'}</span>
+            <span className="eyebrow">{activeRoute || 'All corridors'}</span>
           </div>
           <div className="p-4 h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -195,8 +235,8 @@ const Dashboard = () => {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
-                <XAxis dataKey="time" stroke="#64748B" fontSize={11} tickMargin={8} minTickGap={30} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
-                <YAxis stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis dataKey="time" stroke="#8896A8" fontSize={12} tickMargin={8} minTickGap={30} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
+                <YAxis stroke="#8896A8" fontSize={12} tickLine={false} axisLine={false} />
                 <RechartsTooltip cursor={{ stroke: '#263244' }} contentStyle={tooltipStyle} />
                 <Area type="monotone" dataKey="Congestion" stroke={FLOW} strokeWidth={2.5}
                       fill="url(#congFill)" dot={false} activeDot={{ r: 5, fill: FLOW, stroke: '#0B0E14', strokeWidth: 2 }} />
@@ -214,10 +254,10 @@ const Dashboard = () => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={delayChartData} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
-                <XAxis dataKey="name" stroke="#64748B" fontSize={11} tickMargin={8} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
-                <YAxis stroke="#64748B" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis dataKey="name" stroke="#8896A8" fontSize={12} tickMargin={8} tickLine={false} axisLine={{ stroke: '#1B2534' }} />
+                <YAxis stroke="#8896A8" fontSize={12} tickLine={false} axisLine={false} />
                 <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={tooltipStyle} />
-                <Bar dataKey="Delay" fill={AMBER} radius={[4, 4, 0, 0]} maxBarSize={44} />
+                <Bar dataKey="Delay" fill={CAUTION} radius={[4, 4, 0, 0]} maxBarSize={44} />
               </BarChart>
             </ResponsiveContainer>
           </div>

@@ -89,4 +89,8 @@ cd backend && npm test
 *(Insert live demo link / video here)*
 
 ---
+<<<<<<< HEAD
 *Built for Gen AI Academy APAC — "AI for Better Living and Smarter Communities" · Team Infinite Parallax*
+=======
+*Built for the Google Cloud Hackathon*
+>>>>>>> 664f51643a605ba6b1964350c6ae99e3434476d3

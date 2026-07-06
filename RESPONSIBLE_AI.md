@@ -15,6 +15,8 @@ human must stay in the loop.
 | Waste / water-quality | **Synthetic** | Ward-level (`backend/data/environment.json`). |
 | Citizen reports | **User-generated at runtime** | Free-text + optional photo. Persisted in Firestore in production mode. |
 | Action memos | **Synthetic** | Structured decision drafts. In production mode, memos persist in Firestore (still requiring manual approval/dispatch). |
+| Tourism POIs / events | **Static demo data** | 8 points of interest + 4 events in `routes/tourism.js`. Illustrative only. |
+| Energy / water utility data | **Static demo data** | 5 wards tracked in `routes/energy.js`. Not a live SCADA feed. |
 
 All coordinates sit near the demo map center so markers render; they are
 illustrative, **not** a real municipal feed. In production these become BigQuery

@@ -9,67 +9,279 @@ import HealthAdvisory from '../components/HealthAdvisory.jsx';
 import WardDetailPanel from '../components/WardDetailPanel.jsx';
 import ActionCenter from '../components/ActionCenter.jsx';
 import CitizenReport from '../components/CitizenReport.jsx';
+import TourismPanel from '../components/TourismPanel.jsx';
+import EnergyPanel from '../components/EnergyPanel.jsx';
+import AgenticPlanner from '../components/AgenticPlanner.jsx';
+import LookerEmbed from '../components/LookerEmbed.jsx';
 ---
 
 <Layout>
-  <div class="p-4 sm:p-6 lg:p-8">
-    <div class="max-w-[1600px] mx-auto space-y-8 lg:space-y-10">
-
-      <!-- Query Bar -->
-      <QueryBar client:load />
-
-      <!-- Map: Hero section - full width, dominant -->
-      <section aria-label="Traffic Map" class="relative">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span>
-          <h2 class="text-lg font-bold" style="color: var(--amber)">Traffic Map</h2>
-          <span class="eyebrow ml-auto hidden sm:block">Bengaluru · Live Network</span>
-        </div>
-        <div class="relative">
-          <MapView client:only="react" />
-          <div class="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0B0E14] to-transparent rounded-b-[16px]"></div>
-        </div>
-      </section>
-
-      <!-- Second domain: Environmental / Community Wellness -->
-      <section aria-label="Health & Air-Quality Advisories">
-        <HealthAdvisory client:load />
-      </section>
-
-      <!-- Live Telemetry -->
-      <section aria-label="Live Telemetry">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="w-1 h-5 rounded-full bg-[#31D0AA] shadow-[0_0_8px_rgba(49,208,170,0.6)]"></span>
-          <h2 class="text-lg font-bold" style="color: var(--amber)">Live Telemetry</h2>
-        </div>
-        <Dashboard client:load />
-      </section>
-
-      <!-- Alerts + AI Recommendations -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <AlertsPanel client:load />
-        <RecommendationCard client:load />
-      </div>
-
-      <!-- Phase 2: Environment Ward Details -->
-      <section aria-label="Ward Livability">
-        <h2 class="text-lg font-bold text-[#31D0AA] mb-4 flex items-center gap-2">
-          <span class="w-1 h-5 rounded-full bg-[#10b981]"></span>
-          Ward Livability Score
-        </h2>
-        <WardDetailPanel client:load />
-      </section>
-
-      <!-- Phase 3: Action Center & Citizen Reporting -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <section aria-label="Action Center">
-          <ActionCenter client:load />
-        </section>
-        
-        <section aria-label="Citizen Reporting">
-          <CitizenReport client:load />
-        </section>
-      </div>
+  <!-- Sticky section nav -->
+  <nav class="section-nav" aria-label="Section quick navigation">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto custom-scrollbar">
+      <a href="#operations" class="section-nav-link">Operations</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#health" class="section-nav-link">Health</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#telemetry" class="section-nav-link">Telemetry</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#wards" class="section-nav-link">Wards</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#community" class="section-nav-link">Community</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#economy" class="section-nav-link">Economy</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#utilities" class="section-nav-link">Utilities</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#planning" class="section-nav-link">AI Planning</a>
+      <span class="section-nav-divider" aria-hidden="true"></span>
+      <a href="#analytics" class="section-nav-link">Analytics</a>
     </div>
+  </nav>
+
+  <div class="page-content">
+    <!-- ───── Section 1: AI Query Bar ───── -->
+    <section id="query" class="content-section">
+      <div class="section-inner">
+        <QueryBar client:load />
+      </div>
+    </section>
+
+    <!-- ───── Section 2: Live Operations (Map + Alerts) ───── -->
+    <section id="operations" class="content-section">
+      <div class="section-header">
+        <span class="section-indicator" style="background:var(--amber)"></span>
+        <h2 class="section-title">Live Operations</h2>
+        <span class="section-eyebrow">Map · Anomalies · Recommendations</span>
+      </div>
+
+      <div class="layout-ops">
+        <div class="layout-ops-main">
+          <MapView client:only="react" />
+        </div>
+        <div class="layout-ops-side">
+          <AlertsPanel client:load />
+          <div class="mt-4">
+            <RecommendationCard client:load />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── Section 3: Health & Air Quality ───── -->
+    <section id="health" class="content-section">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#8B5CF6"></span>
+        <h2 class="section-title">Health &amp; Air Quality</h2>
+        <span class="section-eyebrow">AQI · Advisories · Vulnerable Groups</span>
+      </div>
+      <HealthAdvisory client:load />
+    </section>
+
+    <!-- ───── Section 4: Live Telemetry ───── -->
+    <section id="telemetry" class="content-section">
+      <div class="section-header">
+        <span class="section-indicator" style="background:var(--flow)"></span>
+        <h2 class="section-title">Live Telemetry</h2>
+        <span class="section-eyebrow">KPIs · Trends · Forecasts</span>
+      </div>
+      <Dashboard client:load />
+    </section>
+
+    <!-- ───── Section 5: Ward Livability ───── -->
+    <section id="wards" class="content-section">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#10B981"></span>
+        <h2 class="section-title">Ward Livability</h2>
+        <span class="section-eyebrow">Scores · Metrics · Interpretation</span>
+      </div>
+      <WardDetailPanel client:load />
+    </section>
+
+    <!-- ───── Section 6: Community & Actions ───── -->
+    <section id="community" class="content-section">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#F59E0B"></span>
+        <h2 class="section-title">Community &amp; Actions</h2>
+        <span class="section-eyebrow">Action Center · Citizen Reporting</span>
+      </div>
+      <div class="layout-community">
+        <ActionCenter client:load />
+        <CitizenReport client:load />
+      </div>
+    </section>
+
+    <!-- ───── Section 7: Tourism & Local Economy ───── -->
+    <section id="economy" class="content-section planner-only">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#10B981"></span>
+        <h2 class="section-title">Tourism &amp; Local Economy</h2>
+        <span class="section-eyebrow">POIs · Events · Economic Impact</span>
+      </div>
+      <TourismPanel client:load />
+    </section>
+
+    <!-- ───── Section 8: Energy & Smart Utilities ───── -->
+    <section id="utilities" class="content-section planner-only">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#F59E0B"></span>
+        <h2 class="section-title">Energy &amp; Smart Utilities</h2>
+        <span class="section-eyebrow">Consumption · Efficiency · Water Quality</span>
+      </div>
+      <EnergyPanel client:load />
+    </section>
+
+    <!-- ───── Section 9: AI Agentic Planning (ADK) ───── -->
+    <section id="planning" class="content-section">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#8B5CF6"></span>
+        <h2 class="section-title">AI Multi-Step Planning</h2>
+        <span class="section-eyebrow">Agentic Workflows · Cross-Domain Reasoning</span>
+      </div>
+      <AgenticPlanner client:load />
+    </section>
+
+    <!-- ───── Section 10: Looker Studio Analytics ───── -->
+    <section id="analytics" class="content-section planner-only">
+      <div class="section-header">
+        <span class="section-indicator" style="background:#8B5CF6"></span>
+        <h2 class="section-title">City Analytics</h2>
+        <span class="section-eyebrow">Looker Studio · Embedded Reports</span>
+      </div>
+      <LookerEmbed client:load />
+    </section>
   </div>
 </Layout>
+
+<style is:global>
+  /* ─── Section Navigation Bar ─── */
+  .section-nav {
+    position: sticky;
+    top: 60px;
+    z-index: 20;
+    background: rgba(5, 11, 20, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.35rem 0;
+  }
+
+  .section-nav-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .section-nav-link:hover {
+    color: var(--amber);
+    background: var(--amber-soft);
+  }
+
+  .section-nav-divider {
+    width: 1px;
+    height: 14px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  /* ─── Page Content ─── */
+  .page-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1rem 1rem 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-content { padding: 1.25rem 1.5rem 3rem; }
+  }
+  @media (min-width: 1024px) {
+    .page-content { padding: 1.5rem 2rem 4rem; }
+  }
+
+  /* ─── Section Container ─── */
+  .content-section {
+    scroll-margin-top: 130px;
+    margin-bottom: 2rem;
+  }
+
+  .section-inner {
+    width: 100%;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .section-indicator {
+    width: 4px;
+    height: 1.4rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  /* ─── Operations Layout (Map + Alerts side by side) ─── */
+  .layout-ops {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .layout-ops {
+      grid-template-columns: 1fr 380px;
+    }
+  }
+
+  .layout-ops-main {
+    min-height: 0;
+  }
+
+  .layout-ops-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  /* ─── Community Layout ─── */
+  .layout-community {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .layout-community {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

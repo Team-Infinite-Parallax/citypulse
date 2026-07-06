@@ -110,12 +110,21 @@ const MapView = () => {
     }
   };
 
+  const mapContainerRef = React.useRef(null);
+
   return (
-    <div className="relative w-full h-[50vh] min-h-[300px] lg:h-[560px] panel overflow-hidden">
+    <div
+      ref={mapContainerRef}
+      className="map-wrapper relative w-full h-[50vh] min-h-[300px] lg:h-[560px] panel overflow-hidden"
+      style={{ touchAction: 'none', overscrollBehavior: 'none' }}
+      onWheelCapture={(e) => { if (mapContainerRef.current?.contains(e.target)) { e.preventDefault(); e.stopPropagation(); } }}
+      onTouchMoveCapture={(e) => { if (mapContainerRef.current?.contains(e.target)) e.preventDefault(); }}
+      onTouchStartCapture={(e) => { if (mapContainerRef.current?.contains(e.target)) e.preventDefault(); }}
+    >
       {loading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#0B0E14]/60 backdrop-blur-md" aria-live="polite">
           <div className="flex flex-col items-center">
-            <div className="w-8 h-8 border-4 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-4 border-[#38BDF8] border-t-transparent rounded-full animate-spin"></div>
             <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Loading map data…</p>
           </div>
         </div>
@@ -198,7 +207,7 @@ const MapView = () => {
           className={`px-3 py-1.5 rounded text-sm font-medium transition-colors border ${
             showIncidents 
               ? 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/50' 
-               : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#31D0AA]'
+               : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#38BDF8]'
           }`}
         >
             {showIncidents ? 'Hide Incidents' : 'Show Incidents'}

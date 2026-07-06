@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp, Sparkles, Gauge, Database } from 'lucide-react'
 // system used: a confidence/relevance score, a one-sentence rationale, the
 // retrieved/evidence sources, and the retrieval/detection method — no placeholders.
 
-const LABEL_COLOR = { high: '#31D0AA', medium: '#FFB020', low: '#8896A8' };
+const LABEL_COLOR = { high: '#38BDF8', medium: '#FFB020', low: '#8896A8' };
 
 const SourceRow = ({ source }) => {
   // Retrieval sources: { route_name/ward, similarity, summary }.
@@ -14,8 +14,8 @@ const SourceRow = ({ source }) => {
     const name = source.route_name || source.ward || source.key || 'source';
     return (
       <div className="flex items-center justify-between gap-2 bg-[#0E141E] px-3 py-2 rounded-lg border border-[#1B2534]">
-        <span className="text-xs text-[#31D0AA] font-medium truncate">{name}</span>
-        <span className="mono text-[11px] text-[#31D0AA] flex-shrink-0">
+        <span className="text-xs text-[#38BDF8] font-medium truncate">{name}</span>
+        <span className="mono text-[11px] text-[#38BDF8] flex-shrink-0">
           sim {Number(source.similarity).toFixed(3)}
         </span>
       </div>
@@ -71,7 +71,7 @@ const ExplainabilityPanel = ({ explain, title = 'Why this answer?', defaultOpen 
         <div className="p-4 bg-[#131A26] border-t border-[#263244] space-y-4">
           {/* Rationale */}
           {rationale && (
-            <p className="text-sm text-[#31D0AA] leading-relaxed">{rationale}</p>
+            <p className="text-sm text-[#38BDF8] leading-relaxed">{rationale}</p>
           )}
 
           {/* Confidence / relevance */}

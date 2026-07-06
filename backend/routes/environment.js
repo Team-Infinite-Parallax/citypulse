@@ -1,48 +1,91 @@
 import express from 'express';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { getTrafficData } from '../lib/db.js';
+import { generateOneLiner } from '../lib/gemini.js';
 
 const router = express.Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const WARDS = [
-  { ward: 'MG Road', aqi: 72, waste_efficiency: 68, incident_rate: '14/mo' },
-  { ward: 'Indiranagar', aqi: 58, waste_efficiency: 82, incident_rate: '6/mo' },
-  { ward: 'Koramangala', aqi: 65, waste_efficiency: 74, incident_rate: '9/mo' },
-  { ward: 'Hebbal', aqi: 78, waste_efficiency: 55, incident_rate: '21/mo' },
-  { ward: 'Jayanagar', aqi: 52, waste_efficiency: 88, incident_rate: '3/mo' },
-];
+const loadEnvFile = async () => {
+  try {
+    return JSON.parse(await fs.readFile(path.join(__dirname, '..', 'data', 'environment.json'), 'utf-8'));
+  } catch {
+    return [];
+  }
+};
 
-const INTERPRETATIONS = [
-  'Moderate livability — traffic and AQI need attention.',
-  'High livability score — green cover and low incidents.',
-  'Good livability with room for waste management improvement.',
-  'Below-average livability — high congestion and AQI concerns.',
-  'Excellent livability — clean air and efficient services.',
-];
+const loadIncidentsFile = async () => {
+  try {
+    return JSON.parse(await fs.readFile(path.join(__dirname, '..', 'data', 'incidents.json'), 'utf-8'));
+  } catch {
+    return [];
+  }
+};
 
 router.get('/livability', async (req, res) => {
   const traffic = await getTrafficData();
+  const env = await loadEnvFile();
+  const incidents = await loadIncidentsFile();
+
   const routeCongestion = {};
   traffic.forEach(t => {
     if (!routeCongestion[t.route_name]) routeCongestion[t.route_name] = [];
     routeCongestion[t.route_name].push(t.congestion);
   });
 
-  const wardScores = WARDS.map((w, i) => {
-    const congestion = routeCongestion[w.ward] || [];
+  const latestEnv = {};
+  env.forEach(e => {
+    if (!latestEnv[e.wardId] || new Date(e.timestamp) > new Date(latestEnv[e.wardId].timestamp)) {
+      latestEnv[e.wardId] = e;
+    }
+  });
+
+  const wardIncidents = {};
+  incidents.forEach(inc => {
+    const mapping = { 'Hazratganj': 'MG Road', 'Gomti Nagar': 'Indiranagar', 'Alambagh': 'Koramangala', 'Indira Nagar': 'Hebbal', 'Aminabad': 'Koramangala', 'Chowk': 'MG Road' };
+    const mappedWard = mapping[inc.ward] || inc.ward;
+    if (!wardIncidents[mappedWard]) wardIncidents[mappedWard] = 0;
+    wardIncidents[mappedWard] += 1;
+  });
+
+  const wardNames = [...new Set([...Object.keys(latestEnv), ...Object.keys(routeCongestion), ...Object.keys(wardIncidents)])];
+  const wardScores = await Promise.all(wardNames.map(async (ward) => {
+    const congestion = routeCongestion[ward] || [];
     const avgCong = congestion.length > 0
       ? Math.round(congestion.reduce((a, c) => a + c, 0) / congestion.length)
       : 50;
-    const aqiScore = Math.max(0, 100 - w.aqi);
-    const wasteScore = w.waste_efficiency;
-    const congestionScore = Math.max(0, 100 - avgCong);
-    const livability = Math.round((aqiScore + wasteScore + congestionScore) / 3);
-    return {
-      ...w,
-      livability_score: livability,
-      interpretation: INTERPRETATIONS[i % INTERPRETATIONS.length],
-    };
-  });
+    const envData = latestEnv[ward];
+    const aqi = envData?.aqi || 50;
+    const wasteEfficiency = envData?.waste_collection_efficiency_pct || 50;
+    const waterQuality = envData?.water_quality_index || 50;
+    const incidentCount = wardIncidents[ward] || 0;
 
+    const aqiScore = Math.max(0, 100 - aqi);
+    const wasteScore = wasteEfficiency;
+    const congestionScore = Math.max(0, 100 - avgCong);
+    const safetyScore = Math.max(0, 100 - Math.min(100, incidentCount * 10));
+    const waterScore = waterQuality;
+    const livability = Math.round((aqiScore + wasteScore + congestionScore + safetyScore + waterScore) / 5);
+
+    const prompt = `Interpret this ward livability score of ${livability}/100 for ${ward} given AQI ${aqi}, congestion ${avgCong}/100, waste efficiency ${wasteEfficiency}%, water quality ${waterQuality}/100, and ${incidentCount} incidents. One sentence only.`;
+    const fallback = `${ward} scores ${livability}/100 — ${livability >= 75 ? 'high' : livability >= 50 ? 'moderate' : 'needs improvement'} livability across all five domains.`;
+    const interpretation = await generateOneLiner(prompt, fallback);
+
+    return {
+      ward,
+      aqi,
+      waste_efficiency: wasteEfficiency,
+      water_quality: waterQuality,
+      incident_rate: `${incidentCount}/mo`,
+      livability_score: livability,
+      interpretation,
+    };
+  }));
+
+  wardScores.sort((a, b) => b.livability_score - a.livability_score);
   res.json(wardScores);
 });
 

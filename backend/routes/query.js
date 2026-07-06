@@ -31,6 +31,22 @@ const confidenceLabel = (score) =>
 /*  record count changes, so queries don't re-embed on every request.          */
 /* -------------------------------------------------------------------------- */
 
+const TOURISM_POI_DATA = [
+  { name: 'MG Road Shopping District', ward: 'MG Road', category: 'shopping', footfall: 8500, rating: 4.2 },
+  { name: 'Indiranagar 100ft Road', ward: 'Indiranagar', category: 'dining', footfall: 7200, rating: 4.5 },
+  { name: 'Koramangala Food Street', ward: 'Koramangala', category: 'dining', footfall: 6400, rating: 4.4 },
+  { name: 'Lalbagh Botanical Garden', ward: 'Jayanagar', category: 'park', footfall: 5200, rating: 4.6 },
+  { name: 'Cubbon Park', ward: 'MG Road', category: 'park', footfall: 4800, rating: 4.7 },
+];
+
+const ENERGY_WARD_DATA = [
+  { ward: 'MG Road', solar_pct: 12, green_pct: 18, water_loss: 18 },
+  { ward: 'Indiranagar', solar_pct: 24, green_pct: 31, water_loss: 12 },
+  { ward: 'Koramangala', solar_pct: 18, green_pct: 22, water_loss: 14 },
+  { ward: 'Hebbal', solar_pct: 8, green_pct: 12, water_loss: 22 },
+  { ward: 'Jayanagar', solar_pct: 32, green_pct: 38, water_loss: 10 },
+];
+
 export const buildDomainSummaries = (trafficData, incidentsData, envData) => {
   const byRoute = {};
   for (const r of trafficData) {
@@ -119,17 +135,27 @@ export const buildDomainSummaries = (trafficData, incidentsData, envData) => {
     const latestEnv = w.env.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
     const aqi = latestEnv?.aqi || 'n/a';
     const waste = latestEnv?.waste_collection_efficiency_pct || 'n/a';
+    const water = latestEnv?.water_quality_index || 'n/a';
+
+    const energy = ENERGY_WARD_DATA.find(e => e.ward === w.ward);
+    const tourism = TOURISM_POI_DATA.filter(p => p.ward === w.ward);
     
     const text = `Ward ${w.ward}: Public safety incidents reported: ${w.incidents.length}. ` +
       `Types of incidents: ${[...new Set(w.incidents.map(i => i.type))].join(', ')}. ` +
-      `Environment metrics: AQI ${aqi}, Waste collection efficiency ${waste}%. ` +
-      `Topics: safety, crime, environment, livability, waste management.`;
+      `Environment metrics: AQI ${aqi}, Waste collection efficiency ${waste}%, Water quality index ${water}. ` +
+      (energy ? `Energy: solar adoption ${energy.solar_pct}%, green energy ${energy.green_pct}%, water loss ${energy.water_loss}%. ` : '') +
+      (tourism.length ? `Tourism POIs: ${tourism.map(p => `${p.name} (rating ${p.rating}, ${p.footfall} daily)`).join('; ')}. ` : '') +
+      `Topics: safety, crime, environment, livability, waste management, energy, tourism, local economy.`;
     
     const stats = {
       ward: w.ward,
       incident_count: w.incidents.length,
       aqi,
       waste_efficiency: waste,
+      water_quality: water,
+      solar_adoption: energy?.solar_pct || 'n/a',
+      green_energy: energy?.green_pct || 'n/a',
+      tourism_pois: tourism.length,
       domain: 'ward_health_safety'
     };
 

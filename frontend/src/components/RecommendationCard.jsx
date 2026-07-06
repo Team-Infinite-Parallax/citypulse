@@ -30,7 +30,7 @@ const RecommendationCard = () => {
   if (loading) {
     return (
       <div className="panel h-64 flex flex-col justify-center items-center" aria-live="polite">
-        <div className="w-8 h-8 border-4 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-[#38BDF8] border-t-transparent rounded-full animate-spin"></div>
         <p className="mt-3 text-sm font-medium text-[#9AA9BD]">Generating AI Recommendations…</p>
       </div>
     );
@@ -48,10 +48,10 @@ const RecommendationCard = () => {
   if (recommendations.length === 0) {
     return (
       <div className="panel h-64 flex flex-col justify-center items-center">
-        <div className="w-12 h-12 bg-[#31D0AA]/10 text-[#31D0AA] border border-[#31D0AA]/20 rounded-full flex items-center justify-center mb-3 shadow-[0_0_12px_rgba(49,208,170,0.15)]">
+        <div className="w-12 h-12 bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20 rounded-full flex items-center justify-center mb-3 shadow-[0_0_12px_rgba(56,189,248,0.15)]">
           <Lightbulb className="w-6 h-6" />
         </div>
-        <h3 className="font-semibold text-[#31D0AA]">No Action Needed</h3>
+        <h3 className="font-semibold text-[#38BDF8]">No Action Needed</h3>
         <p className="text-sm text-[#9AA9BD] mt-1">Traffic patterns are within normal parameters.</p>
       </div>
     );
@@ -71,7 +71,7 @@ const RecommendationCard = () => {
           <div key={rec.id} className="border border-[#1B2534] rounded-xl overflow-hidden bg-[#0E141E] hover:border-[#FFB020]/50 transition-all hover:-translate-y-0.5 shadow-lg">
             <div className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <span className="mono text-[10px] font-bold px-2 py-1 rounded tracking-wider bg-[#31D0AA]/10 text-[#31D0AA] border border-[#31D0AA]/20 uppercase">
+                <span className="mono text-[10px] font-bold px-2 py-1 rounded tracking-wider bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20 uppercase">
                   {rec.route_name}
                 </span>
                 <span className="text-xs font-medium text-[#9AA9BD] px-2 py-1 bg-[#131A26] border border-[#263244] rounded">
@@ -81,7 +81,7 @@ const RecommendationCard = () => {
               
               <div className="mt-3 flex items-start">
                 <Lightbulb className="w-4 h-4 text-[#FFB020] mr-2 flex-shrink-0 mt-0.5" />
-                <p className="text-[#31D0AA] text-sm font-medium leading-relaxed">
+                <p className="text-[#38BDF8] text-sm font-medium leading-relaxed">
                   {rec.suggestion}
                 </p>
               </div>

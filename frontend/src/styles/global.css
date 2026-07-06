@@ -6,24 +6,24 @@
    ============================================================ */
 
 :root {
-  --ink:        #F6FFF5;   /* pale green page background */
-  --ink-2:      #EDFFF0;   /* slightly darker wells       */
-  --panel:      rgba(255, 255, 255, 0.94);   /* card surface */
-  --panel-2:    rgba(238, 255, 244, 0.9);   /* inner cells / hover   */
-  --line:       rgba(51, 113, 70, 0.08);     /* hairline dividers     */
-  --line-soft:  rgba(51, 113, 70, 0.06);
-  --text:       #11502B;   /* primary dark green text    */
-  --text-mid:   #3A7C54;   /* secondary                 */
-  --text-dim:   #6A8B6F;   /* captions / muted          */
+  --ink:        #050B14;   /* very dark blue background */
+  --ink-2:      #08101E;   /* slightly lighter wells */
+  --panel:      rgba(15, 23, 42, 0.85);   /* dark blue card surface */
+  --panel-2:    rgba(30, 41, 59, 0.7);   /* inner cells / hover */
+  --line:       rgba(255, 255, 255, 0.1);     /* hairline dividers */
+  --line-soft:  rgba(255, 255, 255, 0.05);
+  --text:       #F1F5F9;   /* primary light text */
+  --text-mid:   #94A3B8;   /* secondary muted blue-gray */
+  --text-dim:   #64748B;   /* captions */
 
-  --amber:      #4EBF79;   /* primary accent (light green) */
-  --amber-soft: rgba(78,191,121,0.16);
-  --flow:       #6EE3A0;   /* free-flowing / good       */
-  --caution:    #FF8C42;   /* slowing (distinct orange) */
-  --stop:       #E94B4B;   /* congested / critical      */
+  --amber:      #38BDF8;   /* primary accent - bright blue */
+  --amber-soft: rgba(56, 189, 248, 0.2);
+  --flow:       #10B981;   /* free-flowing / good */
+  --caution:    #F59E0B;   /* slowing */
+  --stop:       #EF4444;   /* congested / critical */
   
-  --glass-border: rgba(18, 40, 24, 0.06);
-  --glass-highlight: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.05);
 
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
@@ -34,12 +34,12 @@ html, body { margin: 0; width: 100%; min-height: 100%; }
 
 body {
   background-color: var(--ink);
-  /* Soft greenish mesh + subtle grid */
+  /* Soft blue mesh + subtle grid for dark mode */
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(70,216,154,0.06), transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(46,168,110,0.04), transparent 40%),
-    linear-gradient(rgba(34,68,48,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34,68,48,0.04) 1px, transparent 1px);
+    radial-gradient(circle at 15% 50%, rgba(56,189,248,0.08), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(59,130,246,0.06), transparent 40%),
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
   background-attachment: fixed;
   color: var(--text);
@@ -210,3 +210,24 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.01em; text
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.1) transparent; }
+
+/* ---------- Citizen View Mode ---------- */
+[data-view-mode="citizen"] .planner-only { display: none !important; }
+[data-view-mode="citizen"] .panel { border-radius: 16px; }
+[data-view-mode="citizen"] input,
+[data-view-mode="citizen"] textarea,
+[data-view-mode="citizen"] button { font-size: 16px !important; }
+[data-view-mode="citizen"] .section-eyebrow { display: none; }
+[data-view-mode="citizen"] .section-title { font-size: 1.25rem; }
+
+/* ---------- High-Contrast Accessibility Mode ---------- */
+.high-contrast { --text: #FFFFFF !important; --text-mid: #E2E8F0 !important; --text-dim: #CBD5E1 !important; }
+.high-contrast .panel { border-color: rgba(255,255,255,0.25) !important; background: rgba(0,0,0,0.7) !important; }
+.high-contrast .btn-signal { border: 2px solid #FFFFFF !important; }
+.high-contrast [role="button"], .high-contrast button, .high-contrast a { outline-width: 2px !important; }
+.high-contrast *:focus-visible { outline: 3px solid #FFB020 !important; outline-offset: 3px !important; }
+
+/* ---------- Lite Mode ---------- */
+[data-lite-mode="true"] .map-wrapper { display: none; }
+[data-lite-mode="true"] .recharts-responsive-container { display: none; }
+[data-lite-mode="true"] .lite-hidden { display: none; }

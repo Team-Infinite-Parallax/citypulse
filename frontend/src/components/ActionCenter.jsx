@@ -57,7 +57,7 @@ const ActionCenter = () => {
   if (loading && memos.length === 0) {
     return (
       <div className="panel p-6 flex items-center justify-center h-48">
-        <div className="w-6 h-6 border-2 border-[#31D0AA] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-6 h-6 border-2 border-[#38BDF8] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -65,12 +65,12 @@ const ActionCenter = () => {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold text-[#31D0AA] flex items-center gap-2">
+        <h3 className="text-lg font-bold text-[#38BDF8] flex items-center gap-2">
           <ClipboardList className="w-5 h-5 text-[#FFB020]" /> Action Center
         </h3>
         <button 
           onClick={handleTestDraft}
-          className="text-xs px-3 py-1.5 rounded bg-[#1B2534] border border-[#263244] text-[#31D0AA] hover:bg-[#263244] transition-colors"
+          className="text-xs px-3 py-1.5 rounded bg-[#1B2534] border border-[#263244] text-[#38BDF8] hover:bg-[#263244] transition-colors"
         >
           + Draft Test Memo
         </button>
@@ -82,10 +82,10 @@ const ActionCenter = () => {
         <p className="text-sm text-[#8896A8] italic">No action memos generated yet.</p>
       ) : (
         memos.map(memo => (
-          <div key={memo.id} className="panel p-5 border border-[#263244] hover:border-[#31D0AA]/30 transition-colors">
+          <div key={memo.id} className="panel p-5 border border-[#263244] hover:border-[#38BDF8]/30 transition-colors">
             <div className="flex justify-between items-start mb-3">
               <div>
-                <h4 className="font-semibold text-[#31D0AA]">{memo.title}</h4>
+                <h4 className="font-semibold text-[#38BDF8]">{memo.title}</h4>
                 <p className="text-xs text-[#8896A8] mt-1 flex items-center gap-1">
                   <AlertTriangle className="w-3 h-3" /> Dept: {memo.department}
                 </p>
@@ -95,11 +95,11 @@ const ActionCenter = () => {
               </span>
             </div>
             
-            <p className="text-sm text-[#31D0AA] mb-3">{memo.justification}</p>
+            <p className="text-sm text-[#38BDF8] mb-3">{memo.justification}</p>
             
             <div className="bg-[#0B0E14] p-3 rounded text-sm mb-4">
               <span className="eyebrow block mb-2 text-[#8896A8]">Action Items:</span>
-              <ul className="list-disc pl-4 text-[#31D0AA] space-y-1">
+              <ul className="list-disc pl-4 text-[#38BDF8] space-y-1">
                 {memo.action_items?.map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}
@@ -115,7 +115,7 @@ const ActionCenter = () => {
               {memo.status === 'DRAFT' && (
                 <button 
                   onClick={() => handleDispatch(memo.id)}
-                  className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 bg-[#31D0AA] text-[#0B0E14] rounded hover:bg-[#31D0AA]/90 transition-colors"
+                  className="flex items-center gap-1.5 text-xs font-semibold px-4 py-2 bg-[#38BDF8] text-[#0B0E14] rounded hover:bg-[#38BDF8]/90 transition-colors"
                 >
                   <CheckCircle className="w-4 h-4" /> Approve & Dispatch
                 </button>

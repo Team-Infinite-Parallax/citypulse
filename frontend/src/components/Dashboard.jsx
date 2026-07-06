@@ -7,7 +7,7 @@ import useCityStore from '../store/useCityStore';
 import { AlertCircle, Clock, Activity, Gauge, Wind, Filter, TrendingUp } from 'lucide-react';
 import routesGeoJson from '../data/routes.json';
 
-const FLOW = '#31D0AA', CAUTION = '#F97316', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
+const FLOW = '#38BDF8', CAUTION = '#F97316', STOP = '#FF5A5F', AQI_COLOR = '#8B5CF6';
 
 const scoreColor = (v) => (v >= 70 ? STOP : v >= 40 ? CAUTION : FLOW);
 
@@ -24,7 +24,7 @@ const tooltipStyle = {
   WebkitBackdropFilter: 'blur(12px)',
   border: '1px solid rgba(255, 255, 255, 0.08)',
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-  borderRadius: '12px', color: '#31D0AA', fontSize: 12,
+  borderRadius: '12px', color: '#38BDF8', fontSize: 12,
 };
 
 const Dashboard = () => {
@@ -166,7 +166,7 @@ const Dashboard = () => {
       key: 'peak',
       value: peakHour,
       unit: '',
-      color: '#31D0AA',
+      color: '#38BDF8',
       extra: <p className="mono text-[11px] text-[#8896A8] mt-3">busiest window</p>,
     },
     {
@@ -222,7 +222,7 @@ const Dashboard = () => {
           <button
             type="button"
             onClick={() => { setFilterRoute(''); setSelectedRoute(''); }}
-            className="text-xs clear-filter hover:text-[#31D0AA] transition-colors px-2 py-1"
+            className="text-xs clear-filter hover:text-[#38BDF8] transition-colors px-2 py-1"
           >
             Clear filter
           </button>
@@ -244,7 +244,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="flex items-baseline gap-1.5">
-                <span className="stat text-2xl sm:text-4xl" style={{ color: key === 'congestion' ? color : '#31D0AA' }}>
+                <span className="stat text-2xl sm:text-4xl" style={{ color: key === 'congestion' ? color : '#38BDF8' }}>
                   {value}
                 </span>
                 {unit && <span className="text-[#8896A8] text-sm">{unit}</span>}
@@ -259,7 +259,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="panel">
           <div className="panel-head">
-            <h3 className="text-base font-semibold text-[#31D0AA]">Congestion Trend · 24h</h3>
+            <h3 className="text-base font-semibold text-[#38BDF8]">Congestion Trend · 24h</h3>
             <span className="eyebrow">{activeRoute || 'All corridors'}</span>
           </div>
           <div className="p-4 h-64">
@@ -284,7 +284,7 @@ const Dashboard = () => {
 
         <div className="panel">
           <div className="panel-head">
-            <h3 className="text-base font-semibold text-[#31D0AA]">Avg Delay by Route</h3>
+            <h3 className="text-base font-semibold text-[#38BDF8]">Avg Delay by Route</h3>
             <span className="eyebrow">minutes</span>
           </div>
           <div className="p-4 h-64">
@@ -306,8 +306,8 @@ const Dashboard = () => {
         <div className="panel">
           <div className="panel-head">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-[#31D0AA]" />
-              <h3 className="text-base font-semibold text-[#31D0AA]">
+              <TrendingUp className="w-4 h-4 text-[#38BDF8]" />
+              <h3 className="text-base font-semibold text-[#38BDF8]">
                 Congestion Forecast · next {activeForecast.horizon_hours}h
               </h3>
             </div>
@@ -318,8 +318,8 @@ const Dashboard = () => {
               <ComposedChart data={forecastChartData} margin={{ top: 8, right: 12, left: -12, bottom: 0 }}>
                 <defs>
                   <linearGradient id="bandFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#31D0AA" stopOpacity={0.28} />
-                    <stop offset="100%" stopColor="#31D0AA" stopOpacity={0.06} />
+                    <stop offset="0%" stopColor="#38BDF8" stopOpacity={0.28} />
+                    <stop offset="100%" stopColor="#38BDF8" stopOpacity={0.06} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2534" />
@@ -344,7 +344,7 @@ const Dashboard = () => {
                       fill="url(#bandFill)" connectNulls={false} isAnimationActive={false} />
                 <Line type="monotone" dataKey="Actual" name="Actual" stroke="#8896A8" strokeWidth={2}
                       dot={false} connectNulls={false} isAnimationActive={false} />
-                <Line type="monotone" dataKey="Forecast" name="Forecast" stroke="#31D0AA" strokeWidth={2.5}
+                <Line type="monotone" dataKey="Forecast" name="Forecast" stroke="#38BDF8" strokeWidth={2.5}
                       strokeDasharray="5 4" dot={false} connectNulls isAnimationActive={false} />
                 {boundaryTs && (
                   <ReferenceLine x={boundaryTs} stroke="#FFB020" strokeDasharray="2 4"

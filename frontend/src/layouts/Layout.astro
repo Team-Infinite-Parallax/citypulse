@@ -12,7 +12,8 @@ import '../styles/global.css';
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-		<title>CityPulse — Urban Mobility Intelligence</title>
+		<title>CityPulse — AI Decision Intelligence for Smarter Communities</title>
+		<meta name="description" content="AI-powered Decision Intelligence Platform for urban mobility, public safety, environmental sustainability, citizen engagement, and community well-being." />
 	</head>
 	<body>
 		<header class="site-header border-b border-[var(--glass-border)] backdrop-blur-xl sticky top-0 z-30 shadow-lg transition-colors" style="background: var(--panel)">
@@ -22,20 +23,24 @@ import '../styles/global.css';
 					<div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg grid place-items-center font-bold text-base sm:text-lg" style="font-family:var(--font-display); background: var(--amber); color: var(--panel); box-shadow: 0 0 12px rgba(46,168,110,0.12)">C</div>
 					<div class="leading-tight">
 						<h1 class="text-base sm:text-lg font-bold tracking-tight" style="color: var(--text)">City<span style="color: var(--amber)">Pulse</span></h1>
-						<p class="eyebrow mt-0.5 hidden sm:block">Bengaluru · Mobility Ops</p>
+						<p class="eyebrow mt-0.5 hidden sm:block">Decision Intelligence Platform</p>
 					</div>
 				</a>
 
-				<!-- Signature: live EKG pulse -->
-				<div class="ekg flex-1 h-8 hidden sm:block">
-					<svg viewBox="0 0 480 32" width="480" height="32" preserveAspectRatio="none" aria-hidden="true">
-						<path class="trace" d="M0 16 H58 L68 16 L74 4 L80 28 L88 16 H148 L158 16 L164 6 L170 24 L178 16 H240 H298 L308 16 L314 4 L320 28 L328 16 H388 L398 16 L404 6 L410 24 L418 16 H480" />
-					</svg>
+				<!-- View mode toggle -->
+				<div class="flex items-center gap-1 bg-[#0E141E] rounded-lg border border-[#263244] p-0.5 shrink-0" role="radiogroup" aria-label="View mode">
+					<button id="view-planner" class="view-toggle text-xs px-3 py-1.5 rounded-md font-medium transition-colors" data-mode="planner" aria-pressed="true">Planner</button>
+					<button id="view-citizen" class="view-toggle text-xs px-3 py-1.5 rounded-md text-[#64748B] hover:text-[#38BDF8] transition-colors" data-mode="citizen" aria-pressed="false">Citizen</button>
 				</div>
 
+				<!-- Accessibility toggle -->
+				<button id="access-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[#263244] text-[#64748B] hover:text-[#38BDF8] bg-[#0E141E] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle accessibility mode">
+					<span aria-hidden="true">Aa</span>
+				</button>
+
 				<!-- Live clock / status -->
-				<div class="flex items-center gap-2 sm:gap-3 shrink-0" aria-live="polite">
-					<span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[#31D0AA]/30 bg-[#31D0AA]/10 shadow-[0_0_10px_rgba(49,208,170,0.15)]">
+				<div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto" aria-live="polite">
+					<span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[#38BDF8]/30 bg-[#38BDF8]/10 shadow-[0_0_10px_rgba(56,189,248,0.15)]">
 						<span class="livedot" aria-hidden="true"></span>
 						<span class="eyebrow text-[10px] sm:text-[11px]" style="color:var(--flow)">Live</span>
 					</span>
@@ -44,21 +49,79 @@ import '../styles/global.css';
 			</div>
 		</header>
 
-		<main class="flex-grow" id="main-content">
+		<main class="flex-grow" id="main-content" data-view-mode="planner" data-access-mode="default">
 			<slot />
 		</main>
 
 		<footer class="border-t border-[var(--glass-border)] mt-14 bg-[var(--panel)] backdrop-blur-md">
 			<div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-center">
 				<p class="eyebrow">CityPulse · Gen AI Academy APAC</p>
-				<p class="eyebrow">Team Infinite Parallax</p>
+				<p class="eyebrow">Team Infinite Parallax · AI for Better Living and Smarter Communities</p>
 			</div>
 		</footer>
 
 		<script is:inline>
+			// Live clock
 			const el = document.getElementById('dispatch-clock');
 			const tick = () => { if (el) el.textContent = new Date().toLocaleTimeString('en-GB'); };
 			tick(); setInterval(tick, 1000);
+
+			// View mode toggle
+			const setViewMode = (mode) => {
+				document.querySelectorAll('.view-toggle').forEach(btn => {
+					const pressed = btn.dataset.mode === mode;
+					btn.setAttribute('aria-pressed', pressed);
+					if (pressed) {
+						btn.style.background = 'rgba(56,189,248,0.15)';
+						btn.style.color = '#38BDF8';
+					} else {
+						btn.style.background = 'transparent';
+						btn.style.color = '#64748B';
+					}
+				});
+				document.getElementById('main-content').setAttribute('data-view-mode', mode);
+				try {
+					import('zustand').then(() => {
+						// Dispatch custom event for React components
+						window.dispatchEvent(new CustomEvent('viewmodechange', { detail: mode }));
+					});
+				} catch(e) {}
+				// Store in session for persistence
+				sessionStorage.setItem('citypulse-view', mode);
+			};
+
+			document.getElementById('view-planner').addEventListener('click', () => setViewMode('planner'));
+			document.getElementById('view-citizen').addEventListener('click', () => setViewMode('citizen'));
+
+			// Restore saved view
+			const saved = sessionStorage.getItem('citypulse-view');
+			if (saved) setViewMode(saved);
+
+			// Accessibility mode toggle
+			const accToggle = document.getElementById('access-toggle');
+			if (accToggle) {
+				accToggle.addEventListener('click', () => {
+					const main = document.getElementById('main-content');
+					const current = main.getAttribute('data-access-mode');
+					const next = current === 'high-contrast' ? 'default' : 'high-contrast';
+					main.setAttribute('data-access-mode', next);
+					document.body.classList.toggle('high-contrast', next === 'high-contrast');
+					sessionStorage.setItem('citypulse-access', next);
+				});
+				const savedAcc = sessionStorage.getItem('citypulse-access');
+				if (savedAcc === 'high-contrast') {
+					document.getElementById('main-content').setAttribute('data-access-mode', 'high-contrast');
+					document.body.classList.add('high-contrast');
+				}
+			}
+
+			// Lite mode detection
+			if ('connection' in navigator && navigator.connection.effectiveType) {
+				const ct = navigator.connection.effectiveType;
+				if (ct === 'slow-2g' || ct === '2g') {
+					document.getElementById('main-content').setAttribute('data-lite-mode', 'true');
+				}
+			}
 		</script>
 	</body>
 </html>

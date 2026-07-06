@@ -10,6 +10,9 @@ import publicSafetyRoutes from './routes/publicSafety.js';
 import environmentRoutes from './routes/environment.js';
 import actionsRoutes from './routes/actions.js';
 import citizenRoutes from './routes/citizen.js';
+import tourismRoutes from './routes/tourism.js';
+import energyRoutes from './routes/energy.js';
+import planRoutes from './routes/plan.js';
 
 dotenv.config();
 
@@ -62,6 +65,11 @@ app.use('/api/environment', environmentRoutes);
 // Phase 3 Routes
 app.use('/api/actions', actionsRoutes);
 app.use('/api/citizen', citizenRoutes);
+
+// Phase 4 Routes — Tourism & Local Economy, Energy & Smart Utilities, Agentic Planning (ADK)
+app.use('/api/tourism', tourismRoutes);
+app.use('/api/energy', energyRoutes);
+app.use('/api/plan', planRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

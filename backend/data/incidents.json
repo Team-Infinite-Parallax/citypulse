@@ -918,5 +918,16 @@
     "timestamp": "2026-07-06T17:34:00.000Z",
     "severity": "HIGH",
     "source": "sensor"
+  },
+  {
+    "incident_id": "CIT-1783343523448-b6e5",
+    "type": "pothole",
+    "ward": "TestWard-1783343523401",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "timestamp": "2026-07-06T13:12:03.449Z",
+    "severity": "INFO",
+    "source": "citizen_report",
+    "notes": "Large pothole in the middle lane"
   }
 ]

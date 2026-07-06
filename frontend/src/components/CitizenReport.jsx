@@ -58,7 +58,7 @@ const CitizenReport = () => {
 
   return (
     <div className="panel p-5">
-      <h3 className="text-lg font-bold text-[#E6EDF3] mb-4 flex items-center gap-2">
+      <h3 className="text-lg font-bold text-[#31D0AA] mb-4 flex items-center gap-2">
         <span className="w-1 h-5 rounded-full bg-[#3b82f6]"></span>
         Citizen Report
       </h3>
@@ -72,7 +72,7 @@ const CitizenReport = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <textarea
-              className="w-full bg-[#0E141E] border border-[#263244] rounded-lg p-3 text-sm text-[#E6EDF3] placeholder-[#64748B] focus:border-[#3b82f6] focus:outline-none transition-colors min-h-[100px] resize-none"
+              className="w-full bg-[#0E141E] border border-[#263244] rounded-lg p-3 text-sm text-[#31D0AA] placeholder-[#64748B] focus:border-[#3b82f6] focus:outline-none transition-colors min-h-[100px] resize-none"
               placeholder="Describe the issue (e.g., severe pothole on Main St, uncollected garbage...)"
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -82,7 +82,7 @@ const CitizenReport = () => {
           {error && <p className="text-[#FF9497] text-xs">{error}</p>}
           
           <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 cursor-pointer text-sm text-[#8896A8] hover:text-[#E6EDF3] transition-colors">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-[#8896A8] hover:text-[#31D0AA] transition-colors">
               <Camera className="w-4 h-4" />
               <span>{photoBase64 ? 'Photo Attached' : 'Attach Photo'}</span>
               <input 

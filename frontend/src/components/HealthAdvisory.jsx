@@ -59,7 +59,7 @@ const HealthAdvisory = () => {
       <div className="panel-head">
         <div className="flex items-center gap-2">
           <HeartPulse className="w-4 h-4 text-[#8B5CF6]" />
-          <h3 className="text-base font-semibold text-[#E6EDF3]">Health &amp; Air-Quality Advisories</h3>
+          <h3 className="text-base font-semibold text-[#31D0AA]">Health &amp; Air-Quality Advisories</h3>
         </div>
         <span className="mono text-xs px-2 py-0.5 rounded-full bg-[#8B5CF6]/12 text-[#C4B5FD] border border-[#8B5CF6]/25">
           {actionable.length} active
@@ -83,7 +83,7 @@ const HealthAdvisory = () => {
               style={{ borderLeft: `3px solid ${accent}` }}
             >
               <div className="flex justify-between items-center mb-2">
-                <h4 className="font-semibold text-[#E6EDF3] text-sm">{a.route_name}</h4>
+                <h4 className="font-semibold text-[#31D0AA] text-sm">{a.route_name}</h4>
                 <span
                   className="mono text-[10px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider"
                   style={{ background: `${accent}1f`, color: accent }}
@@ -94,13 +94,13 @@ const HealthAdvisory = () => {
 
               <div className="flex items-center gap-2 mb-3 mono text-[11px]">
                 <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD] flex items-center gap-1">
-                  <Wind className="w-3 h-3" /> AQI <span className="text-[#E6EDF3]">{a.peak_aqi}</span>
+                  <Wind className="w-3 h-3" /> AQI <span className="text-[#31D0AA]">{a.peak_aqi}</span>
                 </span>
                 <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]">
                   {a.aqi_category}
                 </span>
                 <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]">
-                  Cong <span className="text-[#E6EDF3]">{a.peak_congestion}</span>/100
+                  Cong <span className="text-[#31D0AA]">{a.peak_congestion}</span>/100
                 </span>
               </div>
 

@@ -198,10 +198,10 @@ const MapView = () => {
           className={`px-3 py-1.5 rounded text-sm font-medium transition-colors border ${
             showIncidents 
               ? 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/50' 
-              : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#E6EDF3]'
+               : 'bg-[#0E141E] text-[#8896A8] border-[#263244] hover:text-[#31D0AA]'
           }`}
         >
-          {showIncidents ? 'Hide Incidents' : 'Show Incidents'}
+            {showIncidents ? 'Hide Incidents' : 'Show Incidents'}
         </button>
       </div>
     </div>

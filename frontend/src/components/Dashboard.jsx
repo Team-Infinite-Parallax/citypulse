@@ -24,7 +24,7 @@ const tooltipStyle = {
   WebkitBackdropFilter: 'blur(12px)',
   border: '1px solid rgba(255, 255, 255, 0.08)',
   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-  borderRadius: '12px', color: '#E6EDF3', fontSize: 12,
+  borderRadius: '12px', color: '#31D0AA', fontSize: 12,
 };
 
 const Dashboard = () => {
@@ -222,7 +222,7 @@ const Dashboard = () => {
           <button
             type="button"
             onClick={() => { setFilterRoute(''); setSelectedRoute(''); }}
-            className="text-xs clear-filter hover:text-[#E6EDF3] transition-colors px-2 py-1"
+            className="text-xs clear-filter hover:text-[#31D0AA] transition-colors px-2 py-1"
           >
             Clear filter
           </button>
@@ -244,7 +244,7 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="flex items-baseline gap-1.5">
-                <span className="stat text-2xl sm:text-4xl" style={{ color: key === 'congestion' ? color : '#E6EDF3' }}>
+                <span className="stat text-2xl sm:text-4xl" style={{ color: key === 'congestion' ? color : '#31D0AA' }}>
                   {value}
                 </span>
                 {unit && <span className="text-[#8896A8] text-sm">{unit}</span>}
@@ -259,7 +259,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="panel">
           <div className="panel-head">
-            <h3 className="text-base font-semibold text-[#E6EDF3]">Congestion Trend · 24h</h3>
+            <h3 className="text-base font-semibold text-[#31D0AA]">Congestion Trend · 24h</h3>
             <span className="eyebrow">{activeRoute || 'All corridors'}</span>
           </div>
           <div className="p-4 h-64">
@@ -284,7 +284,7 @@ const Dashboard = () => {
 
         <div className="panel">
           <div className="panel-head">
-            <h3 className="text-base font-semibold text-[#E6EDF3]">Avg Delay by Route</h3>
+            <h3 className="text-base font-semibold text-[#31D0AA]">Avg Delay by Route</h3>
             <span className="eyebrow">minutes</span>
           </div>
           <div className="p-4 h-64">
@@ -307,7 +307,7 @@ const Dashboard = () => {
           <div className="panel-head">
             <div className="flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-[#31D0AA]" />
-              <h3 className="text-base font-semibold text-[#E6EDF3]">
+              <h3 className="text-base font-semibold text-[#31D0AA]">
                 Congestion Forecast · next {activeForecast.horizon_hours}h
               </h3>
             </div>

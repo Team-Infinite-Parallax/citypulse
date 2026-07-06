@@ -14,7 +14,7 @@ const SourceRow = ({ source }) => {
     const name = source.route_name || source.ward || source.key || 'source';
     return (
       <div className="flex items-center justify-between gap-2 bg-[#0E141E] px-3 py-2 rounded-lg border border-[#1B2534]">
-        <span className="text-xs text-[#E6EDF3] font-medium truncate">{name}</span>
+        <span className="text-xs text-[#31D0AA] font-medium truncate">{name}</span>
         <span className="mono text-[11px] text-[#31D0AA] flex-shrink-0">
           sim {Number(source.similarity).toFixed(3)}
         </span>
@@ -71,7 +71,7 @@ const ExplainabilityPanel = ({ explain, title = 'Why this answer?', defaultOpen 
         <div className="p-4 bg-[#131A26] border-t border-[#263244] space-y-4">
           {/* Rationale */}
           {rationale && (
-            <p className="text-sm text-[#E6EDF3] leading-relaxed">{rationale}</p>
+            <p className="text-sm text-[#31D0AA] leading-relaxed">{rationale}</p>
           )}
 
           {/* Confidence / relevance */}

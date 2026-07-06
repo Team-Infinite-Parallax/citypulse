@@ -1,4 +1,7 @@
 import express from 'express';
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import {
   generateQueryResponse,
   embedTexts,
@@ -7,8 +10,12 @@ import {
   embeddingMode,
 } from '../lib/gemini.js';
 import { getTrafficData } from '../lib/db.js';
+import { getAllChunks, upsertChunks, searchSimilar } from '../lib/vectorStore.js';
 
 const router = express.Router();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const TOP_K = 3;
 const MIN_SIMILARITY = 0.15; // below this, retrieval is treated as a miss
@@ -24,9 +31,7 @@ const confidenceLabel = (score) =>
 /*  record count changes, so queries don't re-embed on every request.          */
 /* -------------------------------------------------------------------------- */
 
-let index = null; // { signature, chunks: [{ route_name, text, records, embedding, stats }] }
-
-const buildDomainSummaries = (trafficData, incidentsData, envData) => {
+export const buildDomainSummaries = (trafficData, incidentsData, envData) => {
   const byRoute = {};
   for (const r of trafficData) {
     if (!byRoute[r.route_name]) {
@@ -134,38 +139,78 @@ const buildDomainSummaries = (trafficData, incidentsData, envData) => {
   return [...trafficChunks, ...wardChunks];
 };
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+let currentSignature = null;
+let cachedTraffic = null;
+let cachedIncidents = null;
+let cachedEnv = null;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const getIndex = async () => {
-  const data = await getTrafficData();
-  
-  let incidentsData = [];
-  let envData = [];
+const ensureDomainData = async () => {
+  if (cachedTraffic && cachedIncidents && cachedEnv) return;
+  cachedTraffic = await getTrafficData();
   try {
-    incidentsData = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'data', 'incidents.json'), 'utf-8'));
-    envData = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'data', 'environment.json'), 'utf-8'));
+    cachedIncidents = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'data', 'incidents.json'), 'utf-8'));
+    cachedEnv = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'data', 'environment.json'), 'utf-8'));
   } catch(e) {
-    console.error('Error loading extra domains for query index', e);
+    console.error('Error loading extra domains for query data', e);
+    cachedIncidents = cachedIncidents || [];
+    cachedEnv = cachedEnv || [];
+  }
+};
+
+const syncVectorStore = async () => {
+  await ensureDomainData();
+
+  const signature = `${cachedTraffic.length}-${cachedIncidents.length}-${cachedEnv.length}`;
+  if (currentSignature === signature) return;
+
+  console.log(`[Query] Data signature changed to ${signature}. Syncing vector store...`);
+  
+  // 1. Generate summaries
+  const summaries = buildDomainSummaries(cachedTraffic, cachedIncidents, cachedEnv);
+  
+  // 2. Fetch existing chunks from vector store
+  const existingChunks = await getAllChunks();
+  const existingMap = new Map(existingChunks.map(c => [c.id, c]));
+
+  const chunksToUpsert = [];
+  const textsToEmbed = [];
+  const textIndexMap = []; // index in summaries -> index in textsToEmbed
+
+  for (let i = 0; i < summaries.length; i++) {
+    const s = summaries[i];
+    const chunkId = `${s.domain}_${s.route_name}`;
+    s.id = chunkId;
+
+    const existing = existingMap.get(chunkId);
+    if (existing && existing.text === s.text && Array.isArray(existing.embedding) && existing.embedding.length > 0) {
+      // Content has not changed, reuse existing embedding
+      s.embedding = existing.embedding;
+      chunksToUpsert.push(s);
+    } else {
+      // Content has changed or is new, needs embedding
+      textsToEmbed.push(s.text);
+      textIndexMap.push(i);
+    }
   }
 
-  const signature = `${data.length}-${incidentsData.length}-${envData.length}`;
-  if (index && index.signature === signature) return index;
+  if (textsToEmbed.length > 0) {
+    console.log(`[Query] Embedding ${textsToEmbed.length} new/changed chunks...`);
+    const newEmbeddings = await embedTexts(textsToEmbed, 'RETRIEVAL_DOCUMENT');
+    for (let k = 0; k < newEmbeddings.length; k++) {
+      const summaryIdx = textIndexMap[k];
+      const s = summaries[summaryIdx];
+      s.embedding = newEmbeddings[k];
+      chunksToUpsert.push(s);
+    }
+  }
 
-  const summaries = buildDomainSummaries(data, incidentsData, envData);
-  const embeddings = await embedTexts(
-    summaries.map((c) => c.text),
-    'RETRIEVAL_DOCUMENT'
-  );
-  index = {
-    signature,
-    chunks: summaries.map((c, i) => ({ ...c, embedding: embeddings[i] })),
-  };
-  return index;
+  // 3. Upsert into vector store
+  if (chunksToUpsert.length > 0) {
+    await upsertChunks(chunksToUpsert);
+    console.log(`[Query] Upserted ${chunksToUpsert.length} chunks into vector store.`);
+  }
+
+  currentSignature = signature;
 };
 
 router.post('/', async (req, res) => {
@@ -180,23 +225,30 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const { chunks } = await getIndex();
+    await syncVectorStore();
 
     // Embed the query and rank chunks by cosine similarity (genuine retrieval).
     const queryEmbedding = await generateEmbeddings(question, 'RETRIEVAL_QUERY');
-    const ranked = chunks
-      .map((c) => ({ chunk: c, score: cosineSimilarity(queryEmbedding, c.embedding) }))
-      .sort((a, b) => b.score - a.score);
+    const matches = await searchSimilar(queryEmbedding, TOP_K);
 
-    const top = ranked.filter((r) => r.score >= MIN_SIMILARITY).slice(0, TOP_K);
-    const selected = top.length ? top : ranked.slice(0, TOP_K); // always give the LLM something
+    const top = matches.filter((r) => r.score >= MIN_SIMILARITY);
+    const selected = top.length ? top : matches.slice(0, TOP_K); // always give the LLM something
 
-    // Assemble retrieved context: recent records from the top corridors.
-    const contextData = selected.flatMap(({ chunk }) =>
-      [...chunk.records]
+    // Assemble retrieved context: recent records from the top corridors/wards.
+    const contextData = selected.flatMap(({ chunk }) => {
+      let records = [];
+      if (chunk.domain === 'mobility') {
+        records = cachedTraffic.filter(r => r.route_name === chunk.route_name);
+      } else if (chunk.domain === 'ward_health_safety') {
+        records = [
+          ...cachedIncidents.filter(i => i.ward === chunk.route_name),
+          ...cachedEnv.filter(e => e.wardId === chunk.route_name)
+        ];
+      }
+      return [...records]
         .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-        .slice(0, 40)
-    );
+        .slice(0, 40);
+    });
 
     const retrieval = selected.map(({ chunk, score }) => ({
       route_name: chunk.route_name,

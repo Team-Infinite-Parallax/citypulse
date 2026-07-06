@@ -1,7 +1,7 @@
 import express from 'express';
 import { generateRecommendation } from '../lib/gemini.js';
 import { getTrafficData } from '../lib/db.js';
-import { forecastSeries } from '../lib/forecast.js';
+import { forecastSeries, forecastSeriesML } from '../lib/forecast.js';
 import { detectAnomalies } from '../lib/anomaly.js';
 
 const router = express.Router();
@@ -166,11 +166,21 @@ router.get('/forecast', async (req, res) => {
         typeof r.aqi === 'number' ? r.aqi : null
       );
 
-      const cong = forecastSeries(congestion, {
+      const baselineCong = forecastSeries(congestion, {
         period: 24,
         horizon,
         clamp: [0, 100],
       });
+      const mlCong = forecastSeriesML(congestion, {
+        period: 24,
+        horizon,
+        clamp: [0, 100],
+      });
+      const chosenCong =
+        mlCong.inSampleRmse < baselineCong.inSampleRmse
+          ? { ...mlCong, selected_model: 'ml' }
+          : { ...baselineCong, selected_model: 'statistical' };
+
       const hasAqi = aqiSeries.every((v) => v != null);
       const aqi = hasAqi
         ? forecastSeries(aqiSeries, { period: 24, horizon, clamp: [0, 500] })
@@ -186,14 +196,14 @@ router.get('/forecast', async (req, res) => {
       const lastTs = new Date(latest.timestamp).getTime();
       const HOUR = 3600 * 1000;
 
-      const forecast_series = cong.point.map((p, k) => {
+      const forecast_series = chosenCong.point.map((p, k) => {
         const ts = new Date(lastTs + (k + 1) * HOUR).toISOString();
         return {
           ts,
           label: hourLabel(ts),
           forecast: p,
-          lower: cong.lower[k],
-          upper: cong.upper[k],
+          lower: chosenCong.lower[k],
+          upper: chosenCong.upper[k],
         };
       });
 
@@ -206,27 +216,30 @@ router.get('/forecast', async (req, res) => {
       }));
 
       const avgForecast =
-        cong.point.reduce((s, v) => s + v, 0) / cong.point.length;
+        chosenCong.point.reduce((s, v) => s + v, 0) / chosenCong.point.length;
       const delta = avgForecast - latest.congestion;
       const trend = delta > 3 ? 'increasing' : delta < -3 ? 'decreasing' : 'stable';
 
       return {
         route_name: route,
-        method: cong.method + ' · 90% prediction interval',
+        method: `${chosenCong.method} · selected by RMSE (${chosenCong.selected_model}) · 90% prediction interval`,
         horizon_hours: horizon,
-        params: cong.params,
-        residual_std: cong.residualStd,
+        params: chosenCong.params,
+        residual_std: chosenCong.residualStd,
+        model_choice: chosenCong.selected_model,
+        baseline_rmse: baselineCong.inSampleRmse,
+        ml_rmse: mlCong.inSampleRmse,
         current_congestion: latest.congestion,
         // Legacy convenience fields (first forecast step).
-        predicted_congestion: cong.point[0],
+        predicted_congestion: chosenCong.point[0],
         target_hour: `${String(new Date(forecast_series[0].ts).getHours()).padStart(2, '0')}:00`,
-        predicted_delay: Math.max(0, Math.round(cong.point[0] * delayRatio)),
+        predicted_delay: Math.max(0, Math.round(chosenCong.point[0] * delayRatio)),
         predicted_aqi: aqi ? aqi.point[0] : null,
         trend,
         // Real forecasting deliverable: arrays with an uncertainty band.
-        forecast: cong.point,
-        lower_bound: cong.lower,
-        upper_bound: cong.upper,
+        forecast: chosenCong.point,
+        lower_bound: chosenCong.lower,
+        upper_bound: chosenCong.upper,
         forecast_series,
         history,
       };

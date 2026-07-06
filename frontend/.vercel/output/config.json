@@ -20,14 +20,6 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^/api/health/?$",
-			"dest": "_render"
-		},
-		{
-			"src": "^/api/proxy/?$",
-			"dest": "_render"
-		},
-		{
 			"src": "^/$",
 			"dest": "_render"
 		},

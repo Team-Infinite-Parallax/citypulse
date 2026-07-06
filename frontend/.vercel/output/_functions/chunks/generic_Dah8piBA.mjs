@@ -1,9 +1,8 @@
-import { t as __exportAll } from "./rolldown-runtime_D7D4PA-g.mjs";
+import { t as __exportAll } from "./compiler_BKg8mOSr.mjs";
 import { $ as AstroError, O as MissingGetFontFileRequestUrl, S as InvalidImageService, V as RemoteImageNotAllowed, _ as ImageMissingAlt, c as ExpectedImageOptions, d as FontFamilyNotFound, l as ExpectedNotESMImage, s as ExpectedImage } from "./errors-data_sKwIzwfZ.mjs";
 import { S as isRemoteAllowed, _ as fetchWithRedirects, b as isRemoteImage, c as isRemotePath, g as inferRemoteSize$1, x as resolveSrc, y as isESMImportedImage } from "./path_CP1oRZAZ.mjs";
 import { S as createComponent, g as addAttribute, m as maybeRenderHead, t as spreadAttributes, u as renderTemplate, x as createAstro, y as unescapeHTML } from "./server_D0sAaBMA.mjs";
 import { a as DEFAULT_HASH_PROPS, i as resolveDefaultOutputFormat, n as isLocalService } from "./service_D_KJTHgE.mjs";
-import "./compiler_bqGEvU-1.mjs";
 import * as mime from "mrmime";
 //#region node_modules/astro/dist/assets/layout.js
 var DEFAULT_RESOLUTIONS = [

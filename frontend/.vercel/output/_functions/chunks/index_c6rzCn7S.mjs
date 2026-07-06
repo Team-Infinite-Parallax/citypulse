@@ -1,17 +1,20 @@
-import { t as __exportAll } from "./rolldown-runtime_D7D4PA-g.mjs";
+import { t as __exportAll } from "./compiler_BKg8mOSr.mjs";
 import { S as createComponent, g as addAttribute, h as renderHead, i as renderComponent, m as maybeRenderHead, s as renderSlot, u as renderTemplate, x as createAstro } from "./server_D0sAaBMA.mjs";
-import "./compiler_bqGEvU-1.mjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, ComposedChart, Legend, Line, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { create } from "zustand";
-import { Activity, AlertCircle, AlertTriangle, BarChart2, BarChart3, Bot, Calendar, Camera, CheckCircle, ChevronDown, ChevronUp, ClipboardList, Clock, Compass, Cpu, Database, Droplets, ExternalLink, Filter, Gauge, HeartPulse, Leaf, Lightbulb, Loader2, Map, MapPin, Mic, MicOff, Send, Shield, ShieldAlert, ShieldCheck, Sparkles, Star, Sun, TestTube, Trash2, TrendingUp, Users, Wind, Zap } from "lucide-react";
+import { Activity, AlertCircle, AlertTriangle, BarChart2, BarChart3, BookOpen, Bot, Brain, Calendar, Camera, Check, CheckCircle, CheckCircle2, ChevronDown, ChevronUp, ClipboardList, Clock, Compass, Cpu, Database, Droplets, ExternalLink, FileText, Filter, Gauge, GraduationCap, HandHelping, Heart, HeartPulse, Leaf, Lightbulb, Loader2, Map, MapPin, Mic, MicOff, Recycle, Send, Shield, ShieldAlert, ShieldCheck, Sparkles, Star, Sun, TestTube, Trash2, TrendingUp, Users, Wind, Zap } from "lucide-react";
 import { Fragment as Fragment$1, jsx, jsxs } from "react/jsx-runtime";
 //#region src/layouts/Layout.astro
 createAstro("https://astro.build");
 var $$Layout = createComponent(($$result, $$props, $$slots) => {
 	const Astro = $$result.createAstro($$props, $$slots);
 	Astro.self = $$Layout;
-	return renderTemplate`<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator"${addAttribute(Astro.generator, "content")}><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><title>CityPulse — AI Decision Intelligence for Smarter Communities</title><meta name="description" content="AI-powered Decision Intelligence Platform for urban mobility, public safety, environmental sustainability, citizen engagement, and community well-being.">${renderHead($$result)}</head><body><header class="site-header border-b border-[var(--glass-border)] backdrop-blur-xl sticky top-0 z-30 shadow-lg transition-colors" style="background: var(--panel)"><div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-3 sm:gap-5"><!-- Wordmark --><a href="/" class="flex items-center gap-2 sm:gap-3 shrink-0 rounded-lg transition-transform hover:scale-105 active:scale-95" aria-label="CityPulse Home"><div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg grid place-items-center font-bold text-base sm:text-lg" style="font-family:var(--font-display); background: var(--amber); color: var(--panel); box-shadow: 0 0 12px rgba(46,168,110,0.12)">C</div><div class="leading-tight"><h1 class="text-base sm:text-lg font-bold tracking-tight" style="color: var(--text)">City<span style="color: var(--amber)">Pulse</span></h1><p class="eyebrow mt-0.5 hidden sm:block">Decision Intelligence Platform</p></div></a><!-- View mode toggle --><div class="flex items-center gap-1 bg-[#0E141E] rounded-lg border border-[#263244] p-0.5 shrink-0" role="radiogroup" aria-label="View mode"><button id="view-planner" class="view-toggle text-xs px-3 py-1.5 rounded-md font-medium transition-colors" data-mode="planner" aria-pressed="true">Planner</button><button id="view-citizen" class="view-toggle text-xs px-3 py-1.5 rounded-md text-[#64748B] hover:text-[#38BDF8] transition-colors" data-mode="citizen" aria-pressed="false">Citizen</button></div><!-- Accessibility toggle --><button id="access-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[#263244] text-[#64748B] hover:text-[#38BDF8] bg-[#0E141E] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle accessibility mode"><span aria-hidden="true">Aa</span></button><!-- Live clock / status --><div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto" aria-live="polite"><span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[#38BDF8]/30 bg-[#38BDF8]/10 shadow-[0_0_10px_rgba(56,189,248,0.15)]"><span class="livedot" aria-hidden="true"></span><span class="eyebrow text-[10px] sm:text-[11px]" style="color:var(--flow)">Live</span></span><time id="dispatch-clock" class="mono text-sm tabular-nums hidden md:block" style="color:var(--text-mid)" aria-label="Current time">--:--:--</time></div></div></header><main class="flex-grow" id="main-content" data-view-mode="planner" data-access-mode="default">${renderSlot($$result, $$slots["default"])}</main><footer class="border-t border-[var(--glass-border)] mt-14 bg-[var(--panel)] backdrop-blur-md"><div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-center"><p class="eyebrow">CityPulse · Gen AI Academy APAC</p><p class="eyebrow">Team Infinite Parallax · AI for Better Living and Smarter Communities</p></div></footer><script>
+	return renderTemplate`<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator"${addAttribute(Astro.generator, "content")}><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><title>CityPulse — AI Decision Intelligence for Smarter Communities</title><meta name="description" content="AI-powered Decision Intelligence Platform for urban mobility, public safety, environmental sustainability, citizen engagement, and community well-being.">${renderHead($$result)}</head><body><script>
+			/* Prevent theme flickering (FOUT) */
+			if (localStorage.getItem('citypulse-theme') === 'light') document.body.classList.add('light-mode');
+			if (localStorage.getItem('citypulse-access') === 'high-contrast') document.body.classList.add('high-contrast');
+		<\/script><header class="site-header border-b border-[var(--glass-border)] backdrop-blur-xl sticky top-0 z-30 shadow-lg transition-colors" style="background: var(--panel)"><div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 sm:py-3 flex items-center gap-3 sm:gap-5"><!-- Wordmark --><a href="/" class="flex items-center gap-2 sm:gap-3 shrink-0 rounded-lg transition-transform hover:scale-105 active:scale-95" aria-label="CityPulse Home"><div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg grid place-items-center font-bold text-base sm:text-lg" style="font-family:var(--font-display); background: var(--amber); color: var(--panel); box-shadow: 0 0 12px rgba(46,168,110,0.12)">C</div><div class="leading-tight"><h1 class="text-base sm:text-lg font-bold tracking-tight" style="color: var(--text)">City<span style="color: var(--amber)">Pulse</span></h1><p class="eyebrow mt-0.5 hidden sm:block">Decision Intelligence Platform</p></div></a><!-- View mode toggle --><div class="flex items-center gap-1 bg-[var(--ink-2)] rounded-lg border border-[var(--glass-border)] p-0.5 shrink-0" role="radiogroup" aria-label="View mode"><button id="view-planner" class="view-toggle text-xs px-3 py-1.5 rounded-md font-medium transition-colors" data-mode="planner" aria-pressed="true">Planner</button><button id="view-citizen" class="view-toggle text-xs px-3 py-1.5 rounded-md text-[var(--text-dim)] hover:text-[var(--amber)] transition-colors" data-mode="citizen" aria-pressed="false">Citizen</button></div><!-- Theme toggle --><button id="theme-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[var(--glass-border)] text-[var(--text-dim)] hover:text-[var(--amber)] bg-[var(--panel-2)] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle light/dark mode"><svg id="theme-icon-dark" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg><svg id="theme-icon-light" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></button><!-- Accessibility toggle --><button id="access-toggle" class="text-xs px-2.5 py-1.5 rounded-md border border-[var(--glass-border)] text-[var(--text-dim)] hover:text-[var(--amber)] bg-[var(--panel-2)] transition-colors hidden sm:flex items-center gap-1.5" aria-label="Toggle accessibility mode"><span aria-hidden="true">Aa</span></button><!-- Live clock / status --><div class="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto" aria-live="polite"><span class="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-full border border-[var(--amber-soft)] bg-[var(--amber-soft)] shadow-[0_0_10px_var(--amber-soft)]"><span class="livedot" aria-hidden="true"></span><span class="eyebrow text-[10px] sm:text-[11px]" style="color:var(--flow)">Live</span></span><time id="dispatch-clock" class="mono text-sm tabular-nums hidden md:block" style="color:var(--text-mid)" aria-label="Current time">--:--:--</time></div></div></header><main class="flex-grow" id="main-content" data-view-mode="planner" data-access-mode="default">${renderSlot($$result, $$slots["default"])}</main><footer class="border-t border-[var(--glass-border)] mt-14 bg-[var(--panel)] backdrop-blur-md"><div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-center"><p class="eyebrow">CityPulse · Gen AI Academy APAC</p><p class="eyebrow">Team Infinite Parallax · AI for Better Living and Smarter Communities</p></div></footer><script>
 			// Live clock
 			const el = document.getElementById('dispatch-clock');
 			const tick = () => { if (el) el.textContent = new Date().toLocaleTimeString('en-GB'); };
@@ -23,11 +26,11 @@ var $$Layout = createComponent(($$result, $$props, $$slots) => {
 					const pressed = btn.dataset.mode === mode;
 					btn.setAttribute('aria-pressed', pressed);
 					if (pressed) {
-						btn.style.background = 'rgba(56,189,248,0.15)';
-						btn.style.color = '#38BDF8';
+						btn.style.background = 'var(--amber-soft)';
+						btn.style.color = 'var(--amber)';
 					} else {
 						btn.style.background = 'transparent';
-						btn.style.color = '#64748B';
+						btn.style.color = 'var(--text-dim)';
 					}
 				});
 				document.getElementById('main-content').setAttribute('data-view-mode', mode);
@@ -37,15 +40,15 @@ var $$Layout = createComponent(($$result, $$props, $$slots) => {
 						window.dispatchEvent(new CustomEvent('viewmodechange', { detail: mode }));
 					});
 				} catch(e) {}
-				// Store in session for persistence
-				sessionStorage.setItem('citypulse-view', mode);
+				// Store in local for persistence
+				localStorage.setItem('citypulse-view', mode);
 			};
 
 			document.getElementById('view-planner').addEventListener('click', () => setViewMode('planner'));
 			document.getElementById('view-citizen').addEventListener('click', () => setViewMode('citizen'));
 
 			// Restore saved view
-			const saved = sessionStorage.getItem('citypulse-view');
+			const saved = localStorage.getItem('citypulse-view');
 			if (saved) setViewMode(saved);
 
 			// Accessibility mode toggle
@@ -57,12 +60,49 @@ var $$Layout = createComponent(($$result, $$props, $$slots) => {
 					const next = current === 'high-contrast' ? 'default' : 'high-contrast';
 					main.setAttribute('data-access-mode', next);
 					document.body.classList.toggle('high-contrast', next === 'high-contrast');
-					sessionStorage.setItem('citypulse-access', next);
+					localStorage.setItem('citypulse-access', next);
 				});
-				const savedAcc = sessionStorage.getItem('citypulse-access');
+				const savedAcc = localStorage.getItem('citypulse-access');
 				if (savedAcc === 'high-contrast') {
 					document.getElementById('main-content').setAttribute('data-access-mode', 'high-contrast');
 					document.body.classList.add('high-contrast');
+				}
+			}
+
+			// Theme toggle
+			const themeToggle = document.getElementById('theme-toggle');
+			const themeIconDark = document.getElementById('theme-icon-dark');
+			const themeIconLight = document.getElementById('theme-icon-light');
+
+			if (themeToggle) {
+				themeToggle.addEventListener('click', () => {
+					const isLight = document.body.classList.toggle('light-mode');
+					localStorage.setItem('citypulse-theme', isLight ? 'light' : 'dark');
+					if (themeIconDark && themeIconLight) {
+						themeIconDark.classList.toggle('hidden', !isLight);
+						themeIconLight.classList.toggle('hidden', isLight);
+					}
+				});
+				
+				const savedTheme = localStorage.getItem('citypulse-theme');
+				if (savedTheme === 'light') {
+					document.body.classList.add('light-mode');
+					if (themeIconDark && themeIconLight) {
+						themeIconDark.classList.remove('hidden');
+						themeIconLight.classList.add('hidden');
+					}
+				} else {
+                    // Default to dark
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('citypulse-theme', 'dark');
+                }
+			}
+
+			// Lite mode detection
+			if ('connection' in navigator && navigator.connection.effectiveType) {
+				const ct = navigator.connection.effectiveType;
+				if (ct === 'slow-2g' || ct === '2g') {
+					document.getElementById('main-content').setAttribute('data-lite-mode', 'true');
 				}
 			}
 
@@ -163,7 +203,7 @@ var routes_default = {
 //#endregion
 //#region src/components/Dashboard.jsx
 var FLOW = "#38BDF8", CAUTION = "#F97316", STOP = "#FF5A5F", AQI_COLOR = "#8B5CF6";
-var scoreColor = (v) => v >= 70 ? STOP : v >= 40 ? CAUTION : FLOW;
+var scoreColor$1 = (v) => v >= 70 ? STOP : v >= 40 ? CAUTION : FLOW;
 var KPI_ICONS = {
 	congestion: {
 		icon: Gauge,
@@ -187,15 +227,17 @@ var KPI_ICONS = {
 	}
 };
 var tooltipStyle = {
-	background: "rgba(19, 26, 38, 0.85)",
+	background: "var(--panel)",
 	backdropFilter: "blur(12px)",
 	WebkitBackdropFilter: "blur(12px)",
-	border: "1px solid rgba(255, 255, 255, 0.08)",
-	boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+	border: "1px solid var(--glass-border)",
+	boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
 	borderRadius: "12px",
-	color: "#38BDF8",
+	color: "var(--amber)",
 	fontSize: 12
 };
+var congestionWord = (v) => v >= 70 ? "Heavy" : v >= 40 ? "Moderate" : "Light";
+var aqiWord = (v) => v >= 150 ? "Unhealthy" : v >= 100 ? "Fair" : v >= 50 ? "Moderate" : "Good";
 var Dashboard = () => {
 	const [summaryData, setSummaryData] = useState([]);
 	const [trafficData, setTrafficData] = useState([]);
@@ -205,6 +247,7 @@ var Dashboard = () => {
 	const [filterRoute, setFilterRoute] = useState("");
 	const selectedRoute = useCityStore((state) => state.selectedRoute);
 	const setSelectedRoute = useCityStore((state) => state.setSelectedRoute);
+	const viewMode = useCityStore((state) => state.viewMode);
 	const routeNames = useMemo(() => {
 		if (!routes_default?.features) return [];
 		const names = routes_default.features.map((f) => f.properties?.name).filter(Boolean);
@@ -297,7 +340,7 @@ var Dashboard = () => {
 	const overallAvgDelay = displaySummary.length > 0 ? Math.round(displaySummary.reduce((a, s) => a + s.avg_delay_minutes, 0) / displaySummary.length) : 0;
 	const peakHour = displaySummary.length === 1 ? displaySummary[0].peak_hour : displaySummary.length > 1 ? "Var" : "--";
 	const overallAvgAqi = displayTraffic.length > 0 ? Math.round(displayTraffic.reduce((a, t) => a + (t.aqi || 50), 0) / displayTraffic.length) : 50;
-	const congColor = scoreColor(overallAvgCongestion);
+	const congColor = scoreColor$1(overallAvgCongestion);
 	const kpiCards = [
 		{
 			key: "congestion",
@@ -305,7 +348,7 @@ var Dashboard = () => {
 			unit: "/100",
 			color: congColor,
 			extra: /* @__PURE__ */ jsx("div", {
-				className: "mt-3 h-1.5 rounded-full bg-[#0E141E] overflow-hidden",
+				className: "mt-3 h-1.5 rounded-full bg-[var(--ink-2)] overflow-hidden",
 				children: /* @__PURE__ */ jsx("div", {
 					className: "h-full rounded-full transition-all",
 					style: {
@@ -365,6 +408,63 @@ var Dashboard = () => {
 		children: [/* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 mr-3 flex-shrink-0" }), /* @__PURE__ */ jsx("p", {
 			className: "font-semibold",
 			children: error
+		})]
+	});
+	if (viewMode === "citizen") return /* @__PURE__ */ jsxs("div", {
+		className: "space-y-4",
+		children: [/* @__PURE__ */ jsxs("div", {
+			className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
+			children: [/* @__PURE__ */ jsxs("div", {
+				className: "panel p-6 text-center",
+				children: [
+					/* @__PURE__ */ jsx(Gauge, {
+						className: "w-8 h-8 mx-auto mb-3",
+						style: { color: congColor }
+					}),
+					/* @__PURE__ */ jsx("h3", {
+						className: "text-2xl font-bold",
+						style: { color: congColor },
+						children: congestionWord(overallAvgCongestion)
+					}),
+					/* @__PURE__ */ jsx("p", {
+						className: "text-sm text-[#8896A8] mt-1",
+						children: "Current Traffic"
+					}),
+					/* @__PURE__ */ jsx("div", {
+						className: "mt-3 h-2 rounded-full bg-[var(--ink-2)] overflow-hidden",
+						children: /* @__PURE__ */ jsx("div", {
+							className: "h-full rounded-full transition-all",
+							style: {
+								width: `${overallAvgCongestion}%`,
+								background: congColor
+							}
+						})
+					})
+				]
+			}), /* @__PURE__ */ jsxs("div", {
+				className: "panel p-6 text-center",
+				children: [
+					/* @__PURE__ */ jsx(Wind, { className: "w-8 h-8 mx-auto mb-3 text-[#8B5CF6]" }),
+					/* @__PURE__ */ jsx("h3", {
+						className: "text-2xl font-bold text-[#8B5CF6]",
+						children: aqiWord(overallAvgAqi)
+					}),
+					/* @__PURE__ */ jsx("p", {
+						className: "text-sm text-[#8896A8] mt-1",
+						children: "Air Quality"
+					}),
+					/* @__PURE__ */ jsxs("p", {
+						className: "text-xs text-[#64748B] mt-2",
+						children: ["AQI: ", overallAvgAqi]
+					})
+				]
+			})]
+		}), /* @__PURE__ */ jsx("div", {
+			className: "panel p-4",
+			children: /* @__PURE__ */ jsx("p", {
+				className: "text-sm text-[#8896A8] leading-relaxed",
+				children: overallAvgCongestion >= 70 ? "⚠️ Traffic is heavy across the city. Consider using public transport or delaying non-essential trips." : overallAvgCongestion >= 40 ? "🚗 Moderate traffic levels. Some routes may have delays during peak hours." : "✅ Roads are relatively clear. Good time to travel."
+			})
 		})]
 	});
 	return /* @__PURE__ */ jsxs("div", {
@@ -483,25 +583,25 @@ var Dashboard = () => {
 									/* @__PURE__ */ jsx(CartesianGrid, {
 										strokeDasharray: "3 3",
 										vertical: false,
-										stroke: "#1B2534"
+										stroke: "var(--line)"
 									}),
 									/* @__PURE__ */ jsx(XAxis, {
 										dataKey: "time",
-										stroke: "#8896A8",
+										stroke: "var(--text-dim)",
 										fontSize: 12,
 										tickMargin: 8,
 										minTickGap: 30,
 										tickLine: false,
-										axisLine: { stroke: "#1B2534" }
+										axisLine: { stroke: "var(--line)" }
 									}),
 									/* @__PURE__ */ jsx(YAxis, {
-										stroke: "#8896A8",
+										stroke: "var(--text-dim)",
 										fontSize: 12,
 										tickLine: false,
 										axisLine: false
 									}),
 									/* @__PURE__ */ jsx(Tooltip, {
-										cursor: { stroke: "#263244" },
+										cursor: { stroke: "var(--glass-border)" },
 										contentStyle: tooltipStyle
 									}),
 									/* @__PURE__ */ jsx(Area, {
@@ -550,24 +650,24 @@ var Dashboard = () => {
 									/* @__PURE__ */ jsx(CartesianGrid, {
 										strokeDasharray: "3 3",
 										vertical: false,
-										stroke: "#1B2534"
+										stroke: "var(--line)"
 									}),
 									/* @__PURE__ */ jsx(XAxis, {
 										dataKey: "name",
-										stroke: "#8896A8",
+										stroke: "var(--text-dim)",
 										fontSize: 12,
 										tickMargin: 8,
 										tickLine: false,
-										axisLine: { stroke: "#1B2534" }
+										axisLine: { stroke: "var(--line)" }
 									}),
 									/* @__PURE__ */ jsx(YAxis, {
-										stroke: "#8896A8",
+										stroke: "var(--text-dim)",
 										fontSize: 12,
 										tickLine: false,
 										axisLine: false
 									}),
 									/* @__PURE__ */ jsx(Tooltip, {
-										cursor: { fill: "rgba(255,255,255,0.04)" },
+										cursor: { fill: "var(--glass-border)" },
 										contentStyle: tooltipStyle
 									}),
 									/* @__PURE__ */ jsx(Bar, {
@@ -640,27 +740,27 @@ var Dashboard = () => {
 									/* @__PURE__ */ jsx(CartesianGrid, {
 										strokeDasharray: "3 3",
 										vertical: false,
-										stroke: "#1B2534"
+										stroke: "var(--line)"
 									}),
 									/* @__PURE__ */ jsx(XAxis, {
 										dataKey: "ts",
 										tickFormatter: fmtHour,
-										stroke: "#8896A8",
+										stroke: "var(--text-dim)",
 										fontSize: 11,
 										tickMargin: 8,
 										minTickGap: 28,
 										tickLine: false,
-										axisLine: { stroke: "#1B2534" }
+										axisLine: { stroke: "var(--line)" }
 									}),
 									/* @__PURE__ */ jsx(YAxis, {
 										domain: [0, 100],
-										stroke: "#8896A8",
+										stroke: "var(--text-dim)",
 										fontSize: 12,
 										tickLine: false,
 										axisLine: false
 									}),
 									/* @__PURE__ */ jsx(Tooltip, {
-										cursor: { stroke: "#263244" },
+										cursor: { stroke: "var(--glass-border)" },
 										contentStyle: tooltipStyle,
 										labelFormatter: (ts) => {
 											const p = forecastChartData.find((d) => d.ts === ts);
@@ -925,7 +1025,7 @@ var QueryBar = () => {
 						onClick: listening ? stopListening : startListening,
 						className: `ml-auto flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border transition-colors ${listening ? "bg-[#FF5A5F]/20 text-[#FF5A5F] border-[#FF5A5F]/50 animate-pulse" : "bg-[#1B2534] text-[#8896A8] border-[#263244] hover:text-[#38BDF8]"}`,
 						"aria-label": listening ? "Stop listening" : "Voice input",
-						children: [listening ? /* @__PURE__ */ jsx(MicOff, { className: "w-3.5 h-3.5" }) : /* @__PURE__ */ jsx(Mic, { className: "w-3.5 h-3.5" }), listening ? "Listening..." : "Voice"]
+						children: [listening ? /* @__PURE__ */ jsx(MicOff, { className: "w-3.5 h-3.5" }) : /* @__PURE__ */ jsx(Mic, { className: "w-3.5 h-3.5" }), listening ? "Listening..." : "Voice (Multimodal)"]
 					})
 				]
 			}),
@@ -1054,6 +1154,38 @@ var AlertsPanel = () => {
 	const [alerts, setAlerts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [draftingId, setDraftingId] = useState(null);
+	const [draftedIds, setDraftedIds] = useState(/* @__PURE__ */ new Set());
+	const [sseAlerts, setSseAlerts] = useState([]);
+	const eventSourceRef = useRef(null);
+	const viewMode = useCityStore((s) => s.viewMode);
+	useEffect(() => {
+		try {
+			const es = new EventSource(`/api/events`);
+			eventSourceRef.current = es;
+			es.addEventListener("alert", (e) => {
+				try {
+					const data = JSON.parse(e.data);
+					setSseAlerts((prev) => [data, ...prev].slice(0, 5));
+				} catch {}
+			});
+			es.addEventListener("citizen_report", (e) => {
+				try {
+					const data = JSON.parse(e.data);
+					setSseAlerts((prev) => [{
+						id: data.incident_id,
+						route_name: data.ward,
+						severity: data.severity,
+						message: `Citizen report: ${data.notes}`,
+						timestamp: data.timestamp,
+						metrics: {},
+						source: "citizen"
+					}, ...prev].slice(0, 5));
+				} catch {}
+			});
+			return () => es.close();
+		} catch {}
+	}, []);
 	useEffect(() => {
 		const fetchAlerts = async () => {
 			try {
@@ -1071,6 +1203,37 @@ var AlertsPanel = () => {
 		};
 		fetchAlerts();
 	}, []);
+	const handleDraftMemo = async (alert) => {
+		setDraftingId(alert.id);
+		try {
+			if ((await fetch(`/api/actions/draft`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					route_name: alert.route_name,
+					metric: "congestion",
+					value: alert.metrics?.congestion,
+					severity: alert.severity,
+					zscore: alert.explain?.sources?.[1]?.zscore || null,
+					baseline: alert.explain?.sources?.[1]?.baseline || null,
+					domain: "mobility",
+					description: alert.message,
+					timestamp: alert.timestamp
+				})
+			})).ok) setDraftedIds((prev) => /* @__PURE__ */ new Set([...prev, alert.id]));
+		} catch (err) {
+			console.error("Draft memo error:", err);
+		} finally {
+			setDraftingId(null);
+		}
+	};
+	const citizenMessage = (alert) => {
+		const cong = alert.metrics?.congestion;
+		if (cong >= 90) return `Heavy traffic on ${alert.route_name} — consider alternate routes.`;
+		if (cong >= 70) return `Moderate congestion on ${alert.route_name}. Expect some delays.`;
+		return `Traffic advisory on ${alert.route_name}.`;
+	};
+	const allAlerts = [...sseAlerts, ...alerts];
 	if (loading) return /* @__PURE__ */ jsxs("div", {
 		className: "panel h-64 flex flex-col justify-center items-center gap-3",
 		"aria-live": "polite",
@@ -1087,7 +1250,7 @@ var AlertsPanel = () => {
 			children: error
 		})]
 	});
-	if (alerts.length === 0) return /* @__PURE__ */ jsxs("div", {
+	if (allAlerts.length === 0) return /* @__PURE__ */ jsxs("div", {
 		className: "panel h-64 flex flex-col justify-center items-center text-center px-6",
 		children: [
 			/* @__PURE__ */ jsx("div", {
@@ -1100,10 +1263,11 @@ var AlertsPanel = () => {
 			}),
 			/* @__PURE__ */ jsx("p", {
 				className: "text-sm text-[#64748B] mt-1",
-				children: "No anomalies in the network."
+				children: viewMode === "citizen" ? "No traffic issues right now." : "No anomalies in the network."
 			})
 		]
 	});
+	const displayAlerts = viewMode === "citizen" ? allAlerts.slice(0, 3) : allAlerts;
 	return /* @__PURE__ */ jsxs("div", {
 		className: "panel",
 		children: [/* @__PURE__ */ jsxs("div", {
@@ -1112,16 +1276,20 @@ var AlertsPanel = () => {
 				className: "flex items-center gap-2",
 				children: [/* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4 text-[#FF5A5F]" }), /* @__PURE__ */ jsx("h3", {
 					className: "text-base font-semibold text-[#38BDF8]",
-					children: "Active Anomalies"
+					children: viewMode === "citizen" ? "Traffic Alerts" : "Active Anomalies"
 				})]
 			}), /* @__PURE__ */ jsx("span", {
 				className: "mono text-xs px-2 py-0.5 rounded-full bg-[#FF5A5F]/12 text-[#FF9497] border border-[#FF5A5F]/25",
-				children: alerts.length
+				children: allAlerts.length
 			})]
 		}), /* @__PURE__ */ jsx("div", {
 			className: "p-4 space-y-3 max-h-[420px] overflow-y-auto custom-scrollbar",
-			children: alerts.map((alert) => {
-				const accent = alert.severity === "CRITICAL" ? "#FF5A5F" : "#FFB020";
+			children: displayAlerts.map((alert) => {
+				const critical = alert.severity === "CRITICAL";
+				const high = alert.severity === "HIGH";
+				const accent = critical ? "#FF5A5F" : high ? "#F97316" : "#FFB020";
+				const isDrafted = draftedIds.has(alert.id);
+				const isDrafting = draftingId === alert.id;
 				return /* @__PURE__ */ jsxs("div", {
 					className: "rounded-xl bg-[#0E141E] border border-[#1B2534] p-4 hover:border-[#FF5A5F]/50 transition-all hover:-translate-y-0.5 shadow-lg",
 					style: { borderLeft: `3px solid ${accent}` },
@@ -1134,7 +1302,7 @@ var AlertsPanel = () => {
 									background: `${accent}1f`,
 									color: accent
 								},
-								children: alert.severity
+								children: viewMode === "citizen" ? critical ? "Severe" : high ? "Caution" : "Advisory" : alert.severity
 							}), /* @__PURE__ */ jsxs("span", {
 								className: "flex items-center mono text-[11px] text-[#64748B]",
 								children: [/* @__PURE__ */ jsx(Clock, { className: "w-3 h-3 mr-1" }), new Date(alert.timestamp).toLocaleTimeString([], {
@@ -1149,11 +1317,11 @@ var AlertsPanel = () => {
 						}),
 						/* @__PURE__ */ jsx("p", {
 							className: "text-sm text-[#9AA9BD] mb-3 leading-relaxed",
-							children: alert.message
+							children: viewMode === "citizen" ? citizenMessage(alert) : alert.message
 						}),
-						/* @__PURE__ */ jsxs("div", {
-							className: "flex items-center gap-2 mono text-[11px]",
-							children: [/* @__PURE__ */ jsxs("span", {
+						viewMode !== "citizen" && alert.metrics && /* @__PURE__ */ jsxs("div", {
+							className: "flex items-center gap-2 mono text-[11px] mb-2",
+							children: [alert.metrics.congestion != null && /* @__PURE__ */ jsxs("span", {
 								className: "px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]",
 								children: [
 									"Congestion ",
@@ -1163,7 +1331,7 @@ var AlertsPanel = () => {
 									}),
 									"/100"
 								]
-							}), /* @__PURE__ */ jsxs("span", {
+							}), alert.metrics.delay != null && /* @__PURE__ */ jsxs("span", {
 								className: "px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]",
 								children: [
 									"Delay ",
@@ -1175,7 +1343,13 @@ var AlertsPanel = () => {
 								]
 							})]
 						}),
-						alert.explain && /* @__PURE__ */ jsx(ExplainabilityPanel, {
+						viewMode !== "citizen" && (critical || high) && /* @__PURE__ */ jsx("button", {
+							onClick: () => !isDrafted && handleDraftMemo(alert),
+							disabled: isDrafting || isDrafted,
+							className: `mt-2 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-colors ${isDrafted ? "bg-[#10B981]/12 text-[#10B981] border border-[#10B981]/25 cursor-default" : isDrafting ? "bg-[#F59E0B]/12 text-[#F59E0B] border border-[#F59E0B]/25" : "bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/25 hover:bg-[#F59E0B]/20 cursor-pointer"}`,
+							children: isDrafted ? /* @__PURE__ */ jsxs(Fragment$1, { children: [/* @__PURE__ */ jsx(Check, { className: "w-3.5 h-3.5" }), " Memo Drafted — View in Action Center"] }) : isDrafting ? /* @__PURE__ */ jsxs(Fragment$1, { children: [/* @__PURE__ */ jsx(Loader2, { className: "w-3.5 h-3.5 animate-spin" }), " AI Drafting Memo…"] }) : /* @__PURE__ */ jsxs(Fragment$1, { children: [/* @__PURE__ */ jsx(FileText, { className: "w-3.5 h-3.5" }), " Auto-Draft Action Memo"] })
+						}),
+						viewMode !== "citizen" && alert.explain && /* @__PURE__ */ jsx(ExplainabilityPanel, {
 							explain: alert.explain,
 							title: "Why flagged?"
 						})
@@ -1429,7 +1603,10 @@ var HealthAdvisory = () => {
 };
 //#endregion
 //#region src/components/WardDetailPanel.jsx
+var livabilityEmoji = (score) => score >= 80 ? "🟢" : score >= 60 ? "🟡" : "🔴";
+var livabilityWord = (score) => score >= 80 ? "Great" : score >= 60 ? "Okay" : "Needs Work";
 var WardDetailPanel = () => {
+	const viewMode = useCityStore((s) => s.viewMode);
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -1458,6 +1635,32 @@ var WardDetailPanel = () => {
 	if (error) return /* @__PURE__ */ jsxs("div", {
 		className: "panel p-6 text-[#FF9497] flex items-center gap-2",
 		children: [/* @__PURE__ */ jsx(AlertCircle, { className: "w-5 h-5" }), error]
+	});
+	if (viewMode === "citizen") return /* @__PURE__ */ jsxs("div", {
+		className: "space-y-3",
+		children: [/* @__PURE__ */ jsx("p", {
+			className: "eyebrow mb-2",
+			children: "My Neighborhood"
+		}), data.map((ward) => /* @__PURE__ */ jsxs("div", {
+			className: "panel p-5",
+			children: [/* @__PURE__ */ jsxs("div", {
+				className: "flex items-center justify-between mb-3",
+				children: [/* @__PURE__ */ jsx("h3", {
+					className: "font-bold text-lg text-[#38BDF8]",
+					children: ward.ward
+				}), /* @__PURE__ */ jsxs("span", {
+					className: "text-lg",
+					children: [
+						livabilityEmoji(ward.livability_score),
+						" ",
+						livabilityWord(ward.livability_score)
+					]
+				})]
+			}), /* @__PURE__ */ jsx("p", {
+				className: "text-sm text-[#8896A8] leading-relaxed",
+				children: ward.interpretation
+			})]
+		}, ward.ward))]
 	});
 	return /* @__PURE__ */ jsx("div", {
 		className: "space-y-4",
@@ -1604,9 +1807,12 @@ var ActionCenter = () => {
 				children: [
 					/* @__PURE__ */ jsxs("div", {
 						className: "flex justify-between items-start mb-3",
-						children: [/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsx("h4", {
-							className: "font-semibold text-[#38BDF8]",
-							children: memo.title
+						children: [/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsxs("h4", {
+							className: "font-semibold text-[#38BDF8] flex items-center gap-2 flex-wrap",
+							children: [memo.title, memo.status === "DRAFT" && /* @__PURE__ */ jsx("span", {
+								className: "text-[10px] px-1.5 py-0.5 bg-[#FFB020]/20 text-[#FFB020] rounded border border-[#FFB020]/30 tracking-wider font-bold shadow-[0_0_8px_rgba(255,176,32,0.2)]",
+								children: "HUMAN-IN-THE-LOOP REQUIRED"
+							})]
 						}), /* @__PURE__ */ jsxs("p", {
 							className: "text-xs text-[#8896A8] mt-1 flex items-center gap-1",
 							children: [
@@ -1725,18 +1931,24 @@ var CitizenReport = () => {
 				}),
 				/* @__PURE__ */ jsxs("div", {
 					className: "flex items-center justify-between",
-					children: [/* @__PURE__ */ jsxs("label", {
-						className: "flex items-center gap-2 cursor-pointer text-sm text-[#8896A8] hover:text-[#38BDF8] transition-colors",
-						children: [
-							/* @__PURE__ */ jsx(Camera, { className: "w-4 h-4" }),
-							/* @__PURE__ */ jsx("span", { children: photoBase64 ? "Photo Attached" : "Attach Photo" }),
-							/* @__PURE__ */ jsx("input", {
-								type: "file",
-								accept: "image/*",
-								className: "hidden",
-								onChange: handlePhotoUpload
-							})
-						]
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "flex flex-col gap-1",
+						children: [/* @__PURE__ */ jsxs("label", {
+							className: "flex items-center gap-2 cursor-pointer text-sm text-[#8896A8] hover:text-[#38BDF8] transition-colors",
+							children: [
+								/* @__PURE__ */ jsx(Camera, { className: "w-4 h-4" }),
+								/* @__PURE__ */ jsx("span", { children: photoBase64 ? "Photo Attached" : "Attach Photo" }),
+								/* @__PURE__ */ jsx("input", {
+									type: "file",
+									accept: "image/*",
+									className: "hidden",
+									onChange: handlePhotoUpload
+								})
+							]
+						}), /* @__PURE__ */ jsx("span", {
+							className: "text-[10px] text-[#FFB020] font-semibold tracking-wide",
+							children: "✨ Gemini Multimodal Vision API"
+						})]
 					}), /* @__PURE__ */ jsx("button", {
 						type: "submit",
 						disabled: loading || !text && !photoBase64,
@@ -2104,12 +2316,25 @@ var PLAN_ICONS = {
 	simulate_impact: TestTube,
 	tourism_hotspots: Compass
 };
+var STEP_ICONS = {
+	traffic_data: Database,
+	environment_data: Database,
+	incident_data: Database,
+	tourism_data: Database,
+	analysis: BarChart3,
+	simulation: TestTube,
+	ranking: BarChart3,
+	gemini: Brain,
+	complete: CheckCircle2
+};
 var AgenticPlanner = () => {
 	const [planTypes, setPlanTypes] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [executing, setExecuting] = useState(null);
 	const [result, setResult] = useState(null);
 	const [error, setError] = useState(null);
+	const [showSteps, setShowSteps] = useState(true);
+	const [visibleSteps, setVisibleSteps] = useState(0);
 	useEffect(() => {
 		const fetchTypes = async () => {
 			try {
@@ -2123,10 +2348,25 @@ var AgenticPlanner = () => {
 		};
 		fetchTypes();
 	}, []);
+	useEffect(() => {
+		if (!result?.steps) return;
+		setVisibleSteps(0);
+		const timer = setInterval(() => {
+			setVisibleSteps((prev) => {
+				if (prev >= result.steps.length) {
+					clearInterval(timer);
+					return prev;
+				}
+				return prev + 1;
+			});
+		}, 300);
+		return () => clearInterval(timer);
+	}, [result]);
 	const executePlan = async (planType) => {
 		setExecuting(planType);
 		setResult(null);
 		setError(null);
+		setShowSteps(true);
 		try {
 			const res = await fetch(`/api/plan`, {
 				method: "POST",
@@ -2190,6 +2430,59 @@ var AgenticPlanner = () => {
 			result && /* @__PURE__ */ jsxs("div", {
 				className: "mt-5 border-t border-[#263244] pt-5 space-y-4",
 				children: [
+					result.steps && result.steps.length > 0 && /* @__PURE__ */ jsxs("div", {
+						className: "mb-4",
+						children: [/* @__PURE__ */ jsxs("button", {
+							onClick: () => setShowSteps(!showSteps),
+							className: "flex items-center gap-2 mb-3 text-sm hover:opacity-80 transition-opacity",
+							children: [
+								/* @__PURE__ */ jsx(Brain, { className: "w-4 h-4 text-[#8B5CF6]" }),
+								/* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Agent Reasoning Chain"
+								}),
+								/* @__PURE__ */ jsxs("span", {
+									className: "text-[10px] text-[#64748B] ml-1",
+									children: [
+										"(",
+										result.steps.length,
+										" steps)"
+									]
+								}),
+								showSteps ? /* @__PURE__ */ jsx(ChevronUp, { className: "w-3.5 h-3.5 text-[#64748B]" }) : /* @__PURE__ */ jsx(ChevronDown, { className: "w-3.5 h-3.5 text-[#64748B]" })
+							]
+						}), showSteps && /* @__PURE__ */ jsx("div", {
+							className: "relative ml-3 pl-4 border-l-2 border-[#8B5CF6]/20 space-y-2",
+							children: result.steps.map((step, i) => {
+								const StepIcon = STEP_ICONS[step.tool] || Cpu;
+								const isVisible = i < visibleSteps;
+								const isLast = i === result.steps.length - 1;
+								return /* @__PURE__ */ jsxs("div", {
+									className: `relative transition-all duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`,
+									children: [/* @__PURE__ */ jsx("div", { className: `absolute -left-[21px] w-3 h-3 rounded-full border-2 ${isLast && isVisible ? "bg-[#10B981] border-[#10B981]" : isVisible ? "bg-[#8B5CF6] border-[#8B5CF6]" : "bg-[#1B2534] border-[#263244]"}` }), /* @__PURE__ */ jsxs("div", {
+										className: "bg-[#0E141E] rounded-lg p-3 border border-[#1B2534] ml-1",
+										children: [/* @__PURE__ */ jsxs("div", {
+											className: "flex items-center gap-2 mb-0.5",
+											children: [
+												/* @__PURE__ */ jsx(StepIcon, { className: `w-3.5 h-3.5 ${isLast ? "text-[#10B981]" : "text-[#8B5CF6]"}` }),
+												/* @__PURE__ */ jsx("span", {
+													className: "text-xs font-medium text-[#E2E8F0]",
+													children: step.action
+												}),
+												/* @__PURE__ */ jsxs("span", {
+													className: "text-[10px] text-[#64748B] ml-auto mono",
+													children: [step.duration_ms, "ms"]
+												})
+											]
+										}), /* @__PURE__ */ jsx("p", {
+											className: "text-[11px] text-[#64748B] ml-5",
+											children: step.detail
+										})]
+									})]
+								}, i);
+							})
+						})]
+					}),
 					/* @__PURE__ */ jsxs("div", {
 						className: "flex items-center gap-2 mb-2",
 						children: [/* @__PURE__ */ jsx(Sparkles, { className: "w-4 h-4 text-[#8B5CF6]" }), /* @__PURE__ */ jsx("span", {
@@ -2311,10 +2604,11 @@ var AgenticPlanner = () => {
 						explain: {
 							confidence: .85,
 							confidence_label: "high",
-							rationale: `Multi-step agentic workflow executed across ${result.plan_type} domain, synthesizing data from traffic, environment, public safety, tourism, and energy modules.`,
+							rationale: `Multi-step agentic workflow executed ${result.steps?.length || 0} tool calls across ${result.plan_type} domain, synthesizing data from traffic, environment, public safety, tourism, and energy modules.`,
 							sources: [{
 								plan_type: result.plan_type,
-								executed_at: result.executed_at
+								executed_at: result.executed_at,
+								steps_executed: result.steps?.length || 0
 							}],
 							method: "ADK-style agentic planning (multi-tool orchestration)"
 						},
@@ -2403,6 +2697,780 @@ var LookerEmbed = () => {
 	});
 };
 //#endregion
+//#region src/components/EducationPanel.jsx
+var categoryIcons = {
+	digital_skills: "💻",
+	tech_skills: "🤖",
+	business: "💼",
+	environment: "🌿",
+	safety: "🛡️",
+	agriculture: "🌱",
+	life_skills: "🗣️",
+	financial: "💰",
+	health: "❤️"
+};
+var EducationPanel = () => {
+	const [programs, setPrograms] = useState([]);
+	const [stats, setStats] = useState(null);
+	const [recommendations, setRecommendations] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [showRecs, setShowRecs] = useState(false);
+	const [recsLoading, setRecsLoading] = useState(false);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const API = "";
+				const [progsRes, statsRes] = await Promise.all([fetch(`${API}/api/education/programs`), fetch(`${API}/api/education/stats`)]);
+				if (progsRes.ok) setPrograms(await progsRes.json());
+				if (statsRes.ok) setStats(await statsRes.json());
+			} catch (err) {
+				console.error("Education fetch error:", err);
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchData();
+	}, []);
+	const loadRecommendations = async () => {
+		if (recommendations) {
+			setShowRecs(!showRecs);
+			return;
+		}
+		setRecsLoading(true);
+		setShowRecs(true);
+		try {
+			const res = await fetch(`/api/education/recommendations`);
+			if (res.ok) setRecommendations(await res.json());
+		} catch (err) {
+			console.error("Recommendations fetch error:", err);
+		} finally {
+			setRecsLoading(false);
+		}
+	};
+	if (loading) return /* @__PURE__ */ jsxs("div", {
+		className: "panel h-48 flex flex-col justify-center items-center gap-3",
+		"aria-live": "polite",
+		children: [/* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-2 border-[#8B5CF6] border-t-transparent rounded-full animate-spin" }), /* @__PURE__ */ jsx("span", {
+			className: "eyebrow",
+			children: "Loading education data…"
+		})]
+	});
+	return /* @__PURE__ */ jsxs("div", {
+		className: "space-y-4",
+		children: [
+			stats && /* @__PURE__ */ jsxs("div", {
+				className: "grid grid-cols-2 lg:grid-cols-4 gap-4",
+				children: [
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4 text-[#8B5CF6]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Programs"
+								})]
+							}),
+							/* @__PURE__ */ jsx("span", {
+								className: "stat text-2xl text-[#8B5CF6]",
+								children: stats.summary.total_programs
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "active programs"
+							})
+						]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(Users, { className: "w-4 h-4 text-[#10B981]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Enrolled"
+								})]
+							}),
+							/* @__PURE__ */ jsx("span", {
+								className: "stat text-2xl text-[#10B981]",
+								children: stats.summary.total_enrolled
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "learners"
+							})
+						]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(TrendingUp, { className: "w-4 h-4 text-[#38BDF8]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Utilization"
+								})]
+							}),
+							/* @__PURE__ */ jsxs("span", {
+								className: "stat text-2xl text-[#38BDF8]",
+								children: [stats.summary.overall_utilization_pct, "%"]
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "capacity used"
+							})
+						]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(GraduationCap, { className: "w-4 h-4 text-[#F59E0B]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Categories"
+								})]
+							}),
+							/* @__PURE__ */ jsx("span", {
+								className: "stat text-2xl text-[#F59E0B]",
+								children: stats.summary.categories.length
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "skill areas"
+							})
+						]
+					})
+				]
+			}),
+			/* @__PURE__ */ jsxs("div", {
+				className: "panel",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "panel-head",
+					children: [/* @__PURE__ */ jsx("h3", {
+						className: "text-base font-semibold text-[#8B5CF6]",
+						children: "Community Learning Programs"
+					}), /* @__PURE__ */ jsxs("span", {
+						className: "eyebrow",
+						children: [programs.length, " active"]
+					})]
+				}), /* @__PURE__ */ jsx("div", {
+					className: "p-4 grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto custom-scrollbar",
+					children: programs.slice(0, 8).map((p) => /* @__PURE__ */ jsxs("div", {
+						className: "bg-[#0E141E] rounded-xl p-4 border border-[#1B2534] hover:border-[#8B5CF6]/30 transition-colors",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-start justify-between mb-2",
+								children: [/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-2",
+									children: [/* @__PURE__ */ jsx("span", {
+										className: "text-lg",
+										children: categoryIcons[p.category] || "📚"
+									}), /* @__PURE__ */ jsx("h4", {
+										className: "text-sm font-medium text-[#E2E8F0] leading-tight",
+										children: p.title
+									})]
+								}), /* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-1 shrink-0 ml-2",
+									children: [/* @__PURE__ */ jsx(Star, { className: "w-3 h-3 text-[#F59E0B]" }), /* @__PURE__ */ jsx("span", {
+										className: "text-xs text-[#F59E0B] font-medium",
+										children: p.rating
+									})]
+								})]
+							}),
+							/* @__PURE__ */ jsxs("p", {
+								className: "text-xs text-[#8896A8] mb-2",
+								children: [
+									p.provider,
+									" · ",
+									p.ward
+								]
+							}),
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-3 text-xs",
+								children: [/* @__PURE__ */ jsx("span", {
+									className: "text-[#64748B]",
+									children: p.schedule
+								}), /* @__PURE__ */ jsxs("span", {
+									className: "text-[#10B981]",
+									children: [
+										p.enrolled,
+										"/",
+										p.capacity,
+										" enrolled"
+									]
+								})]
+							}),
+							/* @__PURE__ */ jsxs("div", {
+								className: "mt-2 flex flex-wrap gap-1",
+								children: [p.skills_covered.slice(0, 3).map((skill) => /* @__PURE__ */ jsx("span", {
+									className: "text-[10px] px-2 py-0.5 rounded-full bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/20",
+									children: skill
+								}, skill)), p.skills_covered.length > 3 && /* @__PURE__ */ jsxs("span", {
+									className: "text-[10px] text-[#64748B]",
+									children: ["+", p.skills_covered.length - 3]
+								})]
+							}),
+							/* @__PURE__ */ jsxs("div", {
+								className: "mt-2 flex items-center gap-2",
+								children: [/* @__PURE__ */ jsx("div", {
+									className: "h-1 flex-1 rounded-full bg-[#1B2534] overflow-hidden",
+									children: /* @__PURE__ */ jsx("div", {
+										className: "h-full rounded-full transition-all",
+										style: {
+											width: `${p.impact_score}%`,
+											background: p.impact_score >= 85 ? "#10B981" : p.impact_score >= 70 ? "#F59E0B" : "#64748B"
+										}
+									})
+								}), /* @__PURE__ */ jsxs("span", {
+									className: "text-[10px] text-[#64748B] mono",
+									children: [p.impact_score, "/100"]
+								})]
+							})
+						]
+					}, p.id))
+				})]
+			}),
+			/* @__PURE__ */ jsxs("div", {
+				className: "panel",
+				children: [/* @__PURE__ */ jsxs("button", {
+					onClick: loadRecommendations,
+					className: "w-full panel-head cursor-pointer hover:bg-[#1B2534]/40 transition-colors",
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "flex items-center gap-2",
+						children: [/* @__PURE__ */ jsx(Sparkles, { className: "w-4 h-4 text-[#FFB020]" }), /* @__PURE__ */ jsx("h3", {
+							className: "text-base font-semibold text-[#FFB020]",
+							children: "AI Learning Recommendations"
+						})]
+					}), showRecs ? /* @__PURE__ */ jsx(ChevronUp, { className: "w-4 h-4 text-[#64748B]" }) : /* @__PURE__ */ jsx(ChevronDown, { className: "w-4 h-4 text-[#64748B]" })]
+				}), showRecs && /* @__PURE__ */ jsx("div", {
+					className: "p-4",
+					children: recsLoading ? /* @__PURE__ */ jsxs("div", {
+						className: "flex items-center gap-3 py-6 justify-center",
+						children: [/* @__PURE__ */ jsx("div", { className: "w-5 h-5 border-2 border-[#FFB020] border-t-transparent rounded-full animate-spin" }), /* @__PURE__ */ jsx("span", {
+							className: "text-sm text-[#8896A8]",
+							children: "Generating cross-domain recommendations…"
+						})]
+					}) : recommendations ? /* @__PURE__ */ jsxs("div", {
+						className: "space-y-3",
+						children: [/* @__PURE__ */ jsx("p", {
+							className: "text-sm text-[#8896A8] mb-4",
+							children: recommendations.summary
+						}), (recommendations.recommendations || []).map((rec, i) => /* @__PURE__ */ jsxs("div", {
+							className: "bg-[#0E141E] rounded-xl p-4 border border-[#FFB020]/20",
+							children: [
+								/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-2 mb-1",
+									children: [/* @__PURE__ */ jsx("span", {
+										className: `text-xs px-2 py-0.5 rounded-full font-medium ${rec.priority === "HIGH" ? "bg-[#FF5A5F]/15 text-[#FF5A5F]" : "bg-[#F59E0B]/15 text-[#F59E0B]"}`,
+										children: rec.priority
+									}), /* @__PURE__ */ jsx("span", {
+										className: "text-xs text-[#64748B]",
+										children: rec.ward
+									})]
+								}),
+								/* @__PURE__ */ jsx("h4", {
+									className: "text-sm font-medium text-[#E2E8F0] mt-1",
+									children: rec.program_title
+								}),
+								/* @__PURE__ */ jsx("p", {
+									className: "text-xs text-[#8896A8] mt-1",
+									children: rec.reason
+								}),
+								/* @__PURE__ */ jsxs("p", {
+									className: "text-[10px] text-[#64748B] mt-1",
+									children: ["Target: ", rec.target_audience]
+								})
+							]
+						}, i))]
+					}) : /* @__PURE__ */ jsx("p", {
+						className: "text-sm text-[#64748B]",
+						children: "Unable to load recommendations."
+					})
+				})]
+			})
+		]
+	});
+};
+//#endregion
+//#region src/components/CommunityImpactPanel.jsx
+var sviColor = (score) => score >= 60 ? "#FF5A5F" : score >= 40 ? "#F59E0B" : "#10B981";
+var sviLabel = (score) => score >= 60 ? "High Vulnerability" : score >= 40 ? "Moderate" : "Resilient";
+var CommunityImpactPanel = () => {
+	const [impact, setImpact] = useState(null);
+	const [vulnerability, setVulnerability] = useState(null);
+	const [programs, setPrograms] = useState(null);
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const API = "";
+				const [impactRes, vulnRes, progsRes] = await Promise.all([
+					fetch(`${API}/api/community/impact`),
+					fetch(`${API}/api/community/vulnerability`),
+					fetch(`${API}/api/community/programs`)
+				]);
+				if (impactRes.ok) setImpact(await impactRes.json());
+				if (vulnRes.ok) setVulnerability(await vulnRes.json());
+				if (progsRes.ok) setPrograms(await progsRes.json());
+			} catch (err) {
+				console.error("Community fetch error:", err);
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchData();
+	}, []);
+	if (loading) return /* @__PURE__ */ jsxs("div", {
+		className: "panel h-48 flex flex-col justify-center items-center gap-3",
+		"aria-live": "polite",
+		children: [/* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-2 border-[#10B981] border-t-transparent rounded-full animate-spin" }), /* @__PURE__ */ jsx("span", {
+			className: "eyebrow",
+			children: "Loading community data…"
+		})]
+	});
+	return /* @__PURE__ */ jsxs("div", {
+		className: "space-y-4",
+		children: [
+			impact && /* @__PURE__ */ jsxs("div", {
+				className: "grid grid-cols-2 lg:grid-cols-4 gap-4",
+				children: [
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(HandHelping, { className: "w-4 h-4 text-[#10B981]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Volunteers"
+								})]
+							}),
+							/* @__PURE__ */ jsx("span", {
+								className: "stat text-2xl text-[#10B981]",
+								children: impact.total_volunteers_active
+							}),
+							/* @__PURE__ */ jsxs("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: [
+									"active across ",
+									impact.volunteer_programs,
+									" programs"
+								]
+							})
+						]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(Shield, { className: "w-4 h-4 text-[#38BDF8]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Services"
+								})]
+							}),
+							/* @__PURE__ */ jsx("span", {
+								className: "stat text-2xl text-[#38BDF8]",
+								children: impact.social_services
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "social services"
+							})
+						]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(Users, { className: "w-4 h-4 text-[#F59E0B]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Fill Rate"
+								})]
+							}),
+							/* @__PURE__ */ jsxs("span", {
+								className: "stat text-2xl text-[#F59E0B]",
+								children: [impact.volunteer_fill_rate_pct, "%"]
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "volunteer positions filled"
+							})
+						]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "panel p-4",
+						children: [
+							/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center gap-2 mb-2",
+								children: [/* @__PURE__ */ jsx(Heart, { className: "w-4 h-4 text-[#8B5CF6]" }), /* @__PURE__ */ jsx("span", {
+									className: "eyebrow",
+									children: "Categories"
+								})]
+							}),
+							/* @__PURE__ */ jsx("span", {
+								className: "stat text-2xl text-[#8B5CF6]",
+								children: impact.categories.length
+							}),
+							/* @__PURE__ */ jsx("p", {
+								className: "mono text-[11px] text-[#8896A8] mt-1",
+								children: "impact areas"
+							})
+						]
+					})
+				]
+			}),
+			impact?.interpretation && /* @__PURE__ */ jsxs("div", {
+				className: "panel p-4",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "flex items-center gap-2 mb-2",
+					children: [/* @__PURE__ */ jsx(Sparkles, { className: "w-3.5 h-3.5 text-[#FFB020]" }), /* @__PURE__ */ jsx("span", {
+						className: "eyebrow",
+						children: "AI Impact Assessment"
+					})]
+				}), /* @__PURE__ */ jsx("p", {
+					className: "text-sm text-[#8896A8] leading-relaxed",
+					children: impact.interpretation
+				})]
+			}),
+			vulnerability && /* @__PURE__ */ jsxs("div", {
+				className: "panel",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "panel-head",
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "flex items-center gap-2",
+						children: [/* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4 text-[#F59E0B]" }), /* @__PURE__ */ jsx("h3", {
+							className: "text-base font-semibold text-[#F59E0B]",
+							children: "Social Vulnerability Index"
+						})]
+					}), /* @__PURE__ */ jsx("span", {
+						className: "eyebrow",
+						children: "Cross-domain composite"
+					})]
+				}), /* @__PURE__ */ jsxs("div", {
+					className: "p-4 space-y-3",
+					children: [
+						/* @__PURE__ */ jsx("p", {
+							className: "text-xs text-[#64748B] mb-3",
+							children: vulnerability.methodology
+						}),
+						vulnerability.wards.map((w) => /* @__PURE__ */ jsxs("div", {
+							className: "bg-[#0E141E] rounded-xl p-4 border border-[#1B2534]",
+							children: [/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center justify-between mb-2",
+								children: [/* @__PURE__ */ jsx("h4", {
+									className: "text-sm font-medium text-[#E2E8F0]",
+									children: w.ward
+								}), /* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-2",
+									children: [/* @__PURE__ */ jsx("span", {
+										className: "text-xs px-2 py-0.5 rounded-full font-medium",
+										style: {
+											background: `${sviColor(w.svi)}15`,
+											color: sviColor(w.svi)
+										},
+										children: sviLabel(w.svi)
+									}), /* @__PURE__ */ jsx("span", {
+										className: "stat text-lg",
+										style: { color: sviColor(w.svi) },
+										children: w.svi
+									})]
+								})]
+							}), /* @__PURE__ */ jsx("div", {
+								className: "grid grid-cols-5 gap-2 mt-3",
+								children: Object.entries(w.components).map(([key, comp]) => /* @__PURE__ */ jsxs("div", {
+									className: "text-center",
+									children: [/* @__PURE__ */ jsx("div", {
+										className: "h-1 rounded-full bg-[#1B2534] overflow-hidden mb-1",
+										children: /* @__PURE__ */ jsx("div", {
+											className: "h-full rounded-full",
+											style: {
+												width: `${comp.score}%`,
+												background: comp.score >= 60 ? "#FF5A5F" : comp.score >= 30 ? "#F59E0B" : "#10B981"
+											}
+										})
+									}), /* @__PURE__ */ jsx("span", {
+										className: "text-[10px] text-[#64748B] capitalize",
+										children: key
+									})]
+								}, key))
+							})]
+						}, w.ward)),
+						vulnerability.interpretation && /* @__PURE__ */ jsx("div", {
+							className: "mt-3 p-3 rounded-lg bg-[#FFB020]/5 border border-[#FFB020]/15",
+							children: /* @__PURE__ */ jsxs("p", {
+								className: "text-xs text-[#8896A8]",
+								children: [/* @__PURE__ */ jsx(Sparkles, { className: "w-3 h-3 text-[#FFB020] inline mr-1" }), vulnerability.interpretation]
+							})
+						})
+					]
+				})]
+			}),
+			programs && /* @__PURE__ */ jsxs("div", {
+				className: "grid grid-cols-1 lg:grid-cols-2 gap-4",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "panel",
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "panel-head",
+						children: [/* @__PURE__ */ jsx("h3", {
+							className: "text-base font-semibold text-[#10B981]",
+							children: "Volunteer Programs"
+						}), /* @__PURE__ */ jsxs("span", {
+							className: "eyebrow",
+							children: [programs.volunteer_programs.length, " active"]
+						})]
+					}), /* @__PURE__ */ jsx("div", {
+						className: "p-4 space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar",
+						children: programs.volunteer_programs.map((v) => /* @__PURE__ */ jsxs("div", {
+							className: "bg-[#0E141E] rounded-lg p-3 border border-[#1B2534] hover:border-[#10B981]/30 transition-colors",
+							children: [
+								/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center justify-between mb-1",
+									children: [/* @__PURE__ */ jsx("h4", {
+										className: "text-sm font-medium text-[#E2E8F0]",
+										children: v.name
+									}), /* @__PURE__ */ jsx("span", {
+										className: "text-[10px] px-2 py-0.5 rounded-full bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20",
+										children: v.category
+									})]
+								}),
+								/* @__PURE__ */ jsxs("p", {
+									className: "text-xs text-[#8896A8]",
+									children: [
+										v.organizer,
+										" · ",
+										v.ward
+									]
+								}),
+								/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center justify-between mt-2 text-xs",
+									children: [/* @__PURE__ */ jsx("span", {
+										className: "text-[#64748B]",
+										children: v.schedule
+									}), /* @__PURE__ */ jsxs("span", {
+										className: "text-[#10B981]",
+										children: [
+											v.volunteers_registered,
+											"/",
+											v.volunteers_needed,
+											" volunteers"
+										]
+									})]
+								}),
+								/* @__PURE__ */ jsx("p", {
+									className: "text-[10px] text-[#64748B] mt-1",
+									children: v.impact_metric
+								})
+							]
+						}, v.id))
+					})]
+				}), /* @__PURE__ */ jsxs("div", {
+					className: "panel",
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "panel-head",
+						children: [/* @__PURE__ */ jsx("h3", {
+							className: "text-base font-semibold text-[#38BDF8]",
+							children: "Social Services"
+						}), /* @__PURE__ */ jsxs("span", {
+							className: "eyebrow",
+							children: [programs.social_services.length, " available"]
+						})]
+					}), /* @__PURE__ */ jsx("div", {
+						className: "p-4 space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar",
+						children: programs.social_services.map((s) => /* @__PURE__ */ jsxs("div", {
+							className: "bg-[#0E141E] rounded-lg p-3 border border-[#1B2534] hover:border-[#38BDF8]/30 transition-colors",
+							children: [
+								/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center justify-between mb-1",
+									children: [/* @__PURE__ */ jsx("h4", {
+										className: "text-sm font-medium text-[#E2E8F0]",
+										children: s.name
+									}), /* @__PURE__ */ jsx("span", {
+										className: "text-[10px] px-2 py-0.5 rounded-full bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20",
+										children: s.category
+									})]
+								}),
+								/* @__PURE__ */ jsxs("p", {
+									className: "text-xs text-[#8896A8]",
+									children: [
+										s.provider,
+										" · ",
+										s.ward
+									]
+								}),
+								/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center justify-between mt-2 text-xs",
+									children: [/* @__PURE__ */ jsx("span", {
+										className: "text-[#64748B]",
+										children: s.availability
+									}), /* @__PURE__ */ jsx("span", {
+										className: "text-[#38BDF8]",
+										children: s.capacity
+									})]
+								}),
+								/* @__PURE__ */ jsxs("p", {
+									className: "text-[10px] text-[#64748B] mt-1",
+									children: ["📞 ", s.contact]
+								})
+							]
+						}, s.id))
+					})]
+				})]
+			})
+		]
+	});
+};
+//#endregion
+//#region src/components/WasteManagementPanel.jsx
+var scoreColor = (score) => {
+	if (score >= 80) return "#10B981";
+	if (score >= 60) return "#F59E0B";
+	return "#EF4444";
+};
+var WasteManagementPanel = () => {
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await fetch(`/api/waste/summary`);
+				if (!res.ok) throw new Error("Failed to fetch waste management data");
+				setData(await res.json());
+			} catch (err) {
+				setError(err.message);
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchData();
+	}, []);
+	if (loading) return /* @__PURE__ */ jsx("div", {
+		className: "panel p-8 flex items-center justify-center",
+		children: /* @__PURE__ */ jsx(Loader2, { className: "w-6 h-6 animate-spin text-[#10B981]" })
+	});
+	if (error) return /* @__PURE__ */ jsxs("div", {
+		className: "panel p-6 flex items-center gap-3 text-[#FF9497] border-[#EF4444]/30",
+		children: [/* @__PURE__ */ jsx(AlertCircle, { className: "w-5 h-5" }), /* @__PURE__ */ jsx("span", {
+			className: "text-sm",
+			children: error
+		})]
+	});
+	return /* @__PURE__ */ jsxs("div", {
+		className: "space-y-4",
+		children: [/* @__PURE__ */ jsx("div", {
+			className: "grid grid-cols-1 md:grid-cols-3 gap-4",
+			children: data.slice(0, 3).map((ward, i) => /* @__PURE__ */ jsxs("div", {
+				className: "panel p-5 relative overflow-hidden group",
+				children: [
+					/* @__PURE__ */ jsx("div", {
+						className: "absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:opacity-20 transition-opacity duration-500",
+						style: { background: scoreColor(ward.waste_efficiency) }
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "flex items-center justify-between mb-4 relative",
+						children: [/* @__PURE__ */ jsx("h3", {
+							className: "text-lg font-semibold text-[#E2E8F0]",
+							children: ward.ward
+						}), /* @__PURE__ */ jsxs("div", {
+							className: "flex items-center gap-1.5 text-xs font-mono text-[#64748B]",
+							children: [/* @__PURE__ */ jsx("span", { children: "Priority" }), /* @__PURE__ */ jsxs("span", {
+								className: "text-[#E2E8F0] bg-[#1B2534] px-1.5 py-0.5 rounded",
+								children: ["#", i + 1]
+							})]
+						})]
+					}),
+					/* @__PURE__ */ jsxs("div", {
+						className: "space-y-4 relative",
+						children: [
+							/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center justify-between text-sm mb-1.5",
+								children: [/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-1.5 text-[#8896A8]",
+									children: [/* @__PURE__ */ jsx(Trash2, { className: "w-4 h-4" }), /* @__PURE__ */ jsx("span", { children: "Collection Efficiency" })]
+								}), /* @__PURE__ */ jsxs("span", {
+									className: "font-semibold",
+									style: { color: scoreColor(ward.waste_efficiency) },
+									children: [ward.waste_efficiency, "%"]
+								})]
+							}), /* @__PURE__ */ jsx("div", {
+								className: "h-1.5 w-full bg-[#0E141E] rounded-full overflow-hidden",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "h-full rounded-full",
+									style: {
+										width: `${ward.waste_efficiency}%`,
+										backgroundColor: scoreColor(ward.waste_efficiency)
+									}
+								})
+							})] }),
+							/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center justify-between text-sm mb-1.5",
+								children: [/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-1.5 text-[#8896A8]",
+									children: [/* @__PURE__ */ jsx(Droplets, { className: "w-4 h-4" }), /* @__PURE__ */ jsx("span", { children: "Water Quality Index" })]
+								}), /* @__PURE__ */ jsxs("span", {
+									className: "font-semibold",
+									style: { color: scoreColor(ward.water_quality) },
+									children: [ward.water_quality, "/100"]
+								})]
+							}), /* @__PURE__ */ jsx("div", {
+								className: "h-1.5 w-full bg-[#0E141E] rounded-full overflow-hidden",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "h-full rounded-full",
+									style: {
+										width: `${ward.water_quality}%`,
+										backgroundColor: scoreColor(ward.water_quality)
+									}
+								})
+							})] }),
+							/* @__PURE__ */ jsxs("div", { children: [/* @__PURE__ */ jsxs("div", {
+								className: "flex items-center justify-between text-sm mb-1.5",
+								children: [/* @__PURE__ */ jsxs("div", {
+									className: "flex items-center gap-1.5 text-[#8896A8]",
+									children: [/* @__PURE__ */ jsx(Recycle, { className: "w-4 h-4" }), /* @__PURE__ */ jsx("span", { children: "Estimated Recycling" })]
+								}), /* @__PURE__ */ jsxs("span", {
+									className: "font-semibold text-[#38BDF8]",
+									children: [ward.recycling_rate, "%"]
+								})]
+							}), /* @__PURE__ */ jsx("div", {
+								className: "h-1.5 w-full bg-[#0E141E] rounded-full overflow-hidden",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "h-full rounded-full bg-[#38BDF8]",
+									style: { width: `${ward.recycling_rate}%` }
+								})
+							})] })
+						]
+					}),
+					/* @__PURE__ */ jsx("div", {
+						className: "mt-5 p-3 rounded-lg bg-[#1B2534]/50 border border-[#263244] relative",
+						children: /* @__PURE__ */ jsxs("div", {
+							className: "flex items-start gap-2",
+							children: [/* @__PURE__ */ jsx(Sparkles, { className: "w-4 h-4 text-[#8B5CF6] mt-0.5 shrink-0" }), /* @__PURE__ */ jsx("p", {
+								className: "text-xs text-[#E2E8F0] leading-relaxed",
+								children: ward.recommendation
+							})]
+						})
+					})
+				]
+			}, ward.ward))
+		}), /* @__PURE__ */ jsx(ExplainabilityPanel, {
+			explain: {
+				confidence: .88,
+				confidence_label: "high",
+				rationale: "Generated by analyzing recent ward-level waste collection efficiency and water quality data via Gemini.",
+				sources: data.map((d) => ({
+					ward: d.ward,
+					waste: d.waste_efficiency,
+					water: d.water_quality
+				})),
+				method: "Gemini RAG (Cross-domain synthesis)"
+			},
+			title: "Why these recommendations?"
+		})]
+	});
+};
+//#endregion
 //#region src/pages/index.astro
 var pages_exports = /* @__PURE__ */ __exportAll({
 	default: () => $$Index,
@@ -2410,7 +3478,7 @@ var pages_exports = /* @__PURE__ */ __exportAll({
 	url: () => ""
 });
 var $$Index = createComponent(($$result, $$props, $$slots) => {
-	return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result) => renderTemplate`${maybeRenderHead($$result)}<nav class="section-nav" aria-label="Section quick navigation"><div class="max-w-[1600px] mx-auto px-4 sm:px-6 flex items-center gap-1 overflow-x-auto custom-scrollbar"><a href="#operations" class="section-nav-link">Operations</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#health" class="section-nav-link">Health</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#telemetry" class="section-nav-link">Telemetry</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#wards" class="section-nav-link">Wards</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#community" class="section-nav-link">Community</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#economy" class="section-nav-link">Economy</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#utilities" class="section-nav-link">Utilities</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#planning" class="section-nav-link">AI Planning</a><span class="section-nav-divider" aria-hidden="true"></span><a href="#analytics" class="section-nav-link">Analytics</a></div></nav><div class="page-content"><!-- ───── Section 1: AI Query Bar ───── --><section id="query" class="content-section"><div class="section-inner">${renderComponent($$result, "QueryBar", QueryBar, {
+	return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result) => renderTemplate`${maybeRenderHead($$result)}<div class="dashboard-layout"><!-- Sidebar --><aside class="dashboard-sidebar" aria-label="Dashboard Navigation"><div class="mb-6 hidden lg:block"><p class="eyebrow ml-4 text-xs font-semibold" style="color: var(--amber)">Modules</p></div><button class="sidebar-nav-item active" data-tab="overview"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>Overview</button><button class="sidebar-nav-item" data-tab="environment"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Environment</button><button class="sidebar-nav-item" data-tab="community"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Community</button><button class="sidebar-nav-item planner-only" data-tab="economy"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>Economy & Services</button><button class="sidebar-nav-item planner-only" data-tab="planning"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>AI Planning</button></aside><!-- Main Content --><main class="dashboard-main"><!-- ───── TAB: OVERVIEW ───── --><div class="tab-pane active" id="tab-overview"><!-- ───── Section 1: AI Query Bar ───── --><section id="query" class="content-section mb-8"><div class="section-inner">${renderComponent($$result, "QueryBar", QueryBar, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/QueryBar.jsx",
@@ -2430,22 +3498,27 @@ var $$Index = createComponent(($$result, $$props, $$slots) => {
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/RecommendationCard.jsx",
 		"client:component-export": "default"
-	})}</div></div></div></section><!-- ───── Section 3: Health & Air Quality ───── --><section id="health" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">Health &amp; Air Quality</h2><span class="section-eyebrow">AQI · Advisories · Vulnerable Groups</span></div>${renderComponent($$result, "HealthAdvisory", HealthAdvisory, {
-		"client:load": true,
-		"client:component-hydration": "load",
-		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/HealthAdvisory.jsx",
-		"client:component-export": "default"
-	})}</section><!-- ───── Section 4: Live Telemetry ───── --><section id="telemetry" class="content-section"><div class="section-header"><span class="section-indicator" style="background:var(--flow)"></span><h2 class="section-title">Live Telemetry</h2><span class="section-eyebrow">KPIs · Trends · Forecasts</span></div>${renderComponent($$result, "Dashboard", Dashboard, {
+	})}</div></div></div></section><!-- ───── Section 4: Live Telemetry ───── --><section id="telemetry" class="content-section mt-12"><div class="section-header"><span class="section-indicator" style="background:var(--flow)"></span><h2 class="section-title">Live Telemetry</h2><span class="section-eyebrow">KPIs · Trends · Forecasts</span></div>${renderComponent($$result, "Dashboard", Dashboard, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/Dashboard.jsx",
 		"client:component-export": "default"
-	})}</section><!-- ───── Section 5: Ward Livability ───── --><section id="wards" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#10B981"></span><h2 class="section-title">Ward Livability</h2><span class="section-eyebrow">Scores · Metrics · Interpretation</span></div>${renderComponent($$result, "WardDetailPanel", WardDetailPanel, {
+	})}</section></div><!-- ───── TAB: ENVIRONMENT ───── --><div class="tab-pane" id="tab-environment"><!-- ───── Section 3: Health & Air Quality ───── --><section id="health" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">Health &amp; Air Quality</h2><span class="section-eyebrow">AQI · Advisories · Vulnerable Groups</span></div>${renderComponent($$result, "HealthAdvisory", HealthAdvisory, {
+		"client:load": true,
+		"client:component-hydration": "load",
+		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/HealthAdvisory.jsx",
+		"client:component-export": "default"
+	})}</section><!-- ───── Section 6: Waste Management & Resources ───── --><section id="waste" class="content-section mt-12"><div class="section-header"><span class="section-indicator" style="background:#10B981"></span><h2 class="section-title">Waste Management &amp; Resources</h2><span class="section-eyebrow">Collection · Recycling · Water Quality</span></div>${renderComponent($$result, "WasteManagementPanel", WasteManagementPanel, {
+		"client:load": true,
+		"client:component-hydration": "load",
+		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/WasteManagementPanel.jsx",
+		"client:component-export": "default"
+	})}</section></div><!-- ───── TAB: COMMUNITY ───── --><div class="tab-pane" id="tab-community"><!-- ───── Section 5: Ward Livability ───── --><section id="wards" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#10B981"></span><h2 class="section-title">Ward Livability</h2><span class="section-eyebrow">Scores · Metrics · Interpretation</span></div>${renderComponent($$result, "WardDetailPanel", WardDetailPanel, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/WardDetailPanel.jsx",
 		"client:component-export": "default"
-	})}</section><!-- ───── Section 6: Community & Actions ───── --><section id="community" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#F59E0B"></span><h2 class="section-title">Community &amp; Actions</h2><span class="section-eyebrow">Action Center · Citizen Reporting</span></div><div class="layout-community">${renderComponent($$result, "ActionCenter", ActionCenter, {
+	})}</section><!-- ───── Section 6: Community & Actions ───── --><section id="community" class="content-section mt-12"><div class="section-header"><span class="section-indicator" style="background:#F59E0B"></span><h2 class="section-title">Community &amp; Actions</h2><span class="section-eyebrow">Action Center · Citizen Reporting</span></div><div class="layout-community">${renderComponent($$result, "ActionCenter", ActionCenter, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/ActionCenter.jsx",
@@ -2455,27 +3528,63 @@ var $$Index = createComponent(($$result, $$props, $$slots) => {
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/CitizenReport.jsx",
 		"client:component-export": "default"
-	})}</div></section><!-- ───── Section 7: Tourism & Local Economy ───── --><section id="economy" class="content-section planner-only"><div class="section-header"><span class="section-indicator" style="background:#10B981"></span><h2 class="section-title">Tourism &amp; Local Economy</h2><span class="section-eyebrow">POIs · Events · Economic Impact</span></div>${renderComponent($$result, "TourismPanel", TourismPanel, {
+	})}</div></section><!-- ───── Section 7: Community Support & Social Impact ───── --><section id="social-impact" class="content-section mt-12"><div class="section-header"><span class="section-indicator" style="background:#10B981"></span><h2 class="section-title">Community Support &amp; Social Impact</h2><span class="section-eyebrow">Vulnerability Index · Volunteers · Services</span></div>${renderComponent($$result, "CommunityImpactPanel", CommunityImpactPanel, {
+		"client:load": true,
+		"client:component-hydration": "load",
+		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/CommunityImpactPanel.jsx",
+		"client:component-export": "default"
+	})}</section></div><!-- ───── TAB: ECONOMY ───── --><div class="tab-pane" id="tab-economy"><!-- ───── Section 8: Education & Lifelong Learning ───── --><section id="education" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">Education &amp; Lifelong Learning</h2><span class="section-eyebrow">Programs · Skills · AI Recommendations</span></div>${renderComponent($$result, "EducationPanel", EducationPanel, {
+		"client:load": true,
+		"client:component-hydration": "load",
+		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/EducationPanel.jsx",
+		"client:component-export": "default"
+	})}</section><!-- ───── Section 9: Tourism & Local Economy ───── --><section id="economy-sec" class="content-section mt-12 planner-only"><div class="section-header"><span class="section-indicator" style="background:#10B981"></span><h2 class="section-title">Tourism &amp; Local Economy</h2><span class="section-eyebrow">POIs · Events · Economic Impact</span></div>${renderComponent($$result, "TourismPanel", TourismPanel, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/TourismPanel.jsx",
 		"client:component-export": "default"
-	})}</section><!-- ───── Section 8: Energy & Smart Utilities ───── --><section id="utilities" class="content-section planner-only"><div class="section-header"><span class="section-indicator" style="background:#F59E0B"></span><h2 class="section-title">Energy &amp; Smart Utilities</h2><span class="section-eyebrow">Consumption · Efficiency · Water Quality</span></div>${renderComponent($$result, "EnergyPanel", EnergyPanel, {
+	})}</section><!-- ───── Section 10: Energy & Smart Utilities ───── --><section id="utilities" class="content-section mt-12 planner-only"><div class="section-header"><span class="section-indicator" style="background:#F59E0B"></span><h2 class="section-title">Energy &amp; Smart Utilities</h2><span class="section-eyebrow">Consumption · Efficiency · Water Quality</span></div>${renderComponent($$result, "EnergyPanel", EnergyPanel, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/EnergyPanel.jsx",
 		"client:component-export": "default"
-	})}</section><!-- ───── Section 9: AI Agentic Planning (ADK) ───── --><section id="planning" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">AI Multi-Step Planning</h2><span class="section-eyebrow">Agentic Workflows · Cross-Domain Reasoning</span></div>${renderComponent($$result, "AgenticPlanner", AgenticPlanner, {
+	})}</section></div><!-- ───── TAB: PLANNING ───── --><div class="tab-pane" id="tab-planning"><!-- ───── Section 11: AI Agentic Planning (ADK) ───── --><section id="planning-sec" class="content-section"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">AI Multi-Step Planning</h2><span class="section-eyebrow">Agentic Workflows · Cross-Domain Reasoning</span></div>${renderComponent($$result, "AgenticPlanner", AgenticPlanner, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/AgenticPlanner.jsx",
 		"client:component-export": "default"
-	})}</section><!-- ───── Section 10: Looker Studio Analytics ───── --><section id="analytics" class="content-section planner-only"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">City Analytics</h2><span class="section-eyebrow">Looker Studio · Embedded Reports</span></div>${renderComponent($$result, "LookerEmbed", LookerEmbed, {
+	})}</section><!-- ───── Section 12: Looker Studio Analytics ───── --><section id="analytics" class="content-section mt-12 planner-only"><div class="section-header"><span class="section-indicator" style="background:#8B5CF6"></span><h2 class="section-title">City Analytics</h2><span class="section-eyebrow">Looker Studio · Embedded Reports</span></div>${renderComponent($$result, "LookerEmbed", LookerEmbed, {
 		"client:load": true,
 		"client:component-hydration": "load",
 		"client:component-path": "C:/Users/himan/Desktop/citypulse/frontend/src/components/LookerEmbed.jsx",
 		"client:component-export": "default"
-	})}</section></div>` })}`;
+	})}</section></div></main></div>` })}<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('.sidebar-nav-item');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        // Remove active class from all
+        navItems.forEach(nav => nav.classList.remove('active'));
+        tabPanes.forEach(tab => tab.classList.remove('active'));
+
+        // Add active class to clicked item
+        item.classList.add('active');
+        
+        // Show corresponding tab
+        const tabId = item.getAttribute('data-tab');
+        const targetTab = document.getElementById(\`tab-\${tabId}\`);
+        if (targetTab) {
+          targetTab.classList.add('active');
+        }
+        
+        // Scroll to top of main area smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  });
+<\/script>`;
 }, "C:/Users/himan/Desktop/citypulse/frontend/src/pages/index.astro", void 0);
 var $$file = "C:/Users/himan/Desktop/citypulse/frontend/src/pages/index.astro";
 //#endregion

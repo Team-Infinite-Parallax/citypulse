@@ -42,7 +42,10 @@ describe('CityPulse API', () => {
         expect(f.lower_bound[i]).toBeLessThanOrEqual(p);
         expect(f.upper_bound[i]).toBeGreaterThanOrEqual(p);
       });
-      expect(f.method).toMatch(/holt-winters|linear|naive/i);
+      expect(f.method).toMatch(/selected by RMSE|holt-winters|linear|naive/i);
+      expect(['ml', 'statistical']).toContain(f.model_choice);
+      expect(typeof f.baseline_rmse).toBe('number');
+      expect(typeof f.ml_rmse).toBe('number');
     }
   });
 

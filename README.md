@@ -78,6 +78,8 @@ flowchart LR
 |---|---|
 | **Vertex AI** | `gemini-1.5-flash` via `@google-cloud/vertexai` SDK for natural-language Q&A, recommendations, and embedding generation |
 | **BigQuery** | Live querying of traffic and environmental data (with a local JSON fallback for offline development) |
+| **Firestore** | Persistent storage for citizen reports and action memos, replacing local JSON/in-memory state (with offline fallbacks) |
+| **AlloyDB** | `pgvector` vector store for RAG retrieval (OLTP + vector search in one service, vs. BigQuery which is OLAP-only) |
 | **Cloud Run** | Containerized backend deployment target |
 | **Cloud Build** | Automated build pipeline, triggered via GitHub Actions |
 

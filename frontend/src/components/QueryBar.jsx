@@ -78,13 +78,13 @@ const QueryBar = () => {
       <div className="mt-3 flex flex-wrap gap-2">
         <button
           onClick={() => setQuery("Which ward has the most incidents and worst AQI?")}
-          className="text-xs px-3 py-1.5 rounded-full bg-[#1B2534] text-[#8896A8] hover:bg-[#263244] hover:text-[#E6EDF3] transition-colors border border-[#263244]"
+          className="text-xs px-3 py-1.5 rounded-full bg-[#1B2534] text-[#8896A8] hover:bg-[#263244] hover:text-[#31D0AA] transition-colors border border-[#263244]"
         >
           Which ward has the most incidents and worst AQI?
         </button>
         <button
           onClick={() => setQuery("Is there a correlation between traffic congestion and air quality today?")}
-          className="text-xs px-3 py-1.5 rounded-full bg-[#1B2534] text-[#8896A8] hover:bg-[#263244] hover:text-[#E6EDF3] transition-colors border border-[#263244]"
+          className="text-xs px-3 py-1.5 rounded-full bg-[#1B2534] text-[#8896A8] hover:bg-[#263244] hover:text-[#31D0AA] transition-colors border border-[#263244]"
         >
           Traffic congestion vs AQI correlation?
         </button>
@@ -105,7 +105,7 @@ const QueryBar = () => {
             </div>
             <div className="flex-1">
               <h4 className="eyebrow mb-1.5">CityPulse AI</h4>
-              <p className="text-[#E6EDF3] text-lg leading-relaxed">{response.answer}</p>
+              <p className="text-[#31D0AA] text-lg leading-relaxed">{response.answer}</p>
             </div>
           </div>
 
@@ -119,7 +119,7 @@ const QueryBar = () => {
                   <BarChart data={response.chart_data}>
                     <XAxis dataKey="label" stroke="#64748B" fontSize={12} />
                     <YAxis stroke="#64748B" fontSize={12} />
-                    <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={{ background: '#131A26', border: '1px solid #263244', borderRadius: '10px', color: '#E6EDF3' }} />
+                    <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={{ background: '#131A26', border: '1px solid #263244', borderRadius: '10px', color: '#31D0AA' }} />
                     <Bar dataKey="value" fill="#FFB020" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>

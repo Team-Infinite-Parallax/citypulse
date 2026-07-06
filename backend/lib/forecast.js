@@ -79,6 +79,175 @@ const fitLinear = (y, alpha, beta) => {
 
 const GRID = [0.1, 0.3, 0.5, 0.7, 0.9];
 const sse = (res) => res.reduce((s, e) => s + e * e, 0);
+const rmse = (res) => (res.length ? Math.sqrt(sse(res) / res.length) : 0);
+const dot = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
+const transpose = (m) => m[0].map((_, i) => m.map((row) => row[i]));
+const matMul = (A, B) => A.map((row) => B[0].map((_, j) => dot(row, B.map((r) => r[j]))));
+
+const solveLinearSystem = (A, b) => {
+  const n = A.length;
+  const M = A.map((row, i) => [...row, b[i]]);
+  for (let i = 0; i < n; i++) {
+    let pivot = i;
+    for (let j = i + 1; j < n; j++) {
+      if (Math.abs(M[j][i]) > Math.abs(M[pivot][i])) pivot = j;
+    }
+    if (Math.abs(M[pivot][i]) < 1e-12) return null;
+    [M[i], M[pivot]] = [M[pivot], M[i]];
+    const diag = M[i][i];
+    for (let k = i; k <= n; k++) M[i][k] /= diag;
+    for (let j = 0; j < n; j++) {
+      if (j === i) continue;
+      const factor = M[j][i];
+      for (let k = i; k <= n; k++) M[j][k] -= factor * M[i][k];
+    }
+  }
+  return M.map((row) => row[n]);
+};
+
+const fitOLS = (X, y, ridge = 1e-3) => {
+  const Xt = transpose(X);
+  const XtX = matMul(Xt, X);
+  for (let i = 0; i < XtX.length; i++) {
+    XtX[i][i] += ridge;
+  }
+  const Xty = Xt.map((row) => dot(row, y));
+  return solveLinearSystem(XtX, Xty);
+};
+
+const buildRegressionData = (y, period) => {
+  const n = y.length;
+  const useLag24 = n >= 24;
+  const maxLag = useLag24 ? 24 : 1;
+  const X = [];
+  const Y = [];
+  for (let t = maxLag; t < n; t++) {
+    const hr = t % period;
+    const vector = [1, y[t - 1]];
+    if (useLag24) vector.push(y[t - 24]);
+    vector.push(Math.sin((2 * Math.PI * hr) / period));
+    vector.push(Math.cos((2 * Math.PI * hr) / period));
+    X.push(vector);
+    Y.push(y[t]);
+  }
+  return { X, Y, useLag24, maxLag };
+};
+
+const makeMlForecast = (coeffs, history, horizon, period, clamp, z, residualStd, useLag24) => {
+  const bound = (v) =>
+    clamp ? Math.max(clamp[0], Math.min(clamp[1], v)) : v;
+  const point = [];
+  const lower = [];
+  const upper = [];
+  const seq = history.slice();
+  for (let k = 1; k <= horizon; k++) {
+    const t = history.length + k - 1;
+    const hr = t % period;
+    const row = [1, seq[seq.length - 1]];
+    if (useLag24) {
+      row.push(seq[seq.length - 24] ?? seq[0]);
+    }
+    row.push(Math.sin((2 * Math.PI * hr) / period));
+    row.push(Math.cos((2 * Math.PI * hr) / period));
+    const p = dot(coeffs, row);
+    const forecast = bound(Math.round(p));
+    const varK = residualStd * residualStd * (1 + (k - 1) * 0.1 * 0.1);
+    const half = z * Math.sqrt(varK);
+    point.push(forecast);
+    lower.push(bound(Math.round(forecast - half)));
+    upper.push(bound(Math.round(forecast + half)));
+    seq.push(p);
+  }
+  return { point, lower, upper };
+};
+
+export const forecastSeriesML = (series, opts = {}) => {
+  const { period = 24, horizon = 6, z = 1.645, clamp = null } = opts;
+  const y = series.filter((v) => typeof v === 'number' && !Number.isNaN(v));
+  const n = y.length;
+  const bound = (v) =>
+    clamp ? Math.max(clamp[0], Math.min(clamp[1], v)) : v;
+
+  if (n < 8) {
+    const last = n ? y[n - 1] : 0;
+    const std = sampleStd(y.slice(-Math.min(n, 3)));
+    const point = Array.from({ length: horizon }, () => bound(Math.round(last)));
+    const half = point.map(() => z * std);
+    return {
+      point,
+      lower: point.map((p, k) => bound(Math.round(p - half[k]))),
+      upper: point.map((p, k) => bound(Math.round(p + half[k]))),
+      method: 'learned autoregression (insufficient history, naive fallback)',
+      params: {},
+      residualStd: Number(std.toFixed(2)),
+      inSampleRmse: Number(std.toFixed(2)),
+      seasonal: false,
+    };
+  }
+
+  const { X, Y, useLag24 } = buildRegressionData(y, period);
+  if (Y.length < 4) {
+    const last = y[n - 1];
+    const std = sampleStd(y.slice(-Math.min(n, 3)));
+    const point = Array.from({ length: horizon }, () => bound(Math.round(last)));
+    const half = point.map(() => z * std);
+    return {
+      point,
+      lower: point.map((p, k) => bound(Math.round(p - half[k]))),
+      upper: point.map((p, k) => bound(Math.round(p + half[k]))),
+      method: 'learned autoregression (insufficient training examples)',
+      params: {},
+      residualStd: Number(std.toFixed(2)),
+      inSampleRmse: Number(std.toFixed(2)),
+      seasonal: useLag24,
+    };
+  }
+
+  const coeffs = fitOLS(X, Y);
+  if (!coeffs) {
+    const last = y[n - 1];
+    const std = sampleStd(y.slice(-Math.min(n, 3)));
+    const point = Array.from({ length: horizon }, () => bound(Math.round(last)));
+    const half = point.map(() => z * std);
+    return {
+      point,
+      lower: point.map((p, k) => bound(Math.round(p - half[k]))),
+      upper: point.map((p, k) => bound(Math.round(p + half[k]))),
+      method: 'learned autoregression (singular fit fallback)',
+      params: {},
+      residualStd: Number(std.toFixed(2)),
+      inSampleRmse: Number(std.toFixed(2)),
+      seasonal: useLag24,
+    };
+  }
+
+  const fitted = X.map((row) => dot(coeffs, row));
+  const residuals = fitted.map((pred, i) => Y[i] - pred);
+  const residualStd = sampleStd(residuals);
+  const { point, lower, upper } = makeMlForecast(
+    coeffs,
+    y,
+    horizon,
+    period,
+    clamp,
+    z,
+    residualStd,
+    useLag24
+  );
+
+  return {
+    point,
+    lower,
+    upper,
+    method: useLag24
+      ? 'learned autoregression with daily cycle and 24h lag'
+      : 'learned autoregression with 1h lag and daily cycle',
+    params: { useLag24, coefficients: coeffs },
+    residualStd: Number(residualStd.toFixed(2)),
+    inSampleRmse: Number(rmse(residuals).toFixed(2)),
+    seasonal: useLag24,
+  };
+};
 
 /**
  * Forecast the next `horizon` steps of a numeric series.
@@ -109,6 +278,7 @@ export const forecastSeries = (series, opts = {}) => {
       method: 'naive (insufficient history)',
       params: {},
       residualStd: Number(std.toFixed(2)),
+      inSampleRmse: Number(std.toFixed(2)),
       seasonal: false,
     };
   }
@@ -168,6 +338,7 @@ export const forecastSeries = (series, opts = {}) => {
       : "Holt's linear trend (double exponential smoothing)",
     params: bestParams,
     residualStd: Number(residualStd.toFixed(2)),
+    inSampleRmse: Number(rmse(state.residuals).toFixed(2)),
     seasonal,
   };
 };

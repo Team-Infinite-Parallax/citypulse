@@ -51,7 +51,7 @@ const RecommendationCard = () => {
         <div className="w-12 h-12 bg-[#31D0AA]/10 text-[#31D0AA] border border-[#31D0AA]/20 rounded-full flex items-center justify-center mb-3 shadow-[0_0_12px_rgba(49,208,170,0.15)]">
           <Lightbulb className="w-6 h-6" />
         </div>
-        <h3 className="font-semibold text-[#E6EDF3]">No Action Needed</h3>
+        <h3 className="font-semibold text-[#31D0AA]">No Action Needed</h3>
         <p className="text-sm text-[#9AA9BD] mt-1">Traffic patterns are within normal parameters.</p>
       </div>
     );
@@ -81,7 +81,7 @@ const RecommendationCard = () => {
               
               <div className="mt-3 flex items-start">
                 <Lightbulb className="w-4 h-4 text-[#FFB020] mr-2 flex-shrink-0 mt-0.5" />
-                <p className="text-[#E6EDF3] text-sm font-medium leading-relaxed">
+                <p className="text-[#31D0AA] text-sm font-medium leading-relaxed">
                   {rec.suggestion}
                 </p>
               </div>

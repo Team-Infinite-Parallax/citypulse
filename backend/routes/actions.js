@@ -1,58 +1,49 @@
 import express from 'express';
-import { getMemos, saveMemo } from '../lib/memoStore.js';
-import { generateStructured } from '../lib/gemini.js';
-import crypto from 'crypto';
+import { getMemos, addMemo, updateMemoStatus } from '../lib/firestore.js';
 
 const router = express.Router();
 
-// GET /api/actions/memos
 router.get('/memos', async (req, res) => {
-  const memos = await getMemos();
-  res.json(memos);
-});
-
-// POST /api/actions/draft
-router.post('/draft', async (req, res) => {
-  const anomaly = req.body; // Expects anomaly data
-  
-  const fallbackMemo = {
-    title: "Review Congestion Anomaly",
-    department: "Traffic Operations",
-    action_items: ["Review live cameras", "Consider temporary signal adjustment"],
-    justification: "Anomaly detected in traffic data."
-  };
-
-  const prompt = `You are a city traffic and public safety planner. Draft a short, actionable response memo for this anomaly:
-${JSON.stringify(anomaly)}
-Respond in strict JSON: { "title": string, "department": string, "action_items": string[], "justification": string }`;
-  
-  const draft = await generateStructured(prompt, fallbackMemo);
-  
-  const memo = {
-    id: `memo-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`,
-    ...draft,
-    status: 'DRAFT',
-    created_at: new Date().toISOString(),
-    anomaly_ref: anomaly
-  };
-
-  await saveMemo(memo);
-  res.json(memo);
-});
-
-// POST /api/actions/dispatch/:id
-router.post('/dispatch/:id', async (req, res) => {
-  const memos = await getMemos();
-  const memo = memos.find(m => m.id === req.params.id);
-  if (!memo) {
-    return res.status(404).json({ error: 'Memo not found' });
+  try {
+    const list = await getMemos();
+    res.json(list);
+  } catch (err) {
+    console.error('Error getting memos:', err);
+    res.status(500).json({ error: 'Failed to get memos' });
   }
+});
 
-  memo.status = 'DISPATCHED';
-  memo.dispatched_at = new Date().toISOString();
-  await saveMemo(memo);
-  
-  res.json(memo);
+router.post('/dispatch/:id', async (req, res) => {
+  try {
+    const success = await updateMemoStatus(req.params.id, 'DISPATCHED');
+    if (success) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ error: 'Memo not found' });
+    }
+  } catch (err) {
+    console.error('Error dispatching memo:', err);
+    res.status(500).json({ error: 'Failed to dispatch memo' });
+  }
+});
+
+router.post('/draft', async (req, res) => {
+  try {
+    const newMemo = {
+      id: `memo-${Date.now()}`,
+      title: 'Auto-Drafted: Congestion Alert',
+      department: 'Traffic Management Center',
+      status: 'DRAFT',
+      justification: req.body?.details || 'Automated alert triggered by anomaly detection system.',
+      action_items: ['Review live camera feed', 'Adjust signal timing if needed', 'Alert ground personnel'],
+      created_at: new Date().toISOString(),
+    };
+    await addMemo(newMemo);
+    res.json(newMemo);
+  } catch (err) {
+    console.error('Error drafting memo:', err);
+    res.status(500).json({ error: 'Failed to draft memo' });
+  }
 });
 
 export default router;

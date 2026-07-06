@@ -50,7 +50,7 @@ const AlertsPanel = () => {
         <div className="w-12 h-12 rounded-full grid place-items-center mb-3 border border-[#31D0AA]/30 bg-[#31D0AA]/12 text-[#31D0AA]">
           <ShieldCheck className="w-6 h-6" />
         </div>
-        <h3 className="font-semibold text-[#E6EDF3]">All Clear</h3>
+        <h3 className="font-semibold text-[#31D0AA]">All Clear</h3>
         <p className="text-sm text-[#64748B] mt-1">No anomalies in the network.</p>
       </div>
     );
@@ -61,7 +61,7 @@ const AlertsPanel = () => {
       <div className="panel-head">
         <div className="flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-[#FF5A5F]" />
-          <h3 className="text-base font-semibold text-[#E6EDF3]">Active Anomalies</h3>
+          <h3 className="text-base font-semibold text-[#31D0AA]">Active Anomalies</h3>
         </div>
         <span className="mono text-xs px-2 py-0.5 rounded-full bg-[#FF5A5F]/12 text-[#FF9497] border border-[#FF5A5F]/25">{alerts.length}</span>
       </div>
@@ -84,7 +84,7 @@ const AlertsPanel = () => {
                 </span>
               </div>
 
-              <h4 className="font-semibold text-[#E6EDF3] mb-1 flex items-center text-sm">
+              <h4 className="font-semibold text-[#31D0AA] mb-1 flex items-center text-sm">
                 <MapPin className="w-3.5 h-3.5 mr-1.5 text-[#64748B]" />
                 {alert.route_name}
               </h4>
@@ -92,10 +92,10 @@ const AlertsPanel = () => {
 
               <div className="flex items-center gap-2 mono text-[11px]">
                 <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]">
-                  Congestion <span className="text-[#E6EDF3]">{alert.metrics.congestion}</span>/100
+                  Congestion <span className="text-[#31D0AA]">{alert.metrics.congestion}</span>/100
                 </span>
                 <span className="px-2 py-1 rounded bg-[#131A26] border border-[#263244] text-[#9AA9BD]">
-                  Delay <span className="text-[#E6EDF3]">{alert.metrics.delay}</span>m
+                  Delay <span className="text-[#31D0AA]">{alert.metrics.delay}</span>m
                 </span>
               </div>
 

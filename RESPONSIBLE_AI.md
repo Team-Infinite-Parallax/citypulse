@@ -11,9 +11,10 @@ human must stay in the loop.
 |---|---|---|
 | Traffic congestion / delay | **Synthetic** | Generated hourly for 5 corridors (`backend/scripts/generate_data.js`), with a seeded incident. |
 | Air-quality (AQI) | **Synthetic** | Correlated with congestion plus noise. |
-| Public-safety incidents | **Synthetic** | ~300 ward-level records (`backend/data/incidents.json`). |
+| Public-safety incidents | **Synthetic** | ~300 ward-level records (`backend/data/incidents.json`). In production mode, these persist in Firestore. |
 | Waste / water-quality | **Synthetic** | Ward-level (`backend/data/environment.json`). |
-| Citizen reports | **User-generated at runtime** | Free-text + optional photo. |
+| Citizen reports | **User-generated at runtime** | Free-text + optional photo. Persisted in Firestore in production mode. |
+| Action memos | **Synthetic** | Structured decision drafts. In production mode, memos persist in Firestore (still requiring manual approval/dispatch). |
 
 All coordinates sit near the demo map center so markers render; they are
 illustrative, **not** a real municipal feed. In production these become BigQuery

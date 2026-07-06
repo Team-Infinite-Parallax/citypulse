@@ -1,0 +1,22 @@
+services:
+  # Express Backend Web Service
+  - type: web
+    name: citypulse-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: USE_BIGQUERY
+        value: "false"
+      - key: USE_FIRESTORE
+        value: "false"
+      - key: USE_ALLOYDB
+        value: "false"
+      - key: CORS_ORIGIN
+        value: https://citypulse.vercel.app
+      - key: GCP_LOCATION
+        value: us-central1

@@ -137,6 +137,33 @@ Visit **http://localhost:4321** in your browser.
 
 ---
 
+## ☁️ Deployment (Backend on Render & Frontend on Vercel)
+
+This project is configured to host the **Express backend on Render** and the **Astro frontend on Vercel**.
+
+### 1. Backend Deployment (Render)
+The backend can be automatically deployed to Render using the bundled [render.yaml Blueprint](file:///d:/infinite%20parallax/web/citypulse/render.yaml).
+
+1. Push your repository to GitHub.
+2. Log in to the [Render Dashboard](https://dashboard.render.com).
+3. Click **New** -> **Blueprint**.
+4. Connect your GitHub repository.
+5. Render will automatically detect the blueprint and set up **`citypulse-backend`** (a Node Express Web Service).
+6. During setup, configure the following environment variables:
+    *   `CORS_ORIGIN`: Set to your frontend's Vercel deployment URL (e.g., `https://citypulse.vercel.app`).
+    *   `GCP_PROJECT_ID`: (Optional) Your Google Cloud project ID if using Vertex AI, BigQuery, or Firestore. If left blank, the backend automatically runs in offline local-fallback mode using bundled JSON caches.
+
+### 2. Frontend Deployment (Vercel)
+The frontend is pre-configured with the `@astrojs/vercel` adapter, allowing Astro to deploy as a serverless SSR application on Vercel.
+
+1. Connect your repository to **Vercel**.
+2. Vercel will automatically detect the Astro framework, configure the build command (`npm run build`), and set the output directory to `dist`.
+3. Set the following environment variable in the Vercel project configuration:
+    *   `PUBLIC_API_URL`: The public URL of your deployed Render backend (e.g., `https://citypulse-backend.onrender.com`).
+4. Click **Deploy**.
+
+---
+
 ## 📁 Project Structure
 
 ```

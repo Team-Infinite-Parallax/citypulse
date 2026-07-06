@@ -1,5 +1,0 @@
-{
-  "framework": "astro",
-  "rootDirectory": "frontend",
-  "buildCommand": "npm install && npm run build"
-}

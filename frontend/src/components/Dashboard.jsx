@@ -72,7 +72,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const activeRoute = filterRoute || selectedRoute;
+  const activeRoute = filterRoute || selectedRoute || '';
 
   const displaySummary = activeRoute
     ? summaryData.filter(s => s.route_name === activeRoute)
@@ -205,13 +205,13 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Route Filter */}
-      <div className="flex items-center gap-3">
-        <Filter className="w-4 h-4 text-[#8896A8]" />
+      <div className="flex items-center gap-3 route-filter">
+        <Filter className="filter-icon" />
         <select
           aria-label="Filter by route"
           value={activeRoute}
           onChange={handleRouteFilter}
-          className="bg-[#0E141E] border border-[#263244] text-[#E6EDF3] text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-[#FFB020] transition-colors cursor-pointer"
+          className="route-select"
         >
           <option value="">All routes</option>
           {routeNames.map(name => (
@@ -221,8 +221,8 @@ const Dashboard = () => {
         {activeRoute && (
           <button
             type="button"
-            onClick={() => { setFilterRoute(''); setSelectedRoute(null); }}
-            className="text-xs text-[#8896A8] hover:text-[#E6EDF3] transition-colors px-2 py-1"
+            onClick={() => { setFilterRoute(''); setSelectedRoute(''); }}
+            className="text-xs clear-filter hover:text-[#E6EDF3] transition-colors px-2 py-1"
           >
             Clear filter
           </button>

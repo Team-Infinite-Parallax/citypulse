@@ -60,8 +60,8 @@ const RecommendationCard = () => {
   return (
     <div className="panel h-full flex flex-col">
       <div className="panel-head">
-        <h3 className="text-base font-bold text-[#E6EDF3] flex items-center">
-          <Sparkles className="w-4 h-4 text-[#FFB020] mr-2" />
+        <h3 className="text-base font-bold flex items-center" style={{ color: 'var(--amber)' }}>
+          <Sparkles className="w-4 h-4 mr-2" style={{ color: 'var(--amber)' }} />
           AI Recommendations ({recommendations.length})
         </h3>
       </div>

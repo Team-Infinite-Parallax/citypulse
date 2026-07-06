@@ -48,8 +48,8 @@ const QueryBar = () => {
         <span className="eyebrow">Ask the city</span>
       </div>
       <form onSubmit={handleSubmit} className="relative">
-        <label htmlFor="query-input" className="flex items-center bg-[#0E141E] border border-[#263244] rounded-xl overflow-hidden focus-within:border-[#FFB020] transition-colors">
-          <div className="pl-4 text-[#64748B]">
+        <div className="flex items-center bg-[#E8F9EE] border border-[#6EE3A0] rounded-xl overflow-hidden focus-within:border-[#6EE3A0] transition-colors">
+          <div className="pl-4 text-[#4EBF79]">
             <Bot className="w-6 h-6" />
           </div>
           <input
@@ -58,7 +58,7 @@ const QueryBar = () => {
             type="text"
             autoComplete="off"
             aria-label="Ask the city"
-            className="flex-1 bg-transparent border-none py-4 px-4 text-[#E6EDF3] placeholder-[#64748B] focus:outline-none"
+            className="flex-1 bg-transparent border-none py-4 px-4 text-[#11502B] placeholder-[#6A8B6F] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
             placeholder="e.g. Which corridor has the worst congestion right now?…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -71,7 +71,7 @@ const QueryBar = () => {
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Send className="w-4 h-4" /> Ask</>}
           </button>
-        </label>
+        </div>
       </form>
 
       {/* Canned cross-domain queries */}

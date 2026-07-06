@@ -28,10 +28,10 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' })); // Increased limit for base64 photo payloads
 
-// Rate limiting
+// Rate limiting — relaxed for development
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: process.env.NODE_ENV === 'production' ? 100 : 500,
   standardHeaders: true,
   legacyHeaders: false,
 });
